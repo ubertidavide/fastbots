@@ -2,5 +2,7 @@
 poetry.lock
 __pycache__
 dist
+debug
 *.png
 *.html
+*.log

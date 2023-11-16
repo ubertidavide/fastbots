@@ -28,8 +28,8 @@ FIREFOX_PROXY_ENABLED: bool = config('FIREFOX_PROXY_ENABLED', default=False, cas
 FIREFOX_HTTP_PROXY: str = config('FIREFOX_HTTP_PROXY', default=None, cast=str)
 FIREFOX_HTTPS_PROXY: str = config('FIREFOX_HTTPS_PROXY', default=FIREFOX_HTTP_PROXY, cast=str)
 
-FIREFOX_SCREENSHOT_DOWNLOAD_FOLDER_PATH: str = config('FIREFOX_SCREENSHOT_DOWNLOAD_FOLDER_PATH', default='.', cast=str)
-FIREFOX_HTML_DOWNLOAD_FOLDER_PATH: str = config('FIREFOX_HTML_DOWNLOAD_FOLDER_PATH', default='.', cast=str)
+FIREFOX_SCREENSHOT_DOWNLOAD_FOLDER_PATH: str = config('FIREFOX_SCREENSHOT_DOWNLOAD_FOLDER_PATH', default='debug/', cast=str)
+FIREFOX_HTML_DOWNLOAD_FOLDER_PATH: str = config('FIREFOX_HTML_DOWNLOAD_FOLDER_PATH', default='debug/', cast=str)
 FIREFOX_COOKIES_FILE: str = config('FIREFOX_COOKIES_FILE_PATH', default='cookies.pkl', cast=str)
 
 FIREFOX_PREFERENCES_FILE_PATH: str = config('FIREFOX_PREFERENCES_FILE_PATH', default='firefox_preferences.json', cast=str)

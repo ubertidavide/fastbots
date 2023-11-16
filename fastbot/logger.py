@@ -1,4 +1,5 @@
 import logging
+from logging.handlers import RotatingFileHandler
 
 from selenium.webdriver.remote.remote_connection import LOGGER
 
@@ -12,4 +13,8 @@ logging.getLogger('hpack').setLevel(logging.WARNING)
 
 LOGGER.setLevel(logging.WARNING)
 
-logging.basicConfig(format='%(asctime)s %(filename)s:%(lineno)s - %(funcName)s - %(name)s - %(levelname)s -  %(message)s', level=config.LOG_LEVEL)
+logging.basicConfig(
+        handlers=[logging.StreamHandler(), RotatingFileHandler('log.log', maxBytes=2000)],
+        format='%(asctime)s %(filename)s:%(lineno)s - %(funcName)s - %(name)s - %(levelname)s -  %(message)s',
+        level=config.LOG_LEVEL
+    )
