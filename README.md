@@ -11,6 +11,10 @@ pip install fastbots
 ## Showcase:
 Simple example, i will create a cookiecutter example.
 ```python
+import logging
+
+from fastbots import Task, Bot, Page, EC, WebElement, Keys
+
 class ProductPage(Page):
 
     def __init__(self, bot: Bot, page_name: str = 'product_page'):
