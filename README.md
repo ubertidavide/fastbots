@@ -11,11 +11,6 @@ pip install fastbot
 ## Showcase:
 Simple example, i will create a cookiecutter example.
 ```python
-import logging
-
-from fastbot import Task, Bot, Page, EC, WebElement
-
-
 class ProductPage(Page):
 
     def __init__(self, bot: Bot, page_name: str = 'product_page'):
@@ -40,10 +35,12 @@ class SearchPage(Page):
         logging.info('DO THINGS')
 
         # using the locators specified in the file give more flexibility and less code changes
-        search_element: WebElement = self.bot.driver.find_element(*self.__locator__('search_locator'))
-        search_element.send_keys('product name\n')
+        search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
+        search_element.send_keys('Selenium with Python Simplified For Beginners')
+        search_element.send_keys(Keys.ENTER)
 
-        product_element: WebElement = self.bot.driver.find_element(*self.__locator__('product_locator'))
+        # product_element: WebElement = self.bot.driver.find_element(*self.__locator__('product_locator'))
+        product_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('product_locator')))
         product_element.click()
 
         return ProductPage(bot=self.bot)
@@ -63,11 +60,11 @@ class TestTask(Task):
 
     # success part
     def on_success(self, payload):
-        logging.info(f'SUCCESS {payload["result"]}')
+        logging.info(f'SUCCESS {payload}')
     
     # failure part
     def on_failure(self, payload):
-        logging.info(f'FAILED {payload["result"]}')
+        logging.info(f'FAILED {payload}')
         
 if __name__ == '__main__':
     # start the task
@@ -111,6 +108,13 @@ Configure Firefox Arguments
 ```ini
 [settings]
 FIREFOX_ARGUMENTS=["--headless", "--disable-gpu"]
+```
+
+### Docker
+Use dockerized container, it will search for the main.py in order to run the bot task.
+```bash
+sudo docker build -t fastbot .
+docker run -it fastbot
 ```
 
 ## TODO:

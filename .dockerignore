@@ -1,0 +1,5 @@
+poetry.lock
+*.log
+debug
+.venv
+Dockerfile
