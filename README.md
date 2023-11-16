@@ -114,6 +114,15 @@ Configure Firefox Arguments
 FIREFOX_ARGUMENTS=["--headless", "--disable-gpu"]
 ```
 
+### Store Preferences
+Store preferences in a json file
+```json
+{
+    "browser.download.manager.showWhenStarting": false,
+    "browser.helperApps.neverAsk.saveToDisk": "application/pdf"
+}
+```
+
 ### Docker
 Use dockerized container, it will search for the main.py in order to run the bot task.
 ```bash

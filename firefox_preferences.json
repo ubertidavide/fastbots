@@ -1,0 +1,4 @@
+{
+    "browser.download.manager.showWhenStarting": false,
+    "browser.helperApps.neverAsk.saveToDisk": "application/pdf"
+}
