@@ -1,6 +1,6 @@
 import logging
 
-from fastbot import Task, Bot, Page, EC, WebElement, Keys
+from fastbots import Task, Bot, Page, EC, WebElement, Keys
 
 
 class ProductPage(Page):

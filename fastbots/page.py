@@ -5,7 +5,7 @@ from typing import Type, Union
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
-from fastbot.bot import Bot
+from fastbots.bot import Bot
 
 
 logger = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 from tenacity import RetryError, Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
 
-from fastbot.bot import Bot
+from fastbots.bot import Bot
 
 
 logger = logging.getLogger(__name__)

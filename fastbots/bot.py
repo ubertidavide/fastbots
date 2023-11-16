@@ -15,8 +15,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-from fastbot import config, logger
-from fastbot.exceptions import ExpectedUrlError
+from fastbots import config, logger
+from fastbots.exceptions import ExpectedUrlError
 
 
 logger = logging.getLogger(__name__)

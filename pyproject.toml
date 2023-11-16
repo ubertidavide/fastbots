@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fastbot"
+name = "fastbots"
 version = "0.1.0"
 description = "A simple library for bot development using selenium and the POM (Page Object Model) design."
 authors = ["Uberti Davide <24529587+ubertidavide@users.noreply.github.com>"]

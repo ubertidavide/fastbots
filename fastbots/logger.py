@@ -3,7 +3,7 @@ from logging.handlers import RotatingFileHandler
 
 from selenium.webdriver.remote.remote_connection import LOGGER
 
-from fastbot import config
+from fastbots import config
 
 
 # libraries logging
