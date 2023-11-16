@@ -1,6 +1,13 @@
 # FastBOT
 A simple library for bot development using selenium and the POM (Page Object Model) design.
 
+## Installation:
+The installation is a simple process with pip on the
+PyPy repository.
+```bash
+pip install fastbot
+```
+
 ## Showcase:
 Simple example, i will create a cookiecutter example.
 ```python
