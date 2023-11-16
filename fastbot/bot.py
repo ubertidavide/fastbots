@@ -36,6 +36,9 @@ class Bot(object):
 
         Load and configure all the needed resources.
         """
+        # data used from pages 
+        self.payload: dict = {}
+
         # use a temporary directory as default download folder
         if config.BOT_DOWNLOAD_FOLDER_PATH != 'None':
             self.temp_dir: str = tempfile.mkdtemp(dir=config.BOT_DOWNLOAD_FOLDER_PATH)
@@ -81,6 +84,9 @@ class Bot(object):
         # default global driver settings
         self.locators = self.__load_locators__()
         self.driver.implicitly_wait(config.SELENIUM_GLOBAL_IMPLICIT_WAIT)
+
+        # default wait
+        self.wait: WebDriverWait = WebDriverWait(driver=self.driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
 
         # load the start page
         self.driver.get(self.locator('pages_url', 'start_url'))

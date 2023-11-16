@@ -11,15 +11,21 @@ import logging
 
 class SearchPage(Page):
 
-    class SearchPage(Page):
-
-    def __init__(self, bot: Bot, page_name: str = 'page_name'):
-        super().__init__(bot, page_name)
+    def __init__
 
     def forward(self) -> Type[Page] | None:
         logging.info('DO THINGS')
         # using the locators specified in the file give more flexibility and less code changes
-        search_bar = self.bot.driver.find_element(*self.__locator__('locator_name'))
+        search_bar = self.bot.driver.find_element(*self.__locator__('search_locator'))
+        logging.info(f'Searchbar: {search_bar.is_enabled}')
+        return None
+
+class ProductPage(Page):
+
+    def forward(self) -> Type[Page] | None:
+        logging.info('DO THINGS')
+        # using the locators specified in the file give more flexibility and less code changes
+        search_bar = self.bot.driver.find_element(*self.__locator__('search_locator'))
         logging.info(f'Searchbar: {search_bar.is_enabled}')
         return None
 
@@ -27,9 +33,8 @@ class TestTask(Task):
 
     # retried n times
     def run(self, bot: Bot) -> bool:
-        time.sleep(5)
-        SearchPage(bot, page_name='page_name').forward()
-        time.sleep(5)
+        logging.info('DO THINGS')
+        SearchPage(bot, page_name='amazon_page').forward()
         return True
 
     # success part

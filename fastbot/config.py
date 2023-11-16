@@ -37,4 +37,5 @@ FIREFOX_PREFERENCES_FILE_PATH: str = config('FIREFOX_PREFERENCES_FILE_PATH', def
 # selenium
 SELENIUM_GLOBAL_IMPLICIT_WAIT: int = config('SELENIUM_GLOBAL_IMPLICIT_WAIT', default=5, cast=int)
 SELENIUM_EXPECTED_URL_TIMEOUT: int = config('SELENIUM_EXPECTED_URL_TIMEOUT', default=5, cast=int)
+SELENIUM_DEFAULT_WAIT: int = config('SELENIUM_DEFAULT_WAIT', default=5, cast=int)
 SELENIUM_LOCATORS_FILE: str = config('SELENIUM_LOCATORS_FILE', default='locators.ini', cast=str)

@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 from tenacity import Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
 
 from fastbot.bot import Bot
-from fastbot.exceptions import GenericError
 
 
 logger = logging.getLogger(__name__)
@@ -38,7 +37,7 @@ class Task(ABC):
         raise NotImplementedError('Tasks must define this method.')
     
     @abstractmethod
-    def on_success(self):
+    def on_success(self, payload):
         """
         On Success
 
@@ -48,7 +47,7 @@ class Task(ABC):
         raise NotImplementedError('Tasks must define this method.')
 
     @abstractmethod
-    def on_failure(self, retry_state):
+    def on_failure(self, payload):
         """
         On Failure
 
@@ -67,22 +66,27 @@ class Task(ABC):
         and called, it will execute the run method with all it' correct logic.
         """
         result: bool = False
+        payload: dict = {}
 
         for attempt in Retrying(wait=wait_fixed(Task.default_retry_delay),
                                 stop=stop_after_attempt(Task.max_retries),
                                 retry=retry_if_result(self.__is_false__),
-                                retry_error_callback=self.on_failure,
                                 after=after_log(logger, logging.DEBUG)):
             with attempt:
                 with Bot() as bot:
                     try:
                         result: bool = self.run(bot)
+                        payload: dict = bot.payload
                     except Exception as e:
                         result: bool = False
                         logging.error(f'{e}')
+                        bot.save_html()
+                        bot.save_screenshot()
 
             if not attempt.retry_state.outcome.failed:
                 attempt.retry_state.set_result(result)
 
         if result:
-            return self.on_success()
+            return self.on_success(payload)
+        else:
+            return self.on_failure(payload)
