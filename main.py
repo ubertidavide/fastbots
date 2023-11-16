@@ -1,8 +1,6 @@
 import logging
 
-from selenium.webdriver.support import expected_conditions as EC
-
-from fastbot import Task, Bot, Page
+from fastbot import Task, Bot, Page, EC, WebElement
 
 
 class ProductPage(Page):
@@ -14,7 +12,7 @@ class ProductPage(Page):
         logging.info('DO THINGS')
 
         # using the locators specified in the file give more flexibility and less code changes
-        name_element = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
+        name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
         # store data in the payload section, useful when i need to retrieve data on success
         self.bot.payload['result'] = name_element.text
 
@@ -29,10 +27,10 @@ class SearchPage(Page):
         logging.info('DO THINGS')
 
         # using the locators specified in the file give more flexibility and less code changes
-        search_element = self.bot.driver.find_element(*self.__locator__('search_locator'))
+        search_element: WebElement = self.bot.driver.find_element(*self.__locator__('search_locator'))
         search_element.send_keys('product name\n')
 
-        product_element = self.bot.driver.find_element(*self.__locator__('product_locator'))
+        product_element: WebElement = self.bot.driver.find_element(*self.__locator__('product_locator'))
         product_element.click()
 
         return ProductPage(bot=self.bot)
