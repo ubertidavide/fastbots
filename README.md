@@ -74,6 +74,22 @@ if __name__ == '__main__':
     TestTask()()
 ```
 
+And in the locators configuration file there is all the required config.
+This could be change easily without rebuild or make modifications at the code.
+```ini
+[pages_url]
+start_url=https://www.amazon.com/
+search_page=https://www.amazon.com/
+product_page=https://www.amazon.com/Volunteer-Lanyards-Identification-Volunteers-Hospital/dp/B0CL4QC72R/ref=sr_1_1_sspa?crid=1QXA5N1RYJFQX&keywords=product+name&qid=1700128009&sprefix=product+name%2Caps%2C165&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1
+
+[search_page]
+search_locator=(By.ID, "twotabsearchtextbox")
+product_locator=(By.XPATH, '//*[@id="search"]/div[1]/div[1]/div/span[1]/div[1]/div[2]')
+
+[product_page]
+name_locator=(By.ID, "title")
+```
+
 ## TODO:
 1. Adding more documentation and stabilize the code
 2. Add a cookiecutter example
