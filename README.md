@@ -1,11 +1,11 @@
-# FastBOT
+# fastbots
 A simple library for bot development using selenium and the POM (Page Object Model) design.
 
 ## Installation:
 The installation is a simple process with pip on the
 PyPy repository.
 ```bash
-pip install fastbot
+pip install fastbots
 ```
 
 ## Showcase:
@@ -113,8 +113,8 @@ FIREFOX_ARGUMENTS=["--headless", "--disable-gpu"]
 ### Docker
 Use dockerized container, it will search for the main.py in order to run the bot task.
 ```bash
-sudo docker build -t fastbot .
-docker run -it fastbot
+sudo docker build -t fastbots .
+docker run -it fastbots
 ```
 
 ## TODO:
