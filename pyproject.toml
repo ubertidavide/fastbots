@@ -7,13 +7,14 @@ license = "LICENSE"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 selenium = "^4.15.2"
 python-decouple = "^3.8"
 tenacity = "^8.2.3"
 selenium-wire = "^5.1.0"
-setuptools = "^68.2.2"
 
+[tool.poetry.group.dev.dependencies]
+setuptools = "^68.2.2"
 
 [build-system]
 requires = ["poetry-core"]

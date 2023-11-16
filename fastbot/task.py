@@ -1,7 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
 
-from tenacity import Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
+from tenacity import RetryError, Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
 
 from fastbot.bot import Bot
 
@@ -68,25 +68,27 @@ class Task(ABC):
         result: bool = False
         payload: dict = {}
 
-        for attempt in Retrying(wait=wait_fixed(Task.default_retry_delay),
-                                stop=stop_after_attempt(Task.max_retries),
-                                retry=retry_if_result(self.__is_false__),
-                                after=after_log(logger, logging.DEBUG)):
-            with attempt:
-                with Bot() as bot:
-                    try:
-                        result: bool = self.run(bot)
-                        payload: dict = bot.payload
-                    except Exception as e:
-                        result: bool = False
-                        logging.error(f'{e}')
-                        bot.save_html()
-                        bot.save_screenshot()
+        try:
+            for attempt in Retrying(wait=wait_fixed(Task.default_retry_delay),
+                                    stop=stop_after_attempt(Task.max_retries),
+                                    retry=retry_if_result(self.__is_false__),
+                                    after=after_log(logger, logging.DEBUG)):
+                with attempt:
+                    with Bot() as bot:
+                        try:
+                            result: bool = self.run(bot)
+                            payload: dict = bot.payload
+                        except Exception as e:
+                            result: bool = False
+                            logging.error(f'{e}')
+                            bot.save_html()
+                            bot.save_screenshot()
 
-            if not attempt.retry_state.outcome.failed:
-                attempt.retry_state.set_result(result)
+                if not attempt.retry_state.outcome.failed:
+                    attempt.retry_state.set_result(result)
 
-        if result:
-            return self.on_success(payload)
-        else:
+            if result:
+                return self.on_success(payload)
+            
+        except RetryError:
             return self.on_failure(payload)

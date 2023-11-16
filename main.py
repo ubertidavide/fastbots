@@ -1,6 +1,6 @@
 import logging
 
-from fastbot import Task, Bot, Page, EC, WebElement
+from fastbot import Task, Bot, Page, EC, WebElement, Keys
 
 
 class ProductPage(Page):
@@ -27,10 +27,12 @@ class SearchPage(Page):
         logging.info('DO THINGS')
 
         # using the locators specified in the file give more flexibility and less code changes
-        search_element: WebElement = self.bot.driver.find_element(*self.__locator__('search_locator'))
-        search_element.send_keys('product name\n')
+        search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
+        search_element.send_keys('Selenium with Python Simplified For Beginners')
+        search_element.send_keys(Keys.ENTER)
 
-        product_element: WebElement = self.bot.driver.find_element(*self.__locator__('product_locator'))
+        # product_element: WebElement = self.bot.driver.find_element(*self.__locator__('product_locator'))
+        product_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('product_locator')))
         product_element.click()
 
         return ProductPage(bot=self.bot)
@@ -50,11 +52,11 @@ class TestTask(Task):
 
     # success part
     def on_success(self, payload):
-        logging.info(f'SUCCESS {payload["result"]}')
+        logging.info(f'SUCCESS {payload}')
     
     # failure part
     def on_failure(self, payload):
-        logging.info(f'FAILED {payload["result"]}')
+        logging.info(f'FAILED {payload}')
         
 if __name__ == '__main__':
     # start the task

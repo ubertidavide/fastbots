@@ -4,7 +4,7 @@ import shutil
 import pickle
 from typing import List
 from pathlib import Path
-import datetime
+from datetime import datetime
 import configparser
 import logging
 
@@ -49,7 +49,7 @@ class Bot(object):
         firefox_options: Options = Options()
         # add all the arguments specified in the config
         for argument in config.FIREFOX_ARGUMENTS:
-            firefox_options.add_argument(argument.strip())
+            firefox_options.add_argument(argument)
 
         firefox_profile: FirefoxProfile = self.__load_preferences__()
 

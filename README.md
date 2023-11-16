@@ -90,6 +90,29 @@ product_locator=(By.XPATH, '//*[@id="search"]/div[1]/div[1]/div/span[1]/div[1]/d
 name_locator=(By.ID, "title")
 ```
 
+### Proxy
+Configure the proxy settings.
+```ini
+[settings]
+FIREFOX_PROXY_ENABLED=True
+FIREFOX_HTTP_PROXY=127.0.0.1:8080
+FIREFOX_HTTPS_PROXY=127.0.0.1:8080
+```
+
+### User Agent
+Configure the user agent used for the requests.
+```ini
+[settings]
+FIREFOX_USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+```
+
+### Arguments
+Configure Firefox Arguments
+```ini
+[settings]
+FIREFOX_ARGUMENTS=["--headless", "--disable-gpu"]
+```
+
 ## TODO:
 1. Adding more documentation and stabilize the code
 2. Add a cookiecutter example
