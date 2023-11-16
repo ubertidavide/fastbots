@@ -9,7 +9,8 @@ pip install fastbots
 ```
 
 ## Showcase:
-Simple example, i will create a cookiecutter example.
+Simple example, i will create a cookiecutter example,
+fore more exaustive examples visit the cookiecutter-fastbots template.
 ```python
 import logging
 
