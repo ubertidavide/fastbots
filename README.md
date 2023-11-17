@@ -88,8 +88,8 @@ if __name__ == '__main__':
 ```
 
 ### Locators File
-And in the locators configuration file there is all the required locators config.
-This could be change easily without rebuild or make modifications at the code.
+In the locators configuration file there is all the required locators config.
+This could be changed easily without rebuild or make modifications at the code.
 ```ini
 -- locators.ini
 [pages_url] # pages_url required url settings
@@ -117,7 +117,7 @@ BOT_DRIVER_TYPE=CHROME
 The browser installation path is autodetected by system env variables, the driver download process and it's related installation path settings are managed automatically.
 
 ### Retry and Debug
-For default every task will be retryed 2 times waiting 10 seconds, when all the two try fail, the task execute the on_error method else it will execute the on_success.
+For default every task will be retryed 2 times waiting 10 seconds, when all the two try fail, the task execute the on_error method else it will execute the on_success method.
 This behaviour could be modified in the settings file:
 ```ini
 -- settings.ini
@@ -128,7 +128,7 @@ BOT_RETRY_DELAY=10 #sec default
 When the task is failed the library store the screenshot and the html of the page in the debug folder, useful for debug.
 It will store also all the logs in the log.log file.
 
-### Download Folder and other Folder settings(Optional)
+### Download Folder and other Folders (Optional)
 ```ini
 -- settings.ini
 [settings]
@@ -137,7 +137,7 @@ BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
 BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug'
 ```
 
-### Global Wait Settings (Optional)
+### Global Wait (Optional)
 The default configured wait are showed below:
 - The implicit wait used for inital page loading.
 - The wait for the url check that matches the specified in the locators file
@@ -153,7 +153,7 @@ SELENIUM_EXPECTED_URL_CHECK=False #disable the automatic page url check, the def
 ```
 
 ### Proxy (Optional)
-Configure the proxy settings in the file.
+Configure the proxy settings.
 ```ini
 -- settings.ini
 [settings]
@@ -163,7 +163,7 @@ BOT_HTTPS_PROXY=127.0.0.1:8080
 ```
 
 ### User Agent (Optional)
-Configure the user agent used for the requests in the file.
+Configure the user agent used for the requests.
 ```ini
 -- settings.ini
 [settings]
@@ -171,8 +171,7 @@ BOT_USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH
 ```
 
 ### Arguments (Optional)
-Configure Firefox Arguments, store them in the config ini file, the format it's the same for all the supported drivers, check carefully that the exact arg is implemented for the selected driver.
-Add them in the file.
+Configure Firefox Arguments, store them in the config file, the format it's the same for all the supported drivers, check carefully that the exact arg it's implemented for the selected driver.
 
 #### Firefox args:
 ```ini
@@ -189,12 +188,11 @@ BOT_ARGUMENTS=["--no-sandbox"]
 ```
 
 ### Store Preferences (Optional)
-Store preferences in a json file, the format it's the same for all the supported drivers, check carefully that the exact string and value is implemented for the selected driver.
-Add them in the file.
+Store preferences in a json file, the format it's the same for all the supported drivers, check carefully that the exact string and value it's implemented for the selected driver.
 
 #### Firefox prefs:
 ```json
--- preferences.ini 
+-- preferences.json 
 {
     "browser.download.manager.showWhenStarting": false, # Don't show download
     "browser.helperApps.neverAsk.saveToDisk": "application/pdf" # Automatic save pdf files
@@ -203,7 +201,7 @@ Add them in the file.
 
 #### Chrome prefs:
 ```json
--- preferences.ini 
+-- preferences.json 
 {
     "profile.default_content_setting_values.notifications": 2,  # Disable notifications
     "profile.default_content_settings.popups": 0  # Allow popups
@@ -218,5 +216,5 @@ docker run -it fastbots
 ```
 
 ## TODO:
-1. Adding more documentation and stabilize the code
-2. Add a cookiecutter example
+1. Add more documentation.
+2. Stabilize the code.
