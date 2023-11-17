@@ -46,7 +46,7 @@ class Bot(object):
             self._temp_dir: str = tempfile.mkdtemp()
 
         # load all the locators
-        self._locators: List[dict] = self.__load_locators__()
+        self._locators: configparser = self.__load_locators__()
 
         # variable instanciated at enter
         if config.BOT_DRIVER_TYPE == config.DriverType.FIREFOX:
