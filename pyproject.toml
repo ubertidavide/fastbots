@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastbots"
-version = "0.1.1"
+version = "0.1.2"
 description = "A simple library for bot development using selenium and the POM (Page Object Model) design."
 authors = ["Uberti Davide <24529587+ubertidavide@users.noreply.github.com>"]
 license = "LICENSE"
@@ -15,6 +15,7 @@ selenium-wire = "^5.1.0"
 
 [tool.poetry.group.dev.dependencies]
 setuptools = "^68.2.2"
+pytest = "^7.4.3"
 
 [build-system]
 requires = ["poetry-core"]
