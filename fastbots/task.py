@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from tenacity import RetryError, Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
 
 from fastbots.bot import Bot
+from fastbots import config
 
 
 logger = logging.getLogger(__name__)
@@ -16,14 +17,6 @@ class Task(ABC):
     A Task blueprint that need to implement the three below specified methods.
     It is a class needed to rapresent a full interaction over more pages.
     """
-
-    #: Maximum number of retries before giving up.  If set to :const:`None`,
-    #: it will **never** stop retrying.
-    max_retries = 2
-
-    #: Default time in seconds before a retry of the task should be
-    #: executed. 5 sec by default.
-    default_retry_delay = 5
 
     @abstractmethod
     def run(self, bot: Bot) -> bool:
@@ -69,8 +62,8 @@ class Task(ABC):
         payload: dict = {}
 
         try:
-            for attempt in Retrying(wait=wait_fixed(Task.default_retry_delay),
-                                    stop=stop_after_attempt(Task.max_retries),
+            for attempt in Retrying(wait=wait_fixed(config.BOT_RETRY_DELAY),
+                                    stop=stop_after_attempt(config.BOT_MAX_RETRIES),
                                     retry=retry_if_result(self.__is_false__),
                                     after=after_log(logger, logging.DEBUG)):
                 with attempt:

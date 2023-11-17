@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
 from fastbots.bot import Bot
+from fastbots import config
 
 
 logger = logging.getLogger(__name__)
@@ -28,16 +29,21 @@ class Page(ABC):
         [pages_url]
         page_name=https://example.com/page
         """
-        self.bot: Bot = bot
-        self.page_name: str = page_name
         super().__init__()
+
+        self._bot: Bot = bot
+        self._page_name: str = page_name
         
         # load the pages url from the locators file
-        self.page_url: str = self.bot.locator('pages_url', self.page_name)
+        self._page_url: str = self._bot.locator('pages_url', self._page_name)
 
         # check that the current page is the expected
-        if self.page_url != 'None':
-            self.bot.check_page_url(expected_page_url=self.page_url)
+        if config.SELENIUM_EXPECTED_URL_CHECK and self._page_url != 'None':
+            self._bot.check_page_url(expected_page_url=self._page_url)
+
+    @property
+    def bot(self):
+        return self._bot
 
     def __locator__(self, locator_name: str) -> tuple:
         """
@@ -52,7 +58,7 @@ class Page(ABC):
 
         """
         # load the locators from file and interprete that as code
-        return eval(self.bot.locator(self.page_name, locator_name))
+        return eval(self._bot.locator(self._page_name, locator_name))
 
     @abstractmethod
     def forward(self) -> Union[Type['Page'], None]:

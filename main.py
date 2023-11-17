@@ -5,7 +5,8 @@ from fastbots import Task, Bot, Page, EC, WebElement, Keys
 
 class ProductPage(Page):
 
-    def __init__(self, bot: Bot, page_name: str = 'product_page'):
+    # page name it's the page_name used in the locators file, see below
+    def __init__(self, bot: Bot, page_name: str = 'product_page'): 
         super().__init__(bot, page_name)
 
     def forward(self) -> None:
@@ -16,10 +17,12 @@ class ProductPage(Page):
         # store data in the payload section, useful when i need to retrieve data on success
         self.bot.payload['result'] = name_element.text
 
+        # end the chain of pages interactins
         return None
 
 class SearchPage(Page):
 
+    # page name it's the page_name used in the locators file, see below
     def __init__(self, bot: Bot, page_name: str = 'search_page'):
         super().__init__(bot, page_name)
 
@@ -35,29 +38,33 @@ class SearchPage(Page):
         product_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('product_locator')))
         product_element.click()
 
+        # continue the chain interaction in the next page
         return ProductPage(bot=self.bot)
 
 class TestTask(Task):
 
-    # retried n times
+    # main task code
     def run(self, bot: Bot) -> bool:
         logging.info('DO THINGS')
 
-        page: Page = SearchPage(bot).forward()
+        # open the search page do things and go forward
+        page: Page = SearchPage(bot=bot).forward()
 
+        # for every page founded do things and go forward
         while page:
             page = page.forward()
 
+        # for default it will succeed
         return True
 
-    # success part
+    # method executed on bot success, with it's payload
     def on_success(self, payload):
         logging.info(f'SUCCESS {payload}')
     
-    # failure part
+    # method executed on bot failure
     def on_failure(self, payload):
         logging.info(f'FAILED {payload}')
         
 if __name__ == '__main__':
-    # start the task
+    # start the above task
     TestTask()()
