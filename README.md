@@ -105,7 +105,7 @@ product_locator=(By.XPATH, '//*[@id="search"]/div[1]/div[1]/div/span[1]/div[1]/d
 name_locator=(By.ID, "title")
 ```
 
-### Browser and Drivers
+### Browser and Drivers (Optional)
 For default config, the selected browser is Firefox, but it could be changed from the config file:
 ```ini
 -- settings.ini
@@ -116,7 +116,7 @@ BOT_DRIVER_TYPE=CHROME
 **The correct browser installed for the driver selected it's required.**
 The browser installation path is autodetected by system env variables, the driver download process and it's related installation path settings are managed automatically.
 
-### Retry and Debug
+### Retry and Debug (Optional)
 For default every task will be retryed 2 times waiting 10 seconds, when all the two try fail, the task execute the on_error method else it will execute the on_success method.
 This behaviour could be modified in the settings file:
 ```ini
@@ -207,14 +207,3 @@ Store preferences in a json file, the format it's the same for all the supported
     "profile.default_content_settings.popups": 0  # Allow popups
 }
 ```
-
-### Docker
-Use dockerized container, it will search for the main.py in order to run the bot task.
-```bash
-sudo docker build -t fastbots .
-docker run -it fastbots
-```
-
-## TODO:
-1. Add more documentation.
-2. Stabilize the code.
