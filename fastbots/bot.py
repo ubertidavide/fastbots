@@ -1,30 +1,30 @@
 import tempfile
-import json
 import shutil
 import pickle
-from typing import List
+from typing import List, Union
 from pathlib import Path
 from datetime import datetime
-import configparser
+from configparser import ConfigParser
 import logging
+from typing import Type
+from abc import ABC, abstractmethod
 
-from seleniumwire.webdriver import Firefox, Chrome
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 
-from fastbots import config, logger
+from fastbots import config
 from fastbots.exceptions import ExpectedUrlError
 
 
 logger = logging.getLogger(__name__)
 
 
-class Bot(object):
+class Bot(ABC):
     """
     Bot
 
@@ -46,43 +46,32 @@ class Bot(object):
             self._temp_dir: str = tempfile.mkdtemp()
 
         # load all the locators
-        self._locators: List[dict] = self.__load_locators__()
-
-        # variable instanciated at enter
-        if config.BOT_DRIVER_TYPE == config.DriverType.FIREFOX:
-            self._driver: webdriver = self.__load_firefox_driver__()
-        elif config.BOT_DRIVER_TYPE == config.DriverType.CHROME:
-            self._driver: webdriver = self.__load_chrome_driver__()
-        else:
-            raise ValueError('Unknown driver type selected')
-        
-        # default wait
-        self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
+        self._locators: ConfigParser = self.__load_locators__()
         # data store
         self._payload: dict = {}
 
     @property
-    def driver(self):
+    def driver(self) -> WebDriver:
         """
         Driver Getter
         """
         return self._driver
     
     @property
-    def wait(self):
+    def wait(self) -> WebDriverWait:
         """
         Wait Getter
         """
         return self._wait
     
     @property
-    def payload(self):
+    def payload(self) -> dict:
         """
         Payload Getter
         """
         return self._payload
 
-    def __enter__(self):
+    def __enter__(self) -> Type['Bot']:
         """
         Enter
 
@@ -121,12 +110,16 @@ class Bot(object):
             # if not the expected url raises an exception
             raise ExpectedUrlError(current_url=self._driver.current_url, expected_url=expected_page_url)
 
-    def locator(self, page_name: str, locator_name: str):
+    def locator(self, page_name: str, locator_name: str) -> str:
         """
         Locator
 
         Getter that get the locator used for a page locator
         """
+        if not self._locators.has_section(page_name):
+            raise ValueError(f'The specified page_name: {page_name} is not declared in locators config.')
+        if not self._locators.has_option(page_name, locator_name):
+            raise ValueError(f'The specified locator_name: {locator_name} is not declared in locators config.')
         return self._locators.get(page_name, locator_name)
         
     def save_screenshot(self):
@@ -139,13 +132,7 @@ class Bot(object):
             Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
 
         file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
-
-        if config.BOT_DRIVER_TYPE == config.DriverType.FIREFOX:
-            self._driver.get_full_page_screenshot_as_file(str(file_path.absolute()))
-        elif config.BOT_DRIVER_TYPE == config.DriverType.CHROME:
-            self._driver.save_screenshot(str(file_path.absolute()))
-        else:
-            raise ValueError('Capability not implemented for the driver type selected')
+        self._driver.save_screenshot(str(file_path.absolute()))
 
     def save_html(self):
         """
@@ -168,7 +155,7 @@ class Bot(object):
         """
         cookies: List[dict] = self._driver.get_cookies()
 
-        with open(config.BOT_COOKIES_FILE, 'wb') as file:
+        with open(config.BOT_COOKIES_FILE_PATH, 'wb') as file:
             pickle.dump(cookies, file)
     
     def load_cookies(self):
@@ -177,14 +164,14 @@ class Bot(object):
 
         Add all the cookies founded in the file.
         """
-        if Path(config.BOT_COOKIES_FILE).is_file():
-            with open(config.BOT_COOKIES_FILE, 'rb') as file:
+        if Path(config.BOT_COOKIES_FILE_PATH).is_file():
+            with open(config.BOT_COOKIES_FILE_PATH, 'rb') as file:
                 cookies = pickle.load(file)
 
                 for cookie in cookies:
                     self._driver.add_cookie(cookie)
 
-    def __load_locators__(self) -> configparser:
+    def __load_locators__(self) -> ConfigParser:
         """
         Load Locators
 
@@ -193,144 +180,34 @@ class Bot(object):
         if not Path(config.SELENIUM_LOCATORS_FILE).is_file():
             return ValueError(f'Erorr, locators file not founded at path: {config.SELENIUM_LOCATORS_FILE}')
         
-        config_parser: configparser = configparser.ConfigParser()
+        config_parser: ConfigParser = ConfigParser()
         config_parser.read(config.SELENIUM_LOCATORS_FILE)
         return config_parser
-    
-    def __load_chrome_preferences__(self) -> dict:
-        """
-        Load Firefox Preferences
 
-        Load all the preferences for chrome stored in a json file,
+    @abstractmethod
+    def __load_preferences__(self) -> Union[FirefoxProfile, dict]:
+        """
+        Load Preferences
+
+        Load all the preferences stored in a json file,
         specified in the config.
         """
-        chrome_preferences: dict = {}
+        return NotImplementedError('Bot must define this method.')
 
-        if Path(config.BOT_PREFERENCES_FILE_PATH).exists():
-            # load all the preferences in the file
-            with open(config.BOT_PREFERENCES_FILE_PATH, 'r') as file:
-                chrome_preferences = json.load(file)
-
-        return chrome_preferences
-
-    def __load_firefox_preferences__(self) -> FirefoxProfile:
+    @abstractmethod
+    def __load_options__(self) -> Union[FirefoxOptions, ChromeOptions]:
         """
-        Load Firefox Preferences
+        Load Options
 
-        Load all the preferences for firefox stored in a json file,
-        specified in the config.
+        Load all the default options
         """
-        # initialize an empty profile for the settings
-        firefox_profile: FirefoxProfile = FirefoxProfile()
-
-        if Path(config.BOT_PREFERENCES_FILE_PATH).exists():
-            # load all the preferences in the file
-            with open(config.BOT_PREFERENCES_FILE_PATH, 'r') as file:
-                data = json.load(file)
-
-                # iterate all the data of the file
-                for key, value in data.items():
-                    firefox_profile.set_preference(key, value)
-
-        return firefox_profile
+        return NotImplementedError('Bot must define this method.')
     
-    def __load_chrome_options__(self) -> ChromeOptions:
+    @abstractmethod
+    def __load_driver__(self) -> WebDriver:
         """
-        Load Chrome Options
+        Load Driver
 
-        Load all the default chrome options
+        Load and configure all the options for the driver.
         """
-        # chrome configurations
-        chrome_options: ChromeOptions = ChromeOptions()
-        # add all the arguments specified in the config
-        for argument in config.BOT_ARGUMENTS:
-            chrome_options.add_argument(argument)
-
-        # basical static settings
-        chrome_options.add_argument(f'user-agent={config.BOT_USER_AGENT}')
-
-        chrome_preferences: dict = self.__load_chrome_preferences__()
-
-        # basical static settings
-        chrome_preferences['download.default_directory'] = self._temp_dir
-
-        # add the preferences to the chrome options
-        chrome_options.add_experimental_option("prefs", chrome_preferences)
-        
-        return chrome_options
-
-    def __load_firefox_options__(self) -> FirefoxOptions:
-        """
-        Load Firefox Options
-
-        Load all the default chrome options
-        """
-        # firefox configurations
-        firefox_options: FirefoxOptions = FirefoxOptions()
-        # add all the arguments specified in the config
-        for argument in config.BOT_ARGUMENTS:
-            firefox_options.add_argument(argument)
-
-        firefox_profile: FirefoxProfile = self.__load_firefox_preferences__()
-
-        # basical static settings, downlaod direcotry as the temp and user agent from config
-        firefox_profile.set_preference('general.useragent.override', config.BOT_USER_AGENT)
-        firefox_profile.set_preference('browser.download.folderList', 2)
-        firefox_profile.set_preference('browser.download.dir', self._temp_dir)
-
-        # add the profile to the firefox options
-        firefox_options.profile = firefox_profile
-
-        return firefox_options
-    
-    def __load_firefox_driver__(self) -> webdriver:
-        """
-        Load Firefox Driver
-
-        Load and configure all the options for the firefox driver.
-        """
-        if config.BOT_PROXY_ENABLED:
-            # proxy settings
-            seleniumwire_options = {
-                "proxy": {
-                    "http": config.BOT_HTTP_PROXY,
-                    "https": config.BOT_HTTPS_PROXY,
-                }
-            }
-
-            # initialize firefox with proxy
-            return Firefox(
-                options=self.__load_firefox_options__(),
-                seleniumwire_options=seleniumwire_options
-            )
-        
-        # initialize firefox without proxy
-        return Firefox(
-            options=self.__load_firefox_options__()
-        )
-
-    def __load_chrome_driver__(self) -> webdriver:
-        """
-        Load Chrome Driver
-
-        Load and configure all the options for the firefox driver.
-        """
-        if config.BOT_PROXY_ENABLED:
-            # proxy settings
-            seleniumwire_options = {
-                "proxy": {
-                    "http": config.BOT_HTTP_PROXY,
-                    "https": config.BOT_HTTPS_PROXY,
-                }
-            }
-
-            # initialize firefox with proxy
-            return Chrome(
-                options=self.__load_chrome_options__(),
-                seleniumwire_options=seleniumwire_options
-            )
-        
-        # initialize firefox without proxy
-        return Chrome(
-            options=self.__load_chrome_options__()
-        )
+        return NotImplementedError('Bot must define this method.')

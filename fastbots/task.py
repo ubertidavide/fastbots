@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 from tenacity import RetryError, Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
 
 from fastbots.bot import Bot
+from fastbots.chrome_bot import ChromeBot
+from fastbots.firefox_bot import FirefoxBot
 from fastbots import config
 
 
@@ -67,13 +69,28 @@ class Task(ABC):
                                     retry=retry_if_result(self.__is_false__),
                                     after=after_log(logger, logging.DEBUG)):
                 with attempt:
-                    with Bot() as bot:
+                    bot: Bot = None
+
+                    if config.BOT_DRIVER_TYPE == config.DriverType.FIREFOX:
+                        bot = FirefoxBot()
+                    elif config.BOT_DRIVER_TYPE == config.DriverType.CHROME:
+                        bot = ChromeBot()
+                    else:
+                        raise ValueError(f'Unknown Driver Type: {config.BOT_DRIVER_TYPE}')
+
+                    with bot:
                         try:
-                            result: bool = self.run(bot)
-                            payload: dict = bot.payload
+                            result = self.run(bot)
+                            payload = bot.payload
                         except Exception as e:
-                            result: bool = False
+                            result = False
                             logging.error(f'{e}')
+
+                            try:
+                                payload = bot.payload
+                            except Exception as e:
+                                payload = {}
+
                             bot.save_html()
                             bot.save_screenshot()
 

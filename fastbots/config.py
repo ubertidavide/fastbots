@@ -37,7 +37,7 @@ BOT_HTTPS_PROXY: str = config('BOT_HTTPS_PROXY', default=BOT_HTTP_PROXY, cast=st
 
 BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH: str = config('BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH', default='debug/', cast=str)
 BOT_HTML_DOWNLOAD_FOLDER_PATH: str = config('BOT_HTML_DOWNLOAD_FOLDER_PATH', default='debug/', cast=str)
-BOT_COOKIES_FILE: str = config('BOT_COOKIES_FILE_PATH', default='cookies.pkl', cast=str)
+BOT_COOKIES_FILE_PATH: str = config('BOT_COOKIES_FILE_PATH', default='cookies.pkl', cast=str)
 
 BOT_PREFERENCES_FILE_PATH: str = config('BOT_PREFERENCES_FILE_PATH', default='preferences.json', cast=str)
 
