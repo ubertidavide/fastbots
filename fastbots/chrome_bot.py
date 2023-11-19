@@ -5,7 +5,7 @@ import logging
 from seleniumwire.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from fastbots import config, Bot
 
@@ -29,7 +29,7 @@ class ChromeBot(Bot):
         super().__init__()
 
         # load the onfigured driver
-        self._driver: webdriver = self.__load_driver__()
+        self._driver: WebDriver = self.__load_driver__()
 
         # default wait
         self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
@@ -65,7 +65,7 @@ class ChromeBot(Bot):
         # basical static settings
         chrome_options.add_argument(f'user-agent={config.BOT_USER_AGENT}')
 
-        chrome_preferences: dict = self.__load_chrome_preferences__()
+        chrome_preferences: dict = self.__load_preferences__()
 
         # basical static settings
         chrome_preferences['download.default_directory'] = self._temp_dir
@@ -75,7 +75,7 @@ class ChromeBot(Bot):
         
         return chrome_options
 
-    def __load_driver__(self) -> webdriver:
+    def __load_driver__(self) -> WebDriver:
         """
         Load Chrome Driver
 
@@ -92,11 +92,11 @@ class ChromeBot(Bot):
 
             # initialize firefox with proxy
             return Chrome(
-                options=self.__load_chrome_options__(),
+                options=self.__load_options__(),
                 seleniumwire_options=seleniumwire_options
             )
         
         # initialize firefox without proxy
         return Chrome(
-            options=self.__load_chrome_options__()
+            options=self.__load_options__()
         )

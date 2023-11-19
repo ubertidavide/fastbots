@@ -4,7 +4,7 @@ import pickle
 from typing import List, Union
 from pathlib import Path
 from datetime import datetime
-import configparser
+from configparser import ConfigParser
 import logging
 from typing import Type
 from abc import ABC, abstractmethod
@@ -15,7 +15,7 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from fastbots import config
 from fastbots.exceptions import ExpectedUrlError
@@ -46,12 +46,12 @@ class Bot(ABC):
             self._temp_dir: str = tempfile.mkdtemp()
 
         # load all the locators
-        self._locators: configparser = self.__load_locators__()
+        self._locators: ConfigParser = self.__load_locators__()
         # data store
         self._payload: dict = {}
 
     @property
-    def driver(self) -> webdriver:
+    def driver(self) -> WebDriver:
         """
         Driver Getter
         """
@@ -118,7 +118,7 @@ class Bot(ABC):
         """
         if not self._locators.has_section(page_name):
             raise ValueError(f'The specified page_name: {page_name} is not declared in locators config.')
-        if not self._locators.has_option(locator_name):
+        if not self._locators.has_option(page_name, locator_name):
             raise ValueError(f'The specified locator_name: {locator_name} is not declared in locators config.')
         return self._locators.get(page_name, locator_name)
         
@@ -171,7 +171,7 @@ class Bot(ABC):
                 for cookie in cookies:
                     self._driver.add_cookie(cookie)
 
-    def __load_locators__(self) -> configparser:
+    def __load_locators__(self) -> ConfigParser:
         """
         Load Locators
 
@@ -180,7 +180,7 @@ class Bot(ABC):
         if not Path(config.SELENIUM_LOCATORS_FILE).is_file():
             return ValueError(f'Erorr, locators file not founded at path: {config.SELENIUM_LOCATORS_FILE}')
         
-        config_parser: configparser = configparser.ConfigParser()
+        config_parser: ConfigParser = ConfigParser()
         config_parser.read(config.SELENIUM_LOCATORS_FILE)
         return config_parser
 
@@ -204,7 +204,7 @@ class Bot(ABC):
         return NotImplementedError('Bot must define this method.')
     
     @abstractmethod
-    def __load_driver__(self) -> webdriver:
+    def __load_driver__(self) -> WebDriver:
         """
         Load Driver
 

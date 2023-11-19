@@ -7,7 +7,7 @@ from seleniumwire.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from fastbots import config, Bot
 
@@ -31,7 +31,7 @@ class FirefoxBot(Bot):
         super().__init__()
 
         # load the onfigured driver
-        self._driver: webdriver = self.__load_driver__()
+        self._driver: WebDriver = self.__load_driver__()
 
         # default wait
         self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
@@ -82,7 +82,7 @@ class FirefoxBot(Bot):
         for argument in config.BOT_ARGUMENTS:
             firefox_options.add_argument(argument)
 
-        firefox_profile: FirefoxProfile = self.__load_firefox_preferences__()
+        firefox_profile: FirefoxProfile = self.__load_preferences__()
 
         # basical static settings, downlaod direcotry as the temp and user agent from config
         firefox_profile.set_preference('general.useragent.override', config.BOT_USER_AGENT)
@@ -94,7 +94,7 @@ class FirefoxBot(Bot):
 
         return firefox_options
     
-    def __load_driver__(self) -> webdriver:
+    def __load_driver__(self) -> WebDriver:
         """
         Load Firefox Driver
 
@@ -111,11 +111,11 @@ class FirefoxBot(Bot):
 
             # initialize firefox with proxy
             return Firefox(
-                options=self.__load_firefox_options__(),
+                options=self.__load_options__(),
                 seleniumwire_options=seleniumwire_options
             )
         
         # initialize firefox without proxy
         return Firefox(
-            options=self.__load_firefox_options__()
+            options=self.__load_options__()
         )
