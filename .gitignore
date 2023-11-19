@@ -7,3 +7,4 @@ debug
 *.html
 *.log
 .pytest_cache
+.pkl

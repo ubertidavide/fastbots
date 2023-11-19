@@ -80,11 +80,17 @@ class Task(ABC):
 
                     with bot:
                         try:
-                            result: bool = self.run(bot)
-                            payload: dict = bot.payload
+                            result = self.run(bot)
+                            payload = bot.payload
                         except Exception as e:
-                            result: bool = False
+                            result = False
                             logging.error(f'{e}')
+
+                            try:
+                                payload = bot.payload
+                            except Exception as e:
+                                payload = {}
+
                             bot.save_html()
                             bot.save_screenshot()
 
