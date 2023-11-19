@@ -6,3 +6,4 @@ debug
 *.png
 *.html
 *.log
+.pytest_cache
