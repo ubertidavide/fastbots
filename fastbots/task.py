@@ -67,7 +67,7 @@ class Task(ABC):
                                     retry=retry_if_result(self.__is_false__),
                                     after=after_log(logger, logging.DEBUG)):
                 with attempt:
-                    with Bot() as bot:
+                    with Bot(config.BOT_DRIVER_TYPE) as bot:
                         try:
                             result: bool = self.run(bot)
                             payload: dict = bot.payload
