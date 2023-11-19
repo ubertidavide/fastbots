@@ -1,5 +1,4 @@
 import tempfile
-import json
 import shutil
 import pickle
 from typing import List, Union
@@ -8,8 +7,8 @@ from datetime import datetime
 import configparser
 import logging
 from typing import Type
+from abc import ABC, abstractmethod
 
-from seleniumwire.webdriver import Firefox, Chrome
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
@@ -18,7 +17,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium import webdriver
 
-from fastbots import config, logger
+from fastbots import config
 from fastbots.exceptions import ExpectedUrlError
 
 
@@ -48,12 +47,6 @@ class Bot(ABC):
 
         # load all the locators
         self._locators: configparser = self.__load_locators__()
-
-        # load the onfigured driver
-        self._driver_type: config.DriverType = self.__load_driver__()
-        
-        # default wait
-        self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
         # data store
         self._payload: dict = {}
 
@@ -191,6 +184,7 @@ class Bot(ABC):
         config_parser.read(config.SELENIUM_LOCATORS_FILE)
         return config_parser
 
+    @abstractmethod
     def __load_preferences__(self) -> Union[FirefoxProfile, dict]:
         """
         Load Preferences
@@ -198,20 +192,22 @@ class Bot(ABC):
         Load all the preferences stored in a json file,
         specified in the config.
         """
-        return NotImplementedError()
+        return NotImplementedError('Bot must define this method.')
 
+    @abstractmethod
     def __load_options__(self) -> Union[FirefoxOptions, ChromeOptions]:
         """
         Load Options
 
         Load all the default options
         """
-        return NotImplementedError()
+        return NotImplementedError('Bot must define this method.')
     
+    @abstractmethod
     def __load_driver__(self) -> webdriver:
         """
         Load Driver
 
         Load and configure all the options for the driver.
         """
-        return NotImplementedError()
+        return NotImplementedError('Bot must define this method.')

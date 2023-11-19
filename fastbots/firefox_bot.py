@@ -8,8 +8,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium import webdriver
 
-from fastbots import config
-from fastbots import Bot
+from fastbots import config, Bot
 
 
 logger = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class FirefoxBot(Bot):
     """
-    Bot
+    Firefox Bot
 
     Class used to specify the Firefox Bot Implementation.
     """
@@ -29,6 +28,12 @@ class FirefoxBot(Bot):
         Initialize all the attributes of the Firefox Bot instance
         """
         super().__init__()
+
+        # load the onfigured driver
+        self._driver: webdriver = self.__load_driver__()
+
+        # default wait
+        self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
 
     
     def save_screenshot(self):
