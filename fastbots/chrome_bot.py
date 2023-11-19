@@ -4,6 +4,7 @@ import logging
 
 from seleniumwire.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
 
 from fastbots import config, Bot

@@ -6,6 +6,7 @@ import logging
 from seleniumwire.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
 
 from fastbots import config, Bot
