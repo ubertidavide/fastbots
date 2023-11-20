@@ -130,6 +130,16 @@ BOT_RETRY_DELAY=10 #sec default
 When the task is failed the library store the screenshot and the html of the page in the debug folder, useful for debug.
 It will store also all the logs in the log.log file.
 
+### Page Url Check (Automatic)
+Every defined page must have a page url and when it's instantiate and reaced by the bot, the library check that the 
+specified url in the config are the same as the reached page during the navigation, to reduce navigation errors.  
+If you want to disable this function see the Global Wait Section below.
+
+### File Download Wait (Functions)
+This library have the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used afer a button download click in order
+to wait and get the path of the downloaded file, it will give the ability also to rename the file.  
+The extension is used to check that the file downloaded it's the correct and it's not corrupted.
+
 ### Download Folder and other Folders (Optional)
 ```ini
 -- settings.ini
@@ -150,6 +160,7 @@ The default configured wait are showed below:
 SELENIUM_GLOBAL_IMPLICIT_WAIT=5 #sec default
 SELENIUM_EXPECTED_URL_TIMEOUT=5 #sec default
 SELENIUM_DEFAULT_WAIT=5 #sec default
+SELENIUM_FILE_DOWNLOAD_TIMEOUT=20 #sec default
 
 SELENIUM_EXPECTED_URL_CHECK=False #disable the automatic page url check, the default value it's True
 ```
