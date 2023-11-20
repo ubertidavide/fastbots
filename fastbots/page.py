@@ -1,9 +1,8 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Type, Union, Dict
+from typing import Type, Union, List
 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
 
 from fastbots.bot import Bot
 from fastbots import config
@@ -64,7 +63,7 @@ class Page(ABC):
             raise ValueError('The locator must be enclosed in round brackets.')
 
         # declared locators
-        locator_list: Dict[str, By] = ['By.ID', 'By.XPATH', 'By.NAME', 'By.CLASS_NAME', 'By.CSS_SELECTOR', 
+        locator_list: List[str] = ['By.ID', 'By.XPATH', 'By.NAME', 'By.CLASS_NAME', 'By.CSS_SELECTOR', 
                                        'By.LINK_TEXT', 'By.PARTIAL_LINK_TEXT', 'By.TAG_NAME']
 
         # check the used locator
