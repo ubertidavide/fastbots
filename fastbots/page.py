@@ -73,7 +73,7 @@ class Page(ABC):
             # check that the first characters are them of the locators and the next one of the comma 
             if full_locator[1:-1].strip().startswith(locator_key) and full_locator[1:-1].strip()[len(locator_key):].strip().startswith(','):
                 locator_by = locator_values
-                locator_content = full_locator[1:-1].strip()[len(locator_key):].strip()[1:].strip()
+                locator_content = full_locator[1:-1].strip()[len(locator_key):].strip()[1:].strip().replace('\"\"', '').replace('\'\'', '')
 
                 return (locator_by, locator_content)
             
