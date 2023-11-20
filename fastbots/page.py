@@ -64,18 +64,20 @@ class Page(ABC):
             raise ValueError('The locator must be enclosed in round brackets.')
 
         # declared locators
-        locator_list: Dict[str, By] = {'By.ID': By.ID, 'By.XPATH': By.XPATH, 'By.NAME': By.NAME, 'By.CLASS_NAME': By.CLASS_NAME, 'By.CSS_SELECTOR': By.CSS_SELECTOR, 'By.LINK_TEXT': By.LINK_TEXT, 'By.PARTIAL_LINK_TEXT': By.PARTIAL_LINK_TEXT, 'By.TAG_NAME': By.TAG_NAME}
+        locator_list: Dict[str, By] = ['By.ID', 'By.XPATH', 'By.NAME', 'By.CLASS_NAME', 'By.CSS_SELECTOR', 
+                                       'By.LINK_TEXT', 'By.PARTIAL_LINK_TEXT', 'By.TAG_NAME']
 
         # check the used locator
-        locator_by: By = None
-        locator_content: str = None
-        for locator_key, locator_values in locator_list.items():
+        parsed_locator: tuple = None
+        for locator in locator_list:
             # check that the first characters are them of the locators and the next one of the comma 
-            if full_locator[1:-1].strip().startswith(locator_key) and full_locator[1:-1].strip()[len(locator_key):].strip().startswith(','):
-                locator_by = locator_values
-                locator_content = full_locator[1:-1].strip()[len(locator_key):].strip()[1:].strip().replace('\"\"', '').replace('\'\'', '')
+            if full_locator[1:-1].strip().startswith(locator) and full_locator[1:-1].strip()[len(locator):].strip().startswith(','):
+                # extract the tuple required as locator
+                parsed_locator = (eval(locator), full_locator[1:-1].strip()[len(locator):].strip()[1:].strip()[1:-1])
 
-                return (locator_by, locator_content)
+                logging.info(f'{parsed_locator}')
+
+                return parsed_locator
             
         else:
             raise ValueError('The specified locator is unknown or worng, check by, brackets and commas.')
