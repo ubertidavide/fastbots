@@ -1,6 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Type, Union
+from typing import Type, Union, Dict
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -58,7 +58,29 @@ class Page(ABC):
 
         """
         # load the locators from file and interprete that as code
-        return eval(self._bot.locator(self._page_name, locator_name))
+        full_locator: str = self._bot.locator(self._page_name, locator_name)
+
+        if not full_locator.startswith('(') or not full_locator.endswith(')'):
+            raise ValueError('The locator must be enclosed in round brackets.')
+
+        # declared locators
+        locator_list: Dict[str, By] = ['By.ID', 'By.XPATH', 'By.NAME', 'By.CLASS_NAME', 'By.CSS_SELECTOR', 
+                                       'By.LINK_TEXT', 'By.PARTIAL_LINK_TEXT', 'By.TAG_NAME']
+
+        # check the used locator
+        parsed_locator: tuple = None
+        for locator in locator_list:
+            # check that the first characters are them of the locators and the next one of the comma 
+            if full_locator[1:-1].strip().startswith(locator) and full_locator[1:-1].strip()[len(locator):].strip().startswith(','):
+                # extract the tuple required as locator
+                parsed_locator = (eval(locator), full_locator[1:-1].strip()[len(locator):].strip()[1:].strip()[1:-1])
+
+                logging.info(f'{parsed_locator}')
+
+                return parsed_locator
+            
+        else:
+            raise ValueError('The specified locator is unknown or worng, check by, brackets and commas.')
 
     @abstractmethod
     def forward(self) -> Union[Type['Page'], None]:

@@ -23,3 +23,17 @@ class ExpectedUrlError(GenericError):
 
     def __str__(self) -> str:
         return self.message
+    
+class DownloadFileError(GenericError):
+    """
+    Download File Error
+
+    Happen when an error occurs in the downloading process.
+    """
+
+    def __init__(self, message: str = 'Download File Error') -> None:
+        self.message: str = message
+        super().__init__(self.message)
+
+    def __str__(self) -> str:
+        return self.message

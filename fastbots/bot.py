@@ -17,8 +17,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from fastbots import config
-from fastbots.exceptions import ExpectedUrlError
+from fastbots import config, logger
+from fastbots.exceptions import ExpectedUrlError, DownloadFileError
 
 
 logger = logging.getLogger(__name__)
@@ -40,10 +40,13 @@ class Bot(ABC):
         super().__init__()
 
         # use a temporary directory as default download folder
+        self._temp_dir: str = tempfile.mkdtemp()
+
+        # official downloaded file folder
         if config.BOT_DOWNLOAD_FOLDER_PATH != 'None':
-            self._temp_dir: str = tempfile.mkdtemp(dir=config.BOT_DOWNLOAD_FOLDER_PATH)
+            self._download_dir: str = tempfile.mkdtemp(dir=config.BOT_DOWNLOAD_FOLDER_PATH)
         else:
-            self._temp_dir: str = tempfile.mkdtemp()
+            self._download_dir: str = tempfile.mkdtemp()
 
         # load all the locators
         self._locators: ConfigParser = self.__load_locators__()
@@ -118,10 +121,60 @@ class Bot(ABC):
         """
         if not self._locators.has_section(page_name):
             raise ValueError(f'The specified page_name: {page_name} is not declared in locators config.')
+        
         if not self._locators.has_option(page_name, locator_name):
             raise ValueError(f'The specified locator_name: {locator_name} is not declared in locators config.')
+        
         return self._locators.get(page_name, locator_name)
         
+    def wait_downloaded_file_path(self, file_extension: str, new_file_name: str | None = None) -> str:
+        """
+        Wait Downloaded File Path
+
+        This method allow to wait for a specific downloaded file to be completely available in the download folder.
+        It uses the file extension in order to wait the full download finish.
+        It will also give the ability to rename the downloaded file.
+
+        The file_extension must be specified without the dot "." (ex .png become png)
+        """
+        try:
+            # polling that the page url is the expected, it uses the extension because the temp part file cache by browser
+            # usally have a specific extension that isn't the usally of the files
+            WebDriverWait(driver=self._driver, timeout=config.SELENIUM_FILE_DOWNLOAD_TIMEOUT, poll_frequency=1).until(
+                lambda driver: len(list(Path(self._temp_dir).glob(f'*.{file_extension}'))) == 1
+            )
+
+            # get the latest downloaded file
+            latest_file: Path = max(list(Path(self._temp_dir).glob(f'*.{file_extension}')), key=lambda x: x.stat().st_ctime)
+
+            # build the download path based on renamed file or 
+            downloaded_file_path: Path = None
+            if new_file_name is None:
+                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / latest_file.name
+            else:
+                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / f'{new_file_name}.{file_extension}'
+                
+            # move to the download folder the file name
+            shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
+
+            # remove the temporary downloaded file
+            latest_file.unlink()
+
+            # return the path and filename as string
+            return str(downloaded_file_path.absolute())
+
+        except TimeoutException as te:
+            # if not the expected url raises an exception
+            file_count: int = len(list(Path(self._temp_dir).glob(f'*.{file_extension}')))
+
+            # error string based on the specific error
+            if file_count == 0:
+                raise DownloadFileError('File not founded in the download folder, an error with the download occurs.')
+            elif file_count > 1:
+                raise DownloadFileError(f'Too many downloaded files founded, files number : {file_count}.')
+
+            raise DownloadFileError()
+
     def save_screenshot(self):
         """
         Save Screenshot
