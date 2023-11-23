@@ -14,34 +14,47 @@ from fastbots import config, Bot
 
 logger = logging.getLogger(__name__)
 
-
 class FirefoxBot(Bot):
     """
     Firefox Bot
 
-    Class used to specify the Firefox Bot Implementation.
+    Class representing the Firefox Bot implementation.
+
+    Attributes:
+        _driver (WebDriver): The WebDriver instance for Firefox.
+        _wait (WebDriverWait): The WebDriverWait instance for Firefox.
+
+    Methods:
+        __init__(): Initializes all attributes of the Firefox Bot instance.
+        save_screenshot(): Saves the browser's screenshot to a PNG file.
+        __load_preferences__(): Loads Firefox preferences from a JSON file.
+        __load_options__(): Loads Firefox options, including user agent and download directory.
+        __load_driver__(): Loads and configures options for the Firefox driver.
+
+    Example:
+        ```python
+        with FirefoxBot() as bot:
+            bot.save_screenshot()
+        ```
     """
 
     def __init__(self) -> None:
         """
-        Bot
-
-        Initialize all the attributes of the Firefox Bot instance
+        Initializes all attributes of the Firefox Bot instance.
         """
         super().__init__()
 
-        # load the onfigured driver
+        # Load the configured driver
         self._driver: WebDriver = self.__load_driver__()
 
-        # default wait
+        # Default wait
         self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
 
-    
     def save_screenshot(self):
         """
-        Save Screenshot
+        Saves the browser's screenshot to a PNG file.
 
-        Save the browser's screenshot to a png file, the path could be specified in the settings.
+        The file path can be specified in the settings.
         """
         if not Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).exists():
             Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
@@ -53,18 +66,20 @@ class FirefoxBot(Bot):
         """
         Load Firefox Preferences
 
-        Load all the preferences for firefox stored in a json file,
-        specified in the config.
+        Load all the preferences for Firefox stored in a JSON file, specified in the config.
+
+        Returns:
+            FirefoxProfile: The Firefox profile with loaded preferences.
         """
-        # initialize an empty profile for the settings
+        # Initialize an empty profile for the settings
         firefox_profile: FirefoxProfile = FirefoxProfile()
 
         if Path(config.BOT_PREFERENCES_FILE_PATH).exists():
-            # load all the preferences in the file
+            # Load all the preferences from the file
             with open(config.BOT_PREFERENCES_FILE_PATH, 'r') as file:
                 data = json.load(file)
 
-                # iterate all the data of the file
+                # Iterate through all the data in the file
                 for key, value in data.items():
                     firefox_profile.set_preference(key, value)
 
@@ -74,22 +89,26 @@ class FirefoxBot(Bot):
         """
         Load Firefox Options
 
-        Load all the default chrome options
+        Load all the default Firefox options.
+
+        Returns:
+            FirefoxOptions: The configured Firefox options.
         """
-        # firefox configurations
+        # Firefox configurations
         firefox_options: FirefoxOptions = FirefoxOptions()
-        # add all the arguments specified in the config
+        
+        # Add all the arguments specified in the config
         for argument in config.BOT_ARGUMENTS:
             firefox_options.add_argument(argument)
 
         firefox_profile: FirefoxProfile = self.__load_preferences__()
 
-        # basical static settings, downlaod direcotry as the temp and user agent from config
+        # Basic static settings: download directory as temp and user agent from config
         firefox_profile.set_preference('general.useragent.override', config.BOT_USER_AGENT)
         firefox_profile.set_preference('browser.download.folderList', 2)
         firefox_profile.set_preference('browser.download.dir', self._temp_dir)
 
-        # add the profile to the firefox options
+        # Add the profile to the Firefox options
         firefox_options.profile = firefox_profile
 
         return firefox_options
@@ -98,10 +117,13 @@ class FirefoxBot(Bot):
         """
         Load Firefox Driver
 
-        Load and configure all the options for the firefox driver.
+        Load and configure all the options for the Firefox driver.
+
+        Returns:
+            WebDriver: The configured WebDriver instance for Firefox.
         """
         if config.BOT_PROXY_ENABLED:
-            # proxy settings
+            # Proxy settings
             seleniumwire_options = {
                 "proxy": {
                     "http": config.BOT_HTTP_PROXY,
@@ -109,13 +131,13 @@ class FirefoxBot(Bot):
                 }
             }
 
-            # initialize firefox with proxy
+            # Initialize Firefox with proxy
             return Firefox(
                 options=self.__load_options__(),
                 seleniumwire_options=seleniumwire_options
             )
         
-        # initialize firefox without proxy
+        # Initialize Firefox without proxy
         return Firefox(
             options=self.__load_options__()
         )
