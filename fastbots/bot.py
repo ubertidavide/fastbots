@@ -32,7 +32,7 @@ class Bot(ABC):
         _temp_dir (str): A temporary directory for storing files during the bot's operation.
         _download_dir (str): The directory where downloaded files are stored.
         _locators (ConfigParser): Configuration parser for managing locators.
-        _payload (dict): Data store for the bot.
+        _payload (dict): Datastore for the bot.
 
     Methods:
         __init__(): Initializes the Bot instance.
@@ -48,7 +48,7 @@ class Bot(ABC):
         load_cookies(): Loads and adds cookies from a file.
         __load_locators__() -> ConfigParser: Loads locators from a configuration file.
         __load_preferences__() -> Union[FirefoxProfile, dict]:
-            Loads preferences stored in a JSON file specified in the configuration.
+            Load preferences that are stored in a JSON file specified in the configuration.
         __load_options__() -> Union[FirefoxOptions, ChromeOptions]: Loads default options.
         __load_driver__() -> WebDriver: Loads and configures the driver.
     """
@@ -61,7 +61,7 @@ class Bot(ABC):
         """
         super().__init__()
 
-        # use a temporary directory as default download folder
+        # use a temporary directory as the default download folder
         self._temp_dir: str = tempfile.mkdtemp()
 
         # official downloaded file folder
@@ -133,7 +133,7 @@ class Bot(ABC):
 
     def check_page_url(self, expected_page_url: str):
         """
-        Checks if the browser is on the expected page URL.
+        Check if the browser is on the expected page URL.
 
         Args:
             expected_page_url (str): The expected page URL.
@@ -142,13 +142,13 @@ class Bot(ABC):
             ExpectedUrlError: If the browser is not on the expected page URL.
         """
         try:
-            # polling that the page url is the expected
+            # polling that the page URL is the expected
             WebDriverWait(driver=self._driver, timeout=config.SELENIUM_EXPECTED_URL_TIMEOUT, poll_frequency=1).until(
                 EC.url_to_be(expected_page_url)
             )
 
         except TimeoutException as te:
-            # if not the expected url raises an exception
+            # if not the expected URL raises an exception
             raise ExpectedUrlError(current_url=self._driver.current_url, expected_url=expected_page_url)
 
     def locator(self, page_name: str, locator_name: str) -> str:
@@ -163,7 +163,7 @@ class Bot(ABC):
             str: The locator string.
 
         Raises:
-            ValueError: If the specified page_name or locator_name is not declared in locators config.
+            ValueError: If the specified page_name or locator_name is not declared in locator's config.
         """
         if not self._locators.has_section(page_name):
             raise ValueError(f'The specified page_name: {page_name} is not declared in locators config.')
@@ -188,8 +188,8 @@ class Bot(ABC):
             DownloadFileError: If an error occurs during the file download.
         """
         try:
-            # polling that the page url is the expected, it uses the extension because the temp part file cache by browser
-            # usally have a specific extension that isn't the usally of the files
+            # polling that the page URL is the expected, it uses the extension because the temp part file cache by browser
+            # usually have a specific extension that isn't the usually of the files
             WebDriverWait(driver=self._driver, timeout=config.SELENIUM_FILE_DOWNLOAD_TIMEOUT, poll_frequency=1).until(
                 lambda driver: len(list(Path(self._temp_dir).glob(f'*.{file_extension}'))) == 1
             )
@@ -214,7 +214,7 @@ class Bot(ABC):
             return str(downloaded_file_path.absolute())
 
         except TimeoutException as te:
-            # if not the expected url raises an exception
+            # if not the expected URL raises an exception
             file_count: int = len(list(Path(self._temp_dir).glob(f'*.{file_extension}')))
 
             # error string based on the specific error
@@ -313,7 +313,7 @@ class Bot(ABC):
     @abstractmethod
     def __load_preferences__(self) -> Union[FirefoxProfile, dict]:
         """
-        Loads preferences stored in a JSON file specified in the configuration.
+        Load preferences that are stored in a JSON file specified in the configuration.
 
         Returns:
             Union[FirefoxProfile, dict]: Either a FirefoxProfile or a dictionary of preferences.
