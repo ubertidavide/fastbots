@@ -1,0 +1,11 @@
+site_name: fastbots
+site_description: A simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.
+site_url: https://github.com/ubertidavide/fastbots
+theme:
+  name: readthedocs
+  language: en
+repo_name: ubertidavide/fastbots
+repo_url: https://github.com/ubertidavide/fastbots
+edit_uri: ''
+nav:
+- fastbots: index.md

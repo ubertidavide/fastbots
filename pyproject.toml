@@ -17,6 +17,7 @@ selenium-wire = "^5.1.0"
 setuptools = "^68.2.2"
 pytest = "^7.4.3"
 pytest-mock = "^3.12.0"
+mkdocs = {extras = ["pymdownx"], version = "^1.5.3"}
 
 [build-system]
 requires = ["poetry-core"]
