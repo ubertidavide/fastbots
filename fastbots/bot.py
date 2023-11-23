@@ -26,16 +26,38 @@ logger = logging.getLogger(__name__)
 
 class Bot(ABC):
     """
-    Bot
+    Base class for creating web automation bots using Selenium.
 
-    Class used to specify a bot blueprint.
+    Attributes:
+        _temp_dir (str): A temporary directory for storing files during the bot's operation.
+        _download_dir (str): The directory where downloaded files are stored.
+        _locators (ConfigParser): Configuration parser for managing locators.
+        _payload (dict): Data store for the bot.
+
+    Methods:
+        __init__(): Initializes the Bot instance.
+        __enter__(): Enters a context and loads/configures resources.
+        __exit__(): Exits a context and cleans up resources.
+        check_page_url(expected_page_url: str): Checks if the browser is on the expected page URL.
+        locator(page_name: str, locator_name: str) -> str: Retrieves a locator for a given page.
+        wait_downloaded_file_path(file_extension: str, new_file_name: str | None = None) -> str:
+            Waits for a specific downloaded file and returns its path.
+        save_screenshot(): Saves a screenshot of the browser.
+        save_html(): Saves the HTML page of the browser.
+        save_cookies(): Saves all the cookies found in the browser.
+        load_cookies(): Loads and adds cookies from a file.
+        __load_locators__() -> ConfigParser: Loads locators from a configuration file.
+        __load_preferences__() -> Union[FirefoxProfile, dict]:
+            Loads preferences stored in a JSON file specified in the configuration.
+        __load_options__() -> Union[FirefoxOptions, ChromeOptions]: Loads default options.
+        __load_driver__() -> WebDriver: Loads and configures the driver.
     """
 
     def __init__(self) -> None:
         """
-        Bot
+        Initializes the Bot instance.
 
-        Initialize all the attributes of the Bot instance
+        Sets up temporary directories, locators, and a data store for the bot.
         """
         super().__init__()
 
@@ -56,29 +78,41 @@ class Bot(ABC):
     @property
     def driver(self) -> WebDriver:
         """
-        Driver Getter
+        Gets the Selenium WebDriver instance used by the bot.
+
+        Returns:
+            WebDriver: The Selenium WebDriver instance.
         """
         return self._driver
     
     @property
     def wait(self) -> WebDriverWait:
         """
-        Wait Getter
+        Gets the WebDriverWait instance used for waiting in the bot.
+
+        Returns:
+            WebDriverWait: The WebDriverWait instance.
         """
         return self._wait
     
     @property
     def payload(self) -> dict:
         """
-        Payload Getter
+        Gets the payload dictionary used to store data in the bot.
+
+        Returns:
+            dict: The payload dictionary.
         """
         return self._payload
 
     def __enter__(self) -> Type['Bot']:
         """
-        Enter
+        Enters a context and loads/configures resources.
 
-        Load and configure all the needed resources.
+        Sets up implicit wait and navigates to the start URL.
+
+        Returns:
+            Type['Bot']: The bot instance within the context.
         """
         # default global driver settings
         self._driver.implicitly_wait(config.SELENIUM_GLOBAL_IMPLICIT_WAIT)
@@ -90,18 +124,22 @@ class Bot(ABC):
 
     def __exit__(self, exc_type, exc_value, exc_tb):
         """
-        Exit
-        
-        Clean all the used resources.
+        Exits a context and cleans up resources.
+
+        Removes temporary directories and closes the driver.
         """
         shutil.rmtree(self._temp_dir)
         self._driver.close()
 
     def check_page_url(self, expected_page_url: str):
         """
-        Check Page Url
+        Checks if the browser is on the expected page URL.
 
-        Check that the browser it't at the expected page.
+        Args:
+            expected_page_url (str): The expected page URL.
+
+        Raises:
+            ExpectedUrlError: If the browser is not on the expected page URL.
         """
         try:
             # polling that the page url is the expected
@@ -115,9 +153,17 @@ class Bot(ABC):
 
     def locator(self, page_name: str, locator_name: str) -> str:
         """
-        Locator
+        Retrieves a locator for a given page.
 
-        Getter that get the locator used for a page locator
+        Args:
+            page_name (str): The name of the page.
+            locator_name (str): The name of the locator.
+
+        Returns:
+            str: The locator string.
+
+        Raises:
+            ValueError: If the specified page_name or locator_name is not declared in locators config.
         """
         if not self._locators.has_section(page_name):
             raise ValueError(f'The specified page_name: {page_name} is not declared in locators config.')
@@ -129,13 +175,17 @@ class Bot(ABC):
         
     def wait_downloaded_file_path(self, file_extension: str, new_file_name: str | None = None) -> str:
         """
-        Wait Downloaded File Path
+        Waits for a specific downloaded file and returns its path.
 
-        This method allow to wait for a specific downloaded file to be completely available in the download folder.
-        It uses the file extension in order to wait the full download finish.
-        It will also give the ability to rename the downloaded file.
+        Args:
+            file_extension (str): The file extension without the dot (e.g., "png" instead of ".png").
+            new_file_name (str | None): The new file name if renaming is needed.
 
-        The file_extension must be specified without the dot "." (ex .png become png)
+        Returns:
+            str: The path of the downloaded file.
+
+        Raises:
+            DownloadFileError: If an error occurs during the file download.
         """
         try:
             # polling that the page url is the expected, it uses the extension because the temp part file cache by browser
@@ -177,9 +227,13 @@ class Bot(ABC):
 
     def save_screenshot(self):
         """
-        Save Screenshot
+        Saves a screenshot of the browser.
 
-        Save the browser's screenshot to a png file, the path could be specified in the settings.
+        Example:
+        ```python
+        bot = MyBot()
+        bot.save_screenshot()
+        ```
         """
         if not Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).exists():
             Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
@@ -189,9 +243,13 @@ class Bot(ABC):
 
     def save_html(self):
         """
-        Save Html
+        Saves the HTML page of the browser.
 
-        Save the browser's html page to a file, the path could be specified in the settings.
+        Example:
+        ```python
+        bot = MyBot()
+        bot.save_html()
+        ```
         """
         if not Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH).exists():
             Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
@@ -202,9 +260,13 @@ class Bot(ABC):
 
     def save_cookies(self):
         """
-        Save Cookies
+        Saves all the cookies found in the browser.
 
-        Save all the cookies founded in the file.
+        Example:
+        ```python
+        bot = MyBot()
+        bot.save_cookies()
+        ```
         """
         cookies: List[dict] = self._driver.get_cookies()
 
@@ -213,9 +275,13 @@ class Bot(ABC):
     
     def load_cookies(self):
         """
-        Load Cookies
+        Loads and adds cookies from a file to the browser.
 
-        Add all the cookies founded in the file.
+        Example:
+        ```python
+        bot = MyBot()
+        bot.load_cookies()
+        ```
         """
         if Path(config.BOT_COOKIES_FILE_PATH).is_file():
             with open(config.BOT_COOKIES_FILE_PATH, 'rb') as file:
@@ -226,9 +292,16 @@ class Bot(ABC):
 
     def __load_locators__(self) -> ConfigParser:
         """
-        Load Locators
+        Loads locators from a configuration file.
 
-        Load a file that contains all the locators
+        Returns:
+            ConfigParser: An instance of ConfigParser with loaded locators.
+
+        Example:
+        ```python
+        bot = MyBot()
+        locators = bot.__load_locators__()
+        ```
         """
         if not Path(config.SELENIUM_LOCATORS_FILE).is_file():
             return ValueError(f'Erorr, locators file not founded at path: {config.SELENIUM_LOCATORS_FILE}')
@@ -240,27 +313,50 @@ class Bot(ABC):
     @abstractmethod
     def __load_preferences__(self) -> Union[FirefoxProfile, dict]:
         """
-        Load Preferences
+        Loads preferences stored in a JSON file specified in the configuration.
 
-        Load all the preferences stored in a json file,
-        specified in the config.
+        Returns:
+            Union[FirefoxProfile, dict]: Either a FirefoxProfile or a dictionary of preferences.
+
+        Example:
+        ```python
+        class MyBot(Bot):
+            def __load_preferences__(self):
+                # your implementation here
+        ```
         """
         return NotImplementedError('Bot must define this method.')
 
     @abstractmethod
     def __load_options__(self) -> Union[FirefoxOptions, ChromeOptions]:
         """
-        Load Options
+        Loads default options.
 
-        Load all the default options
+        Returns:
+            Union[FirefoxOptions, ChromeOptions]: Either FirefoxOptions or ChromeOptions.
+
+        Example:
+        ```python
+        class MyBot(Bot):
+            def __load_options__(self):
+                # your implementation here
+        ```
         """
         return NotImplementedError('Bot must define this method.')
     
     @abstractmethod
     def __load_driver__(self) -> WebDriver:
         """
-        Load Driver
+        Loads and configures the driver.
 
-        Load and configure all the options for the driver.
+        Returns:
+            WebDriver: An instance of Selenium WebDriver.
+
+        Example:
+        ```python
+        class MyBot(Bot):
+            def __load_driver__(self):
+                # your implementation here
+        ```
         """
         return NotImplementedError('Bot must define this method.')
