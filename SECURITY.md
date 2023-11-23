@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Please upgrade to a supported version for a better security.
+Please upgrade to a supported version for better security.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -11,4 +11,4 @@ Please upgrade to a supported version for a better security.
 
 ## Reporting a Vulnerability
 
-In order to report a vulnerability please, report them first privately, that will permit all the contributors to check and fix them in the repo, before it will be available to all.
+To report a vulnerability please, report them first privately, that will permit all the contributors to check and fix them in the repo before it will be available to all.
