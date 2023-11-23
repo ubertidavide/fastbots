@@ -1,7 +1,7 @@
 # fastbots
-Fastbots is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design. 
-It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings. 
-Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.
+Fastbots is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.  
+It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.  
+Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  
 
 ## Installation:
 The installation process is straightforward using pip from the PyPI repository.
