@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/reference/firefox_bot/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Firefox - fastbots</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Firefox";
+        var mkdocs_page_input_path = "reference/firefox_bot.md";
+        var mkdocs_page_url = "/ubertidavide/fastbots/reference/firefox_bot/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> fastbots
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">fastbots</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">References</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../task/">Task</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../page/">Page</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Bot</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../bot/">Bot</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Firefox</a>
+    <ul class="current">
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../chrome_bot/">Chrome</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">fastbots</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">References</li>
+          <li class="breadcrumb-item">Bot</li>
+      <li class="breadcrumb-item active">Firefox</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="firefox">Firefox</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="fastbots.firefox_bot.FirefoxBot"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="fastbots.Bot" href="../bot/#fastbots.bot.Bot">Bot</a></code></p>
+
+  
+      <p>Firefox Bot</p>
+<p>Class representing the Firefox Bot implementation.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>_driver</code></b>
+                  (<code><span title="selenium.webdriver.remote.webdriver.WebDriver">WebDriver</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The WebDriver instance for Firefox.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>_wait</code></b>
+                  (<code><span title="selenium.webdriver.support.wait.WebDriverWait">WebDriverWait</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The WebDriverWait instance for Firefox.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+  <p><strong>Methods:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td><code>__init__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Initializes all attributes of the Firefox Bot instance.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>save_screenshot</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Saves the browser's screenshot to a PNG file.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_preferences__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Loads Firefox preferences from a JSON file.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_options__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Loads Firefox options, including user agent and download directory.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_driver__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Loads and configures options for the Firefox driver.</p>
+              </div>
+            </td>
+          </tr>
+    </tbody>
+  </table>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <pre><code class="language-python">with FirefoxBot() as bot:
+    bot.save_screenshot()
+</code></pre>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
+              <pre class="highlight"><code class="language-python">class FirefoxBot(Bot):
+    """
+    Firefox Bot
+
+    Class representing the Firefox Bot implementation.
+
+    Attributes:
+        _driver (WebDriver): The WebDriver instance for Firefox.
+        _wait (WebDriverWait): The WebDriverWait instance for Firefox.
+
+    Methods:
+        __init__(): Initializes all attributes of the Firefox Bot instance.
+        save_screenshot(): Saves the browser's screenshot to a PNG file.
+        __load_preferences__(): Loads Firefox preferences from a JSON file.
+        __load_options__(): Loads Firefox options, including user agent and download directory.
+        __load_driver__(): Loads and configures options for the Firefox driver.
+
+    Example:
+        ```python
+        with FirefoxBot() as bot:
+            bot.save_screenshot()
+        ```
+    """
+
+    def __init__(self) -&gt; None:
+        """
+        Initializes all attributes of the Firefox Bot instance.
+        """
+        super().__init__()
+
+        # Load the configured driver
+        self._driver: WebDriver = self.__load_driver__()
+
+        # Default wait
+        self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
+
+    def save_screenshot(self):
+        """
+        Saves the browser's screenshot to a PNG file.
+
+        The file path can be specified in the settings.
+        """
+        if not Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).exists():
+            Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
+
+        file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
+        self._driver.get_full_page_screenshot_as_file(str(file_path.absolute()))
+
+    def __load_preferences__(self) -&gt; FirefoxProfile:
+        """
+        Load Firefox Preferences
+
+        Load all the preferences for Firefox stored in a JSON file, specified in the config.
+
+        Returns:
+            FirefoxProfile: The Firefox profile with loaded preferences.
+        """
+        # Initialize an empty profile for the settings
+        firefox_profile: FirefoxProfile = FirefoxProfile()
+
+        if Path(config.BOT_PREFERENCES_FILE_PATH).exists():
+            # Load all the preferences from the file
+            with open(config.BOT_PREFERENCES_FILE_PATH, 'r') as file:
+                data = json.load(file)
+
+                # Iterate through all the data in the file
+                for key, value in data.items():
+                    firefox_profile.set_preference(key, value)
+
+        return firefox_profile
+
+    def __load_options__(self) -&gt; FirefoxOptions:
+        """
+        Load Firefox Options
+
+        Load all the default Firefox options.
+
+        Returns:
+            FirefoxOptions: The configured Firefox options.
+        """
+        # Firefox configurations
+        firefox_options: FirefoxOptions = FirefoxOptions()
+
+        # Add all the arguments specified in the config
+        for argument in config.BOT_ARGUMENTS:
+            firefox_options.add_argument(argument)
+
+        firefox_profile: FirefoxProfile = self.__load_preferences__()
+
+        # Basic static settings: download directory as temp and user agent from config
+        firefox_profile.set_preference('general.useragent.override', config.BOT_USER_AGENT)
+        firefox_profile.set_preference('browser.download.folderList', 2)
+        firefox_profile.set_preference('browser.download.dir', self._temp_dir)
+
+        # Add the profile to the Firefox options
+        firefox_options.profile = firefox_profile
+
+        return firefox_options
+
+    def __load_driver__(self) -&gt; WebDriver:
+        """
+        Load Firefox Driver
+
+        Load and configure all the options for the Firefox driver.
+
+        Returns:
+            WebDriver: The configured WebDriver instance for Firefox.
+        """
+        if config.BOT_PROXY_ENABLED:
+            # Proxy settings
+            seleniumwire_options = {
+                "proxy": {
+                    "http": config.BOT_HTTP_PROXY,
+                    "https": config.BOT_HTTPS_PROXY,
+                }
+            }
+
+            # Initialize Firefox with proxy
+            return Firefox(
+                options=self.__load_options__(),
+                seleniumwire_options=seleniumwire_options
+            )
+
+        # Initialize Firefox without proxy
+        return Firefox(
+            options=self.__load_options__()
+        )</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.firefox_bot.FirefoxBot.__init__" class="doc doc-heading">
+          <code class="highlight language-python">__init__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Initializes all attributes of the Firefox Bot instance.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __init__(self) -&gt; None:
+    """
+    Initializes all attributes of the Firefox Bot instance.
+    """
+    super().__init__()
+
+    # Load the configured driver
+    self._driver: WebDriver = self.__load_driver__()
+
+    # Default wait
+    self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.firefox_bot.FirefoxBot.__load_driver__" class="doc doc-heading">
+          <code class="highlight language-python">__load_driver__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Load Firefox Driver</p>
+<p>Load and configure all the options for the Firefox driver.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>WebDriver</code></b>(                <code><span title="selenium.webdriver.remote.webdriver.WebDriver">WebDriver</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>The configured WebDriver instance for Firefox.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __load_driver__(self) -&gt; WebDriver:
+    """
+    Load Firefox Driver
+
+    Load and configure all the options for the Firefox driver.
+
+    Returns:
+        WebDriver: The configured WebDriver instance for Firefox.
+    """
+    if config.BOT_PROXY_ENABLED:
+        # Proxy settings
+        seleniumwire_options = {
+            "proxy": {
+                "http": config.BOT_HTTP_PROXY,
+                "https": config.BOT_HTTPS_PROXY,
+            }
+        }
+
+        # Initialize Firefox with proxy
+        return Firefox(
+            options=self.__load_options__(),
+            seleniumwire_options=seleniumwire_options
+        )
+
+    # Initialize Firefox without proxy
+    return Firefox(
+        options=self.__load_options__()
+    )</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.firefox_bot.FirefoxBot.__load_options__" class="doc doc-heading">
+          <code class="highlight language-python">__load_options__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Load Firefox Options</p>
+<p>Load all the default Firefox options.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>FirefoxOptions</code></b>(                <code><span title="selenium.webdriver.firefox.options.Options">Options</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>The configured Firefox options.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __load_options__(self) -&gt; FirefoxOptions:
+    """
+    Load Firefox Options
+
+    Load all the default Firefox options.
+
+    Returns:
+        FirefoxOptions: The configured Firefox options.
+    """
+    # Firefox configurations
+    firefox_options: FirefoxOptions = FirefoxOptions()
+
+    # Add all the arguments specified in the config
+    for argument in config.BOT_ARGUMENTS:
+        firefox_options.add_argument(argument)
+
+    firefox_profile: FirefoxProfile = self.__load_preferences__()
+
+    # Basic static settings: download directory as temp and user agent from config
+    firefox_profile.set_preference('general.useragent.override', config.BOT_USER_AGENT)
+    firefox_profile.set_preference('browser.download.folderList', 2)
+    firefox_profile.set_preference('browser.download.dir', self._temp_dir)
+
+    # Add the profile to the Firefox options
+    firefox_options.profile = firefox_profile
+
+    return firefox_options</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.firefox_bot.FirefoxBot.__load_preferences__" class="doc doc-heading">
+          <code class="highlight language-python">__load_preferences__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Load Firefox Preferences</p>
+<p>Load all the preferences for Firefox stored in a JSON file, specified in the config.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>FirefoxProfile</code></b>(                <code><span title="selenium.webdriver.firefox.firefox_profile.FirefoxProfile">FirefoxProfile</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>The Firefox profile with loaded preferences.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __load_preferences__(self) -&gt; FirefoxProfile:
+    """
+    Load Firefox Preferences
+
+    Load all the preferences for Firefox stored in a JSON file, specified in the config.
+
+    Returns:
+        FirefoxProfile: The Firefox profile with loaded preferences.
+    """
+    # Initialize an empty profile for the settings
+    firefox_profile: FirefoxProfile = FirefoxProfile()
+
+    if Path(config.BOT_PREFERENCES_FILE_PATH).exists():
+        # Load all the preferences from the file
+        with open(config.BOT_PREFERENCES_FILE_PATH, 'r') as file:
+            data = json.load(file)
+
+            # Iterate through all the data in the file
+            for key, value in data.items():
+                firefox_profile.set_preference(key, value)
+
+    return firefox_profile</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.firefox_bot.FirefoxBot.save_screenshot" class="doc doc-heading">
+          <code class="highlight language-python">save_screenshot()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Saves the browser's screenshot to a PNG file.</p>
+<p>The file path can be specified in the settings.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def save_screenshot(self):
+    """
+    Saves the browser's screenshot to a PNG file.
+
+    The file path can be specified in the settings.
+    """
+    if not Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).exists():
+        Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
+
+    file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
+    self._driver.get_full_page_screenshot_as_file(str(file_path.absolute()))</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../bot/" class="btn btn-neutral float-left" title="Bot"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../chrome_bot/" class="btn btn-neutral float-right" title="Chrome">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../bot/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../chrome_bot/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

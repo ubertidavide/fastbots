@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/reference/chrome_bot/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Chrome - fastbots</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Chrome";
+        var mkdocs_page_input_path = "reference/chrome_bot.md";
+        var mkdocs_page_url = "/ubertidavide/fastbots/reference/chrome_bot/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> fastbots
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">fastbots</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">References</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../task/">Task</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../page/">Page</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Bot</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../bot/">Bot</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../firefox_bot/">Firefox</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Chrome</a>
+    <ul class="current">
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">fastbots</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">References</li>
+          <li class="breadcrumb-item">Bot</li>
+      <li class="breadcrumb-item active">Chrome</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="chrome">Chrome</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="fastbots.chrome_bot.ChromeBot"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="fastbots.Bot" href="../bot/#fastbots.bot.Bot">Bot</a></code></p>
+
+  
+      <p>Chrome Bot</p>
+<p>Class used to specify a bot blueprint.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>_driver</code></b>
+                  (<code><span title="selenium.webdriver.remote.webdriver.WebDriver">WebDriver</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The Selenium WebDriver instance for Chrome.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>_wait</code></b>
+                  (<code><span title="selenium.webdriver.support.wait.WebDriverWait">WebDriverWait</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The default WebDriverWait instance for Chrome.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+  <p><strong>Methods:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td><code>__init__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Initializes the ChromeBot instance.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_preferences__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Load Chrome preferences from a JSON file.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_options__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Load default Chrome options.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_driver__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Load and configure the Chrome WebDriver.</p>
+              </div>
+            </td>
+          </tr>
+    </tbody>
+  </table>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <pre><code class="language-python">try:
+    # Create an instance of ChromeBot
+    chrome_bot = ChromeBot()
+    # Perform actions using the bot
+    # ...
+finally:
+    # Close the bot to release resources
+    chrome_bot.close()
+</code></pre>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>fastbots/chrome_bot.py</code></summary>
+              <pre class="highlight"><code class="language-python">class ChromeBot(Bot):
+    """
+    Chrome Bot
+
+    Class used to specify a bot blueprint.
+
+    Attributes:
+        _driver (WebDriver): The Selenium WebDriver instance for Chrome.
+        _wait (WebDriverWait): The default WebDriverWait instance for Chrome.
+
+    Methods:
+        __init__(): Initializes the ChromeBot instance.
+        __load_preferences__(): Load Chrome preferences from a JSON file.
+        __load_options__(): Load default Chrome options.
+        __load_driver__(): Load and configure the Chrome WebDriver.
+
+    Example:
+        ```python
+        try:
+            # Create an instance of ChromeBot
+            chrome_bot = ChromeBot()
+            # Perform actions using the bot
+            # ...
+        finally:
+            # Close the bot to release resources
+            chrome_bot.close()
+        ```
+    """
+
+    def __init__(self) -&gt; None:
+        """
+        Chrome Bot
+
+        Initialize all the attributes of the Chrome Bot instance.
+        """
+        super().__init__()
+
+        # Load the configured driver
+        self._driver: WebDriver = self.__load_driver__()
+
+        # Default wait
+        self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT,
+                                                   poll_frequency=1)
+
+    def __load_preferences__(self) -&gt; dict:
+        """
+        Load Chrome Preferences
+
+        Load all the preferences for Chrome stored in a JSON file, specified in the config.
+
+        Returns:
+            dict: Dictionary containing Chrome preferences.
+        """
+        chrome_preferences: dict = {}
+
+        if Path(config.BOT_PREFERENCES_FILE_PATH).exists():
+            # Load all the preferences from the file
+            with open(config.BOT_PREFERENCES_FILE_PATH, 'r') as file:
+                chrome_preferences = json.load(file)
+
+        return chrome_preferences
+
+    def __load_options__(self) -&gt; ChromeOptions:
+        """
+        Load Chrome Options
+
+        Load all the default Chrome options.
+
+        Returns:
+            ChromeOptions: ChromeOptions instance with configured options.
+        """
+        # Chrome configurations
+        chrome_options: ChromeOptions = ChromeOptions()
+
+        # Add all the arguments specified in the config
+        for argument in config.BOT_ARGUMENTS:
+            chrome_options.add_argument(argument)
+
+        # Basic static settings
+        chrome_options.add_argument(f'user-agent={config.BOT_USER_AGENT}')
+
+        # Load preferences
+        chrome_preferences: dict = self.__load_preferences__()
+
+        # Basic static settings
+        chrome_preferences['download.default_directory'] = self._temp_dir
+
+        # Add preferences to Chrome options
+        chrome_options.add_experimental_option("prefs", chrome_preferences)
+
+        return chrome_options
+
+    def __load_driver__(self) -&gt; WebDriver:
+        """
+        Load Chrome Driver
+
+        Load and configure all the options for the Chrome driver.
+
+        Returns:
+            WebDriver: Chrome WebDriver instance.
+        """
+        if config.BOT_PROXY_ENABLED:
+            # Proxy settings
+            seleniumwire_options = {
+                "proxy": {
+                    "http": config.BOT_HTTP_PROXY,
+                    "https": config.BOT_HTTPS_PROXY,
+                }
+            }
+
+            # Initialize Chrome with proxy
+            return Chrome(
+                options=self.__load_options__(),
+                seleniumwire_options=seleniumwire_options
+            )
+
+        # Initialize Chrome without proxy
+        return Chrome(
+            options=self.__load_options__()
+        )</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.chrome_bot.ChromeBot.__init__" class="doc doc-heading">
+          <code class="highlight language-python">__init__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Chrome Bot</p>
+<p>Initialize all the attributes of the Chrome Bot instance.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/chrome_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __init__(self) -&gt; None:
+    """
+    Chrome Bot
+
+    Initialize all the attributes of the Chrome Bot instance.
+    """
+    super().__init__()
+
+    # Load the configured driver
+    self._driver: WebDriver = self.__load_driver__()
+
+    # Default wait
+    self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT,
+                                               poll_frequency=1)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.chrome_bot.ChromeBot.__load_driver__" class="doc doc-heading">
+          <code class="highlight language-python">__load_driver__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Load Chrome Driver</p>
+<p>Load and configure all the options for the Chrome driver.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>WebDriver</code></b>(                <code><span title="selenium.webdriver.remote.webdriver.WebDriver">WebDriver</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>Chrome WebDriver instance.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/chrome_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __load_driver__(self) -&gt; WebDriver:
+    """
+    Load Chrome Driver
+
+    Load and configure all the options for the Chrome driver.
+
+    Returns:
+        WebDriver: Chrome WebDriver instance.
+    """
+    if config.BOT_PROXY_ENABLED:
+        # Proxy settings
+        seleniumwire_options = {
+            "proxy": {
+                "http": config.BOT_HTTP_PROXY,
+                "https": config.BOT_HTTPS_PROXY,
+            }
+        }
+
+        # Initialize Chrome with proxy
+        return Chrome(
+            options=self.__load_options__(),
+            seleniumwire_options=seleniumwire_options
+        )
+
+    # Initialize Chrome without proxy
+    return Chrome(
+        options=self.__load_options__()
+    )</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.chrome_bot.ChromeBot.__load_options__" class="doc doc-heading">
+          <code class="highlight language-python">__load_options__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Load Chrome Options</p>
+<p>Load all the default Chrome options.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>ChromeOptions</code></b>(                <code><span title="selenium.webdriver.chrome.options.Options">Options</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>ChromeOptions instance with configured options.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/chrome_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __load_options__(self) -&gt; ChromeOptions:
+    """
+    Load Chrome Options
+
+    Load all the default Chrome options.
+
+    Returns:
+        ChromeOptions: ChromeOptions instance with configured options.
+    """
+    # Chrome configurations
+    chrome_options: ChromeOptions = ChromeOptions()
+
+    # Add all the arguments specified in the config
+    for argument in config.BOT_ARGUMENTS:
+        chrome_options.add_argument(argument)
+
+    # Basic static settings
+    chrome_options.add_argument(f'user-agent={config.BOT_USER_AGENT}')
+
+    # Load preferences
+    chrome_preferences: dict = self.__load_preferences__()
+
+    # Basic static settings
+    chrome_preferences['download.default_directory'] = self._temp_dir
+
+    # Add preferences to Chrome options
+    chrome_options.add_experimental_option("prefs", chrome_preferences)
+
+    return chrome_options</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.chrome_bot.ChromeBot.__load_preferences__" class="doc doc-heading">
+          <code class="highlight language-python">__load_preferences__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Load Chrome Preferences</p>
+<p>Load all the preferences for Chrome stored in a JSON file, specified in the config.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>(                <code>dict</code>
+)            –
+            <div class="doc-md-description">
+              <p>Dictionary containing Chrome preferences.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/chrome_bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __load_preferences__(self) -&gt; dict:
+    """
+    Load Chrome Preferences
+
+    Load all the preferences for Chrome stored in a JSON file, specified in the config.
+
+    Returns:
+        dict: Dictionary containing Chrome preferences.
+    """
+    chrome_preferences: dict = {}
+
+    if Path(config.BOT_PREFERENCES_FILE_PATH).exists():
+        # Load all the preferences from the file
+        with open(config.BOT_PREFERENCES_FILE_PATH, 'r') as file:
+            chrome_preferences = json.load(file)
+
+    return chrome_preferences</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../firefox_bot/" class="btn btn-neutral float-left" title="Firefox"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../config/" class="btn btn-neutral float-right" title="Config">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../firefox_bot/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../config/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

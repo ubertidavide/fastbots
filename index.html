@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="A simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design." /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>fastbots</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "fastbots";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = "/ubertidavide/fastbots/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> fastbots
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">fastbots</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#showcase">Showcase</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#main-code">Main Code</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#locators-file">Locators File</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#settings">Settings</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#browser-and-drivers-optional">Browser and Drivers (Optional)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#retry-and-debug-optional">Retry and Debug (Optional)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#page-url-check-automatic">Page Url Check (Automatic)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#file-download-wait-functions">File Download Wait (Functions)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#download-folder-and-other-folders-optional">Download Folder and other Folders (Optional)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#global-wait-optional">Global Wait (Optional)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#proxy-optional">Proxy (Optional)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-agent-optional">User Agent (Optional)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#arguments-optional">Arguments (Optional)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#firefox-args">Firefox args</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#chrome-args">Chrome args</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#store-preferences-optional">Store Preferences (Optional)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#firefox-prefs">Firefox prefs</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#chrome-prefs">Chrome prefs</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">References</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/task/">Task</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/page/">Page</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Bot</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="reference/bot/">Bot</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/firefox_bot/">Firefox</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/chrome_bot/">Chrome</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/config/">Config</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">fastbots</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">fastbots</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="fastbots">fastbots</h1>
+<p>Fastbots is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.<br />
+It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.<br />
+Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  </p>
+<p>fastbots is also fully compatible with all selenium functions, refer to <a href="https://www.selenium.dev/documentation/webdriver/elements/interactions/">selenium official documentation</a> for more details.</p>
+<h2 id="installation">Installation</h2>
+<p>The installation process is straightforward using pip from the PyPI repository.</p>
+<pre><code class="language-bash">pip install fastbots
+</code></pre>
+<h2 id="showcase">Showcase</h2>
+<p>Check out the full example at the: <a href="https://github.com/ubertidavide/cookiecutter-fastbots">cookiecutter-fastbots</a>.</p>
+<h3 id="main-code">Main Code</h3>
+<p>Here's the main code example:</p>
+<pre><code class="language-python">-- main.py
+# Import the logging module to handle logging in the script
+import logging
+
+# Import necessary classes and modules from the fastbots library
+from fastbots import Task, Bot, Page, EC, WebElement, Keys
+
+# Define a ProductPage class, which is a subclass of the Page class
+class ProductPage(Page):
+
+    # Constructor to initialize the ProductPage instance
+    # The page_name is used in the locators file; default is 'product_page'
+    def __init__(self, bot: Bot, page_name: str = 'product_page'): 
+        super().__init__(bot, page_name)
+
+    # Define the forward method for navigating to the next page
+    def forward(self) -&gt; None:
+        # Log information about the current action
+        logging.info('DO THINGS')
+
+        # Use locators specified in the file for flexibility and less code changes
+        name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
+
+        # Store data in the payload section for future retrieval on success
+        self.bot.payload['result'] = name_element.text
+
+        # End the chain of page interactions
+        return None
+
+# Define a SearchPage class, which is a subclass of the Page class
+class SearchPage(Page):
+
+    # Constructor to initialize the SearchPage instance
+    # The page_name is used in the locators file; default is 'search_page'
+    def __init__(self, bot: Bot, page_name: str = 'search_page'):
+        super().__init__(bot, page_name)
+
+    # Define the forward method for navigating to the next page (ProductPage)
+    def forward(self) -&gt; ProductPage:
+        # Log information about the current action
+        logging.info('DO THINGS')
+
+        # Use locators specified in the file for flexibility and less code changes
+        search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
+
+        # Enter a search query and submit
+        search_element.send_keys('Selenium with Python Simplified For Beginners')
+        search_element.send_keys(Keys.ENTER)
+
+        # Locate the product element and click on it
+        product_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('product_locator')))
+        product_element.click()
+
+        # Continue the chain of interaction on the next page (ProductPage)
+        return ProductPage(bot=self.bot)
+
+# Define a TestTask class, which is a subclass of the Task class
+class TestTask(Task):
+
+    # Main task code to be executed when running the script
+    def run(self, bot: Bot) -&gt; bool:
+        # Log information about the current action
+        logging.info('DO THINGS')
+
+        # Open the search page, perform actions, and go forward
+        page: Page = SearchPage(bot=bot).forward()
+
+        # For every page found, perform actions and go forward
+        while page:
+            page = page.forward()
+
+        # For default, the task will succeed
+        return True
+
+    # Method executed on bot success, with its payload
+    def on_success(self, payload):
+        logging.info(f'SUCCESS {payload}')
+
+    # Method executed on bot failure
+    def on_failure(self, payload):
+        logging.info(f'FAILED {payload}')
+
+# Check if the script is executed as the main program
+if __name__ == '__main__':
+    # Start the above TestTask
+    TestTask()()
+</code></pre>
+<h3 id="locators-file">Locators File</h3>
+<p>In the locators configuration file, all required locator configurations are defined. 
+This can be easily changed without rebuilding or making modifications to the code.</p>
+<pre><code class="language-ini">-- locators.ini
+[pages_url] # pages_url required url settings
+start_url=https://www.amazon.com/ #start_url it's the first page driver.get()
+search_page=https://www.amazon.com/ #*_page it's the first page url used for the page_name parameter with it's url that need to match
+product_page=https://www.amazon.com/s?k=Selenium+with+Python#*_page it's the second page url used for the page_name parameter with it's url that need to match
+
+[search_page] #*_page first page_name parameter, with it's related locators
+search_locator=(By.ID, &quot;twotabsearchtextbox&quot;)
+product_locator=(By.XPATH, '//*[@id=&quot;search&quot;]/div[1]/div[1]/div/span[1]/div[1]/div[2]')
+
+[product_page]#*_page second page_name parameter, with it's related locators
+name_locator=(By.ID, &quot;title&quot;)
+</code></pre>
+<h2 id="settings">Settings</h2>
+<h3 id="browser-and-drivers-optional">Browser and Drivers (Optional)</h3>
+<p>For default configuration, the selected browser is Firefox, but it could be changed from the config file:</p>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+#BOT_DRIVER_TYPE=FIREFOX
+BOT_DRIVER_TYPE=CHROME
+</code></pre>
+<p><strong>The correct browser installed for the driver selected is required</strong>.
+The browser installation path is autodetected by system environment variables, and the driver download process and its related installation path settings are managed automatically.</p>
+<h3 id="retry-and-debug-optional">Retry and Debug (Optional)</h3>
+<p>By default, every task will be retried 2 times, waiting for 10 seconds. If all two attempts fail, the task executes the on_error method; otherwise, it will execute the on_success method. This behavior could be modified in the settings file:
+This behaviour could be modified in the settings file:</p>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+BOT_MAX_RETRIES=2 #sec default
+BOT_RETRY_DELAY=10 #sec default
+</code></pre>
+<p>When the task fails, the library stores the screenshot and the HTML of the page in the debug folder, useful for debugging. It will also store all the logs in the log.log file.</p>
+<h3 id="page-url-check-automatic">Page Url Check (Automatic)</h3>
+<p>Every defined page must have a page URL, and when it's instantiated and reached by the bot, the library checks that the specified URL in the config matches the reached page during navigation to reduce navigation errors. If you want to disable this function, see the Global Wait Section below.</p>
+<h3 id="file-download-wait-functions">File Download Wait (Functions)</h3>
+<p>This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.</p>
+<h3 id="download-folder-and-other-folders-optional">Download Folder and other Folders (Optional)</h3>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+BOT_DOWNLOAD_FOLDER_PATH='/usr/...' #override the default download path used for the browser
+BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
+BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug'
+</code></pre>
+<h3 id="global-wait-optional">Global Wait (Optional)</h3>
+<p>The default configured waits are shown below:
+- The implicit wait used for initial page loading.
+- The wait for the URL check that matches the specified in the locators file.
+- The default wait used by the self.bot.wait function.</p>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+SELENIUM_GLOBAL_IMPLICIT_WAIT=5 #sec default
+SELENIUM_EXPECTED_URL_TIMEOUT=5 #sec default
+SELENIUM_DEFAULT_WAIT=5 #sec default
+SELENIUM_FILE_DOWNLOAD_TIMEOUT=20 #sec default
+
+SELENIUM_EXPECTED_URL_CHECK=False #disable the automatic page url check, the default value it's True
+</code></pre>
+<h3 id="proxy-optional">Proxy (Optional)</h3>
+<p>Configure the proxy settings.</p>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+BOT_PROXY_ENABLED=True
+BOT_HTTP_PROXY=127.0.0.1:8080
+BOT_HTTPS_PROXY=127.0.0.1:8080
+</code></pre>
+<h3 id="user-agent-optional">User Agent (Optional)</h3>
+<p>Configure the user agent used for the requests.</p>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+BOT_USER_AGENT=&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36&quot;
+</code></pre>
+<h3 id="arguments-optional">Arguments (Optional)</h3>
+<p>Configure Firefox Arguments, store them in the config file. The format is the same for all the supported drivers; check carefully that the exact arg is implemented for the selected driver.</p>
+<h4 id="firefox-args">Firefox args</h4>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+BOT_ARGUMENTS=[&quot;--headless&quot;, &quot;--disable-gpu&quot;]
+</code></pre>
+<h4 id="chrome-args">Chrome args</h4>
+<pre><code class="language-ini">-- settings.ini
+[settings]
+BOT_ARGUMENTS=[&quot;--no-sandbox&quot;]
+</code></pre>
+<h3 id="store-preferences-optional">Store Preferences (Optional)</h3>
+<p>Store preferences in a JSON file, the format is the same for all the supported drivers; check carefully that the exact string and value are implemented for the selected driver.</p>
+<h4 id="firefox-prefs">Firefox prefs</h4>
+<pre><code class="language-jsonc">-- preferences.json 
+{
+    &quot;browser.download.manager.showWhenStarting&quot;: false, # Don't show download
+    &quot;browser.helperApps.neverAsk.saveToDisk&quot;: &quot;application/pdf&quot; # Automatic save PDF files
+}
+</code></pre>
+<h4 id="chrome-prefs">Chrome prefs</h4>
+<pre><code class="language-jsonc">-- preferences.json 
+{
+    &quot;profile.default_content_setting_values.notifications&quot;: 2,  # Disable notifications
+    &quot;profile.default_content_settings.popups&quot;: 0  # Allow popups
+}
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="reference/task/" class="btn btn-neutral float-right" title="Task">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="reference/task/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.5.3
+Build Date UTC : 2023-11-24 15:38:31.055504+00:00
+-->

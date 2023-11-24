@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/reference/bot/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Bot - fastbots</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Bot";
+        var mkdocs_page_input_path = "reference/bot.md";
+        var mkdocs_page_url = "/ubertidavide/fastbots/reference/bot/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> fastbots
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">fastbots</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">References</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../task/">Task</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../page/">Page</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Bot</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Bot</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot">Bot</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.driver">driver</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.payload">payload</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.wait">wait</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.__enter__">__enter__()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.__exit__">__exit__()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.__init__">__init__()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.__load_driver__">__load_driver__()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.__load_locators__">__load_locators__()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.__load_options__">__load_options__()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.__load_preferences__">__load_preferences__()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.check_page_url">check_page_url()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.load_cookies">load_cookies()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.locator">locator()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.save_cookies">save_cookies()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.save_html">save_html()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.save_screenshot">save_screenshot()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fastbots.bot.Bot.wait_downloaded_file_path">wait_downloaded_file_path()</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../firefox_bot/">Firefox</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../chrome_bot/">Chrome</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">fastbots</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">References</li>
+          <li class="breadcrumb-item">Bot</li>
+      <li class="breadcrumb-item active">Bot</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="bot">Bot</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="fastbots.bot.Bot"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="abc.ABC">ABC</span></code></p>
+
+  
+      <p>Base class for creating web automation bots using Selenium.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>_temp_dir</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>A temporary directory for storing files during the bot's operation.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>_download_dir</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The directory where downloaded files are stored.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>_locators</code></b>
+                  (<code><span title="configparser.ConfigParser">ConfigParser</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Configuration parser for managing locators.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>_payload</code></b>
+                  (<code>dict</code>)
+              –
+              <div class="doc-md-description">
+                <p>Datastore for the bot.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+  <p><strong>Methods:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td><code>__init__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Initializes the Bot instance.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__enter__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Enters a context and loads/configures resources.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__exit__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Exits a context and cleans up resources.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>check_page_url</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>str): Checks if the browser is on the expected page URL.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>locator</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>str, locator_name: str) -&gt; str: Retrieves a locator for a given page.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>wait_downloaded_file_path</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>str, new_file_name: str | None = None) -&gt; str:
+Waits for a specific downloaded file and returns its path.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>save_screenshot</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Saves a screenshot of the browser.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>save_html</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Saves the HTML page of the browser.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>save_cookies</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Saves all the cookies found in the browser.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>load_cookies</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Loads and adds cookies from a file.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_locators__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Loads locators from a configuration file.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_preferences__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Load preferences that are stored in a JSON file specified in the configuration.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_options__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Loads default options.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>__load_driver__</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Loads and configures the driver.</p>
+              </div>
+            </td>
+          </tr>
+    </tbody>
+  </table>
+
+            <details class="quote">
+              <summary>Source code in <code>fastbots/bot.py</code></summary>
+              <pre class="highlight"><code class="language-python">class Bot(ABC):
+    """
+    Base class for creating web automation bots using Selenium.
+
+    Attributes:
+        _temp_dir (str): A temporary directory for storing files during the bot's operation.
+        _download_dir (str): The directory where downloaded files are stored.
+        _locators (ConfigParser): Configuration parser for managing locators.
+        _payload (dict): Datastore for the bot.
+
+    Methods:
+        __init__(): Initializes the Bot instance.
+        __enter__(): Enters a context and loads/configures resources.
+        __exit__(): Exits a context and cleans up resources.
+        check_page_url(expected_page_url: str): Checks if the browser is on the expected page URL.
+        locator(page_name: str, locator_name: str) -&gt; str: Retrieves a locator for a given page.
+        wait_downloaded_file_path(file_extension: str, new_file_name: str | None = None) -&gt; str:
+            Waits for a specific downloaded file and returns its path.
+        save_screenshot(): Saves a screenshot of the browser.
+        save_html(): Saves the HTML page of the browser.
+        save_cookies(): Saves all the cookies found in the browser.
+        load_cookies(): Loads and adds cookies from a file.
+        __load_locators__() -&gt; ConfigParser: Loads locators from a configuration file.
+        __load_preferences__() -&gt; Union[FirefoxProfile, dict]:
+            Load preferences that are stored in a JSON file specified in the configuration.
+        __load_options__() -&gt; Union[FirefoxOptions, ChromeOptions]: Loads default options.
+        __load_driver__() -&gt; WebDriver: Loads and configures the driver.
+    """
+
+    def __init__(self) -&gt; None:
+        """
+        Initializes the Bot instance.
+
+        Sets up temporary directories, locators, and a data store for the bot.
+        """
+        super().__init__()
+
+        # use a temporary directory as the default download folder
+        self._temp_dir: str = tempfile.mkdtemp()
+
+        # official downloaded file folder
+        if config.BOT_DOWNLOAD_FOLDER_PATH != 'None':
+            self._download_dir: str = tempfile.mkdtemp(dir=config.BOT_DOWNLOAD_FOLDER_PATH)
+        else:
+            self._download_dir: str = tempfile.mkdtemp()
+
+        # load all the locators
+        self._locators: ConfigParser = self.__load_locators__()
+        # data store
+        self._payload: dict = {}
+
+    @property
+    def driver(self) -&gt; WebDriver:
+        """
+        Gets the Selenium WebDriver instance used by the bot.
+
+        Returns:
+            WebDriver: The Selenium WebDriver instance.
+        """
+        return self._driver
+
+    @property
+    def wait(self) -&gt; WebDriverWait:
+        """
+        Gets the WebDriverWait instance used for waiting in the bot.
+
+        Returns:
+            WebDriverWait: The WebDriverWait instance.
+        """
+        return self._wait
+
+    @property
+    def payload(self) -&gt; dict:
+        """
+        Gets the payload dictionary used to store data in the bot.
+
+        Returns:
+            dict: The payload dictionary.
+        """
+        return self._payload
+
+    def __enter__(self) -&gt; Type['Bot']:
+        """
+        Enters a context and loads/configures resources.
+
+        Sets up implicit wait and navigates to the start URL.
+
+        Returns:
+            Type['Bot']: The bot instance within the context.
+        """
+        # default global driver settings
+        self._driver.implicitly_wait(config.SELENIUM_GLOBAL_IMPLICIT_WAIT)
+
+        # load the start page
+        self._driver.get(self.locator('pages_url', 'start_url'))
+
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_tb):
+        """
+        Exits a context and cleans up resources.
+
+        Removes temporary directories and closes the driver.
+        """
+        shutil.rmtree(self._temp_dir)
+        self._driver.close()
+
+    def check_page_url(self, expected_page_url: str):
+        """
+        Check if the browser is on the expected page URL.
+
+        Args:
+            expected_page_url (str): The expected page URL.
+
+        Raises:
+            ExpectedUrlError: If the browser is not on the expected page URL.
+        """
+        try:
+            # polling that the page URL is the expected
+            WebDriverWait(driver=self._driver, timeout=config.SELENIUM_EXPECTED_URL_TIMEOUT, poll_frequency=1).until(
+                EC.url_to_be(expected_page_url)
+            )
+
+        except TimeoutException as te:
+            # if not the expected URL raises an exception
+            raise ExpectedUrlError(current_url=self._driver.current_url, expected_url=expected_page_url)
+
+    def locator(self, page_name: str, locator_name: str) -&gt; str:
+        """
+        Retrieves a locator for a given page.
+
+        Args:
+            page_name (str): The name of the page.
+            locator_name (str): The name of the locator.
+
+        Returns:
+            str: The locator string.
+
+        Raises:
+            ValueError: If the specified page_name or locator_name is not declared in locator's config.
+        """
+        if not self._locators.has_section(page_name):
+            raise ValueError(f'The specified page_name: {page_name} is not declared in locators config.')
+
+        if not self._locators.has_option(page_name, locator_name):
+            raise ValueError(f'The specified locator_name: {locator_name} is not declared in locators config.')
+
+        return self._locators.get(page_name, locator_name)
+
+    def wait_downloaded_file_path(self, file_extension: str, new_file_name: str | None = None) -&gt; str:
+        """
+        Waits for a specific downloaded file and returns its path.
+
+        Args:
+            file_extension (str): The file extension without the dot (e.g., "png" instead of ".png").
+            new_file_name (str | None): The new file name if renaming is needed.
+
+        Returns:
+            str: The path of the downloaded file.
+
+        Raises:
+            DownloadFileError: If an error occurs during the file download.
+        """
+        try:
+            # polling that the page URL is the expected, it uses the extension because the temp part file cache by browser
+            # usually have a specific extension that isn't the usually of the files
+            WebDriverWait(driver=self._driver, timeout=config.SELENIUM_FILE_DOWNLOAD_TIMEOUT, poll_frequency=1).until(
+                lambda driver: len(list(Path(self._temp_dir).glob(f'*.{file_extension}'))) == 1
+            )
+
+            # get the latest downloaded file
+            latest_file: Path = max(list(Path(self._temp_dir).glob(f'*.{file_extension}')), key=lambda x: x.stat().st_ctime)
+
+            # build the download path based on renamed file or 
+            downloaded_file_path: Path = None
+            if new_file_name is None:
+                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / latest_file.name
+            else:
+                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / f'{new_file_name}.{file_extension}'
+
+            # move to the download folder the file name
+            shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
+
+            # remove the temporary downloaded file
+            latest_file.unlink()
+
+            # return the path and filename as string
+            return str(downloaded_file_path.absolute())
+
+        except TimeoutException as te:
+            # if not the expected URL raises an exception
+            file_count: int = len(list(Path(self._temp_dir).glob(f'*.{file_extension}')))
+
+            # error string based on the specific error
+            if file_count == 0:
+                raise DownloadFileError('File not founded in the download folder, an error with the download occurs.')
+            elif file_count &gt; 1:
+                raise DownloadFileError(f'Too many downloaded files founded, files number : {file_count}.')
+
+            raise DownloadFileError()
+
+    def save_screenshot(self):
+        """
+        Saves a screenshot of the browser.
+
+        Example:
+        ```python
+        bot = MyBot()
+        bot.save_screenshot()
+        ```
+        """
+        if not Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).exists():
+            Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
+
+        file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
+        self._driver.save_screenshot(str(file_path.absolute()))
+
+    def save_html(self):
+        """
+        Saves the HTML page of the browser.
+
+        Example:
+        ```python
+        bot = MyBot()
+        bot.save_html()
+        ```
+        """
+        if not Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH).exists():
+            Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
+
+        file_path: Path = Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.html'
+        with open(str(file_path.absolute()), "w", encoding="utf-8") as file:
+            file.write(self._driver.page_source)
+
+    def save_cookies(self):
+        """
+        Saves all the cookies found in the browser.
+
+        Example:
+        ```python
+        bot = MyBot()
+        bot.save_cookies()
+        ```
+        """
+        cookies: List[dict] = self._driver.get_cookies()
+
+        with open(config.BOT_COOKIES_FILE_PATH, 'wb') as file:
+            pickle.dump(cookies, file)
+
+    def load_cookies(self):
+        """
+        Loads and adds cookies from a file to the browser.
+
+        Example:
+        ```python
+        bot = MyBot()
+        bot.load_cookies()
+        ```
+        """
+        if Path(config.BOT_COOKIES_FILE_PATH).is_file():
+            with open(config.BOT_COOKIES_FILE_PATH, 'rb') as file:
+                cookies = pickle.load(file)
+
+                for cookie in cookies:
+                    self._driver.add_cookie(cookie)
+
+    def __load_locators__(self) -&gt; ConfigParser:
+        """
+        Loads locators from a configuration file.
+
+        Returns:
+            ConfigParser: An instance of ConfigParser with loaded locators.
+
+        Example:
+        ```python
+        bot = MyBot()
+        locators = bot.__load_locators__()
+        ```
+        """
+        if not Path(config.SELENIUM_LOCATORS_FILE).is_file():
+            return ValueError(f'Erorr, locators file not founded at path: {config.SELENIUM_LOCATORS_FILE}')
+
+        config_parser: ConfigParser = ConfigParser()
+        config_parser.read(config.SELENIUM_LOCATORS_FILE)
+        return config_parser
+
+    @abstractmethod
+    def __load_preferences__(self) -&gt; Union[FirefoxProfile, dict]:
+        """
+        Load preferences that are stored in a JSON file specified in the configuration.
+
+        Returns:
+            Union[FirefoxProfile, dict]: Either a FirefoxProfile or a dictionary of preferences.
+
+        Example:
+        ```python
+        class MyBot(Bot):
+            def __load_preferences__(self):
+                # your implementation here
+        ```
+        """
+        return NotImplementedError('Bot must define this method.')
+
+    @abstractmethod
+    def __load_options__(self) -&gt; Union[FirefoxOptions, ChromeOptions]:
+        """
+        Loads default options.
+
+        Returns:
+            Union[FirefoxOptions, ChromeOptions]: Either FirefoxOptions or ChromeOptions.
+
+        Example:
+        ```python
+        class MyBot(Bot):
+            def __load_options__(self):
+                # your implementation here
+        ```
+        """
+        return NotImplementedError('Bot must define this method.')
+
+    @abstractmethod
+    def __load_driver__(self) -&gt; WebDriver:
+        """
+        Loads and configures the driver.
+
+        Returns:
+            WebDriver: An instance of Selenium WebDriver.
+
+        Example:
+        ```python
+        class MyBot(Bot):
+            def __load_driver__(self):
+                # your implementation here
+        ```
+        """
+        return NotImplementedError('Bot must define this method.')</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+
+<h2 id="fastbots.bot.Bot.driver" class="doc doc-heading">
+          <code class="highlight language-python">driver: WebDriver</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the Selenium WebDriver instance used by the bot.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>WebDriver</code></b>(                <code><span title="selenium.webdriver.remote.webdriver.WebDriver">WebDriver</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>The Selenium WebDriver instance.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+
+<h2 id="fastbots.bot.Bot.payload" class="doc doc-heading">
+          <code class="highlight language-python">payload: dict</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the payload dictionary used to store data in the bot.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>(                <code>dict</code>
+)            –
+            <div class="doc-md-description">
+              <p>The payload dictionary.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+
+<h2 id="fastbots.bot.Bot.wait" class="doc doc-heading">
+          <code class="highlight language-python">wait: WebDriverWait</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the WebDriverWait instance used for waiting in the bot.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>WebDriverWait</code></b>(                <code><span title="selenium.webdriver.support.wait.WebDriverWait">WebDriverWait</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>The WebDriverWait instance.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.__enter__" class="doc doc-heading">
+          <code class="highlight language-python">__enter__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Enters a context and loads/configures resources.</p>
+<p>Sets up implicit wait and navigates to the start URL.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="fastbots.bot.Bot" href="#fastbots.bot.Bot">Bot</a>]</code>
+            –
+            <div class="doc-md-description">
+              <p>Type['Bot']: The bot instance within the context.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __enter__(self) -&gt; Type['Bot']:
+    """
+    Enters a context and loads/configures resources.
+
+    Sets up implicit wait and navigates to the start URL.
+
+    Returns:
+        Type['Bot']: The bot instance within the context.
+    """
+    # default global driver settings
+    self._driver.implicitly_wait(config.SELENIUM_GLOBAL_IMPLICIT_WAIT)
+
+    # load the start page
+    self._driver.get(self.locator('pages_url', 'start_url'))
+
+    return self</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.__exit__" class="doc doc-heading">
+          <code class="highlight language-python">__exit__(exc_type, exc_value, exc_tb)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Exits a context and cleans up resources.</p>
+<p>Removes temporary directories and closes the driver.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __exit__(self, exc_type, exc_value, exc_tb):
+    """
+    Exits a context and cleans up resources.
+
+    Removes temporary directories and closes the driver.
+    """
+    shutil.rmtree(self._temp_dir)
+    self._driver.close()</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.__init__" class="doc doc-heading">
+          <code class="highlight language-python">__init__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Initializes the Bot instance.</p>
+<p>Sets up temporary directories, locators, and a data store for the bot.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __init__(self) -&gt; None:
+    """
+    Initializes the Bot instance.
+
+    Sets up temporary directories, locators, and a data store for the bot.
+    """
+    super().__init__()
+
+    # use a temporary directory as the default download folder
+    self._temp_dir: str = tempfile.mkdtemp()
+
+    # official downloaded file folder
+    if config.BOT_DOWNLOAD_FOLDER_PATH != 'None':
+        self._download_dir: str = tempfile.mkdtemp(dir=config.BOT_DOWNLOAD_FOLDER_PATH)
+    else:
+        self._download_dir: str = tempfile.mkdtemp()
+
+    # load all the locators
+    self._locators: ConfigParser = self.__load_locators__()
+    # data store
+    self._payload: dict = {}</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.__load_driver__" class="doc doc-heading">
+          <code class="highlight language-python">__load_driver__()</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Loads and configures the driver.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>WebDriver</code></b>(                <code><span title="selenium.webdriver.remote.webdriver.WebDriver">WebDriver</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>An instance of Selenium WebDriver.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>      <p>Example:</p>
+<pre><code class="language-python">class MyBot(Bot):
+    def __load_driver__(self):
+        # your implementation here
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">@abstractmethod
+def __load_driver__(self) -&gt; WebDriver:
+    """
+    Loads and configures the driver.
+
+    Returns:
+        WebDriver: An instance of Selenium WebDriver.
+
+    Example:
+    ```python
+    class MyBot(Bot):
+        def __load_driver__(self):
+            # your implementation here
+    ```
+    """
+    return NotImplementedError('Bot must define this method.')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.__load_locators__" class="doc doc-heading">
+          <code class="highlight language-python">__load_locators__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Loads locators from a configuration file.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>ConfigParser</code></b>(                <code><span title="configparser.ConfigParser">ConfigParser</span></code>
+)            –
+            <div class="doc-md-description">
+              <p>An instance of ConfigParser with loaded locators.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>      <p>Example:</p>
+<pre><code class="language-python">bot = MyBot()
+locators = bot.__load_locators__()
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __load_locators__(self) -&gt; ConfigParser:
+    """
+    Loads locators from a configuration file.
+
+    Returns:
+        ConfigParser: An instance of ConfigParser with loaded locators.
+
+    Example:
+    ```python
+    bot = MyBot()
+    locators = bot.__load_locators__()
+    ```
+    """
+    if not Path(config.SELENIUM_LOCATORS_FILE).is_file():
+        return ValueError(f'Erorr, locators file not founded at path: {config.SELENIUM_LOCATORS_FILE}')
+
+    config_parser: ConfigParser = ConfigParser()
+    config_parser.read(config.SELENIUM_LOCATORS_FILE)
+    return config_parser</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.__load_options__" class="doc doc-heading">
+          <code class="highlight language-python">__load_options__()</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Loads default options.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+                <code><span title="typing.Union">Union</span>[<span title="selenium.webdriver.firefox.options.Options">Options</span>, <span title="selenium.webdriver.chrome.options.Options">Options</span>]</code>
+            –
+            <div class="doc-md-description">
+              <p>Union[FirefoxOptions, ChromeOptions]: Either FirefoxOptions or ChromeOptions.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>      <p>Example:</p>
+<pre><code class="language-python">class MyBot(Bot):
+    def __load_options__(self):
+        # your implementation here
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">@abstractmethod
+def __load_options__(self) -&gt; Union[FirefoxOptions, ChromeOptions]:
+    """
+    Loads default options.
+
+    Returns:
+        Union[FirefoxOptions, ChromeOptions]: Either FirefoxOptions or ChromeOptions.
+
+    Example:
+    ```python
+    class MyBot(Bot):
+        def __load_options__(self):
+            # your implementation here
+    ```
+    """
+    return NotImplementedError('Bot must define this method.')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.__load_preferences__" class="doc doc-heading">
+          <code class="highlight language-python">__load_preferences__()</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Load preferences that are stored in a JSON file specified in the configuration.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+                <code><span title="typing.Union">Union</span>[<span title="selenium.webdriver.firefox.firefox_profile.FirefoxProfile">FirefoxProfile</span>, dict]</code>
+            –
+            <div class="doc-md-description">
+              <p>Union[FirefoxProfile, dict]: Either a FirefoxProfile or a dictionary of preferences.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>      <p>Example:</p>
+<pre><code class="language-python">class MyBot(Bot):
+    def __load_preferences__(self):
+        # your implementation here
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">@abstractmethod
+def __load_preferences__(self) -&gt; Union[FirefoxProfile, dict]:
+    """
+    Load preferences that are stored in a JSON file specified in the configuration.
+
+    Returns:
+        Union[FirefoxProfile, dict]: Either a FirefoxProfile or a dictionary of preferences.
+
+    Example:
+    ```python
+    class MyBot(Bot):
+        def __load_preferences__(self):
+            # your implementation here
+    ```
+    """
+    return NotImplementedError('Bot must define this method.')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.check_page_url" class="doc doc-heading">
+          <code class="highlight language-python">check_page_url(expected_page_url)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check if the browser is on the expected page URL.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>expected_page_url</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The expected page URL.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="fastbots.exceptions.ExpectedUrlError">ExpectedUrlError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>If the browser is not on the expected page URL.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def check_page_url(self, expected_page_url: str):
+    """
+    Check if the browser is on the expected page URL.
+
+    Args:
+        expected_page_url (str): The expected page URL.
+
+    Raises:
+        ExpectedUrlError: If the browser is not on the expected page URL.
+    """
+    try:
+        # polling that the page URL is the expected
+        WebDriverWait(driver=self._driver, timeout=config.SELENIUM_EXPECTED_URL_TIMEOUT, poll_frequency=1).until(
+            EC.url_to_be(expected_page_url)
+        )
+
+    except TimeoutException as te:
+        # if not the expected URL raises an exception
+        raise ExpectedUrlError(current_url=self._driver.current_url, expected_url=expected_page_url)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.load_cookies" class="doc doc-heading">
+          <code class="highlight language-python">load_cookies()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Loads and adds cookies from a file to the browser.</p>
+<p>Example:</p>
+<pre><code class="language-python">bot = MyBot()
+bot.load_cookies()
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def load_cookies(self):
+    """
+    Loads and adds cookies from a file to the browser.
+
+    Example:
+    ```python
+    bot = MyBot()
+    bot.load_cookies()
+    ```
+    """
+    if Path(config.BOT_COOKIES_FILE_PATH).is_file():
+        with open(config.BOT_COOKIES_FILE_PATH, 'rb') as file:
+            cookies = pickle.load(file)
+
+            for cookie in cookies:
+                self._driver.add_cookie(cookie)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.locator" class="doc doc-heading">
+          <code class="highlight language-python">locator(page_name, locator_name)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retrieves a locator for a given page.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>page_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the page.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>locator_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the locator.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>The locator string.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>ValueError</code>
+              –
+              <div class="doc-md-description">
+                <p>If the specified page_name or locator_name is not declared in locator's config.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def locator(self, page_name: str, locator_name: str) -&gt; str:
+    """
+    Retrieves a locator for a given page.
+
+    Args:
+        page_name (str): The name of the page.
+        locator_name (str): The name of the locator.
+
+    Returns:
+        str: The locator string.
+
+    Raises:
+        ValueError: If the specified page_name or locator_name is not declared in locator's config.
+    """
+    if not self._locators.has_section(page_name):
+        raise ValueError(f'The specified page_name: {page_name} is not declared in locators config.')
+
+    if not self._locators.has_option(page_name, locator_name):
+        raise ValueError(f'The specified locator_name: {locator_name} is not declared in locators config.')
+
+    return self._locators.get(page_name, locator_name)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.save_cookies" class="doc doc-heading">
+          <code class="highlight language-python">save_cookies()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Saves all the cookies found in the browser.</p>
+<p>Example:</p>
+<pre><code class="language-python">bot = MyBot()
+bot.save_cookies()
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def save_cookies(self):
+    """
+    Saves all the cookies found in the browser.
+
+    Example:
+    ```python
+    bot = MyBot()
+    bot.save_cookies()
+    ```
+    """
+    cookies: List[dict] = self._driver.get_cookies()
+
+    with open(config.BOT_COOKIES_FILE_PATH, 'wb') as file:
+        pickle.dump(cookies, file)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.save_html" class="doc doc-heading">
+          <code class="highlight language-python">save_html()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Saves the HTML page of the browser.</p>
+<p>Example:</p>
+<pre><code class="language-python">bot = MyBot()
+bot.save_html()
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def save_html(self):
+    """
+    Saves the HTML page of the browser.
+
+    Example:
+    ```python
+    bot = MyBot()
+    bot.save_html()
+    ```
+    """
+    if not Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH).exists():
+        Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
+
+    file_path: Path = Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.html'
+    with open(str(file_path.absolute()), "w", encoding="utf-8") as file:
+        file.write(self._driver.page_source)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.save_screenshot" class="doc doc-heading">
+          <code class="highlight language-python">save_screenshot()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Saves a screenshot of the browser.</p>
+<p>Example:</p>
+<pre><code class="language-python">bot = MyBot()
+bot.save_screenshot()
+</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def save_screenshot(self):
+    """
+    Saves a screenshot of the browser.
+
+    Example:
+    ```python
+    bot = MyBot()
+    bot.save_screenshot()
+    ```
+    """
+    if not Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).exists():
+        Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
+
+    file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
+    self._driver.save_screenshot(str(file_path.absolute()))</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.bot.Bot.wait_downloaded_file_path" class="doc doc-heading">
+          <code class="highlight language-python">wait_downloaded_file_path(file_extension, new_file_name=None)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Waits for a specific downloaded file and returns its path.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>file_extension</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The file extension without the dot (e.g., "png" instead of ".png").</p>
+              </div>
+            </li>
+            <li>
+              <b><code>new_file_name</code></b>
+                  (<code>str | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>The new file name if renaming is needed.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>The path of the downloaded file.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="fastbots.exceptions.DownloadFileError">DownloadFileError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>If an error occurs during the file download.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/bot.py</code></summary>
+            <pre class="highlight"><code class="language-python">def wait_downloaded_file_path(self, file_extension: str, new_file_name: str | None = None) -&gt; str:
+    """
+    Waits for a specific downloaded file and returns its path.
+
+    Args:
+        file_extension (str): The file extension without the dot (e.g., "png" instead of ".png").
+        new_file_name (str | None): The new file name if renaming is needed.
+
+    Returns:
+        str: The path of the downloaded file.
+
+    Raises:
+        DownloadFileError: If an error occurs during the file download.
+    """
+    try:
+        # polling that the page URL is the expected, it uses the extension because the temp part file cache by browser
+        # usually have a specific extension that isn't the usually of the files
+        WebDriverWait(driver=self._driver, timeout=config.SELENIUM_FILE_DOWNLOAD_TIMEOUT, poll_frequency=1).until(
+            lambda driver: len(list(Path(self._temp_dir).glob(f'*.{file_extension}'))) == 1
+        )
+
+        # get the latest downloaded file
+        latest_file: Path = max(list(Path(self._temp_dir).glob(f'*.{file_extension}')), key=lambda x: x.stat().st_ctime)
+
+        # build the download path based on renamed file or 
+        downloaded_file_path: Path = None
+        if new_file_name is None:
+            downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / latest_file.name
+        else:
+            downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / f'{new_file_name}.{file_extension}'
+
+        # move to the download folder the file name
+        shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
+
+        # remove the temporary downloaded file
+        latest_file.unlink()
+
+        # return the path and filename as string
+        return str(downloaded_file_path.absolute())
+
+    except TimeoutException as te:
+        # if not the expected URL raises an exception
+        file_count: int = len(list(Path(self._temp_dir).glob(f'*.{file_extension}')))
+
+        # error string based on the specific error
+        if file_count == 0:
+            raise DownloadFileError('File not founded in the download folder, an error with the download occurs.')
+        elif file_count &gt; 1:
+            raise DownloadFileError(f'Too many downloaded files founded, files number : {file_count}.')
+
+        raise DownloadFileError()</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../page/" class="btn btn-neutral float-left" title="Page"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../firefox_bot/" class="btn btn-neutral float-right" title="Firefox">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../page/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../firefox_bot/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

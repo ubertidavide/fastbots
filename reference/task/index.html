@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/reference/task/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Task - fastbots</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Task";
+        var mkdocs_page_input_path = "reference/task.md";
+        var mkdocs_page_url = "/ubertidavide/fastbots/reference/task/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> fastbots
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">fastbots</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">References</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Task</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#fastbots.task.Task">Task</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fastbots.task.Task.__call__">__call__()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fastbots.task.Task.__is_false__">__is_false__()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fastbots.task.Task.on_failure">on_failure()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fastbots.task.Task.on_success">on_success()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fastbots.task.Task.run">run()</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../page/">Page</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Bot</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../bot/">Bot</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../firefox_bot/">Firefox</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../chrome_bot/">Chrome</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">fastbots</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">References</li>
+      <li class="breadcrumb-item active">Task</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="task">Task</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="fastbots.task.Task"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="abc.ABC">ABC</span></code></p>
+
+  
+      <p>Task</p>
+<p>A blueprint for tasks representing a series of interactions across multiple pages.</p>
+
+
+
+  <p><strong>Methods:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td><code>run</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Bot) -&gt; bool: Executes the series of interactions. Must be implemented by subclasses.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>on_success</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Actions to be taken on successful completion of the run method.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><code>on_failure</code></td>
+            <td>
+              <div class="doc-md-description">
+                <p>Actions to be taken if the run method fails after a specified number of retries.</p>
+              </div>
+            </td>
+          </tr>
+    </tbody>
+  </table>
+
+            <details class="quote">
+              <summary>Source code in <code>fastbots/task.py</code></summary>
+              <pre class="highlight"><code class="language-python">class Task(ABC):
+    """
+    Task
+
+    A blueprint for tasks representing a series of interactions across multiple pages.
+
+    Methods:
+        run(bot: Bot) -&gt; bool: Executes the series of interactions. Must be implemented by subclasses.
+        on_success(payload): Actions to be taken on successful completion of the run method.
+        on_failure(payload): Actions to be taken if the run method fails after a specified number of retries.
+    """
+
+    @abstractmethod
+    def run(self, bot: Bot) -&gt; bool:
+        """
+        Executes the series of interactions.
+
+        Args:
+            bot (Bot): The bot instance to perform interactions.
+
+        Returns:
+            bool: True if interactions are successful, False otherwise.
+
+        Raises:
+            NotImplementedError: Subclasses must define this method.
+        """
+        raise NotImplementedError('Tasks must define this method.')
+
+    @abstractmethod
+    def on_success(self, payload):
+        """
+        Actions to be taken on successful completion of the run method.
+
+        Args:
+            payload: Data collected during the run method.
+
+        Raises:
+            NotImplementedError: Subclasses must define this method.
+        """
+        raise NotImplementedError('Tasks must define this method.')
+
+    @abstractmethod
+    def on_failure(self, payload):
+        """
+        Actions to be taken if the run method fails after a specified number of retries.
+
+        Args:
+            payload: Data collected during the run method.
+
+        Raises:
+            NotImplementedError: Subclasses must define this method.
+        """
+        raise NotImplementedError('Tasks must define this method.')
+
+    def __is_false__(self, value):
+        """
+        Returns True if the value is False.
+
+        Args:
+            value: The value to check.
+
+        Returns:
+            bool: True if the value is False, False otherwise.
+        """
+        return value is False
+
+    def __call__(self):
+        """
+        Automatically executed when the class is instantiated and called.
+
+        It executes the run method with appropriate logic and handles retries.
+
+        Returns:
+            bool: True on success, False on failure after retries.
+        """
+        result: bool = False
+        payload: dict = {}
+
+        try:
+            for attempt in Retrying(
+                wait=wait_fixed(config.BOT_RETRY_DELAY),
+                stop=stop_after_attempt(config.BOT_MAX_RETRIES),
+                retry=retry_if_result(self.__is_false__),
+                after=after_log(logger, logging.DEBUG)
+            ):
+                with attempt:
+                    bot: Bot = None
+
+                    if config.BOT_DRIVER_TYPE == config.DriverType.FIREFOX:
+                        bot = FirefoxBot()
+                    elif config.BOT_DRIVER_TYPE == config.DriverType.CHROME:
+                        bot = ChromeBot()
+                    else:
+                        raise ValueError(f'Unknown Driver Type: {config.BOT_DRIVER_TYPE}')
+
+                    with bot:
+                        try:
+                            result = self.run(bot)
+                            payload = bot.payload
+                        except Exception as e:
+                            result = False
+                            logging.error(f'{e}')
+
+                            try:
+                                payload = bot.payload
+                            except Exception as e:
+                                payload = {}
+
+                            bot.save_html()
+                            bot.save_screenshot()
+
+                if not attempt.retry_state.outcome.failed:
+                    attempt.retry_state.set_result(result)
+
+            if result:
+                return self.on_success(payload)
+
+        except RetryError:
+            return self.on_failure(payload)</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.task.Task.__call__" class="doc doc-heading">
+          <code class="highlight language-python">__call__()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Automatically executed when the class is instantiated and called.</p>
+<p>It executes the run method with appropriate logic and handles retries.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>bool</code></b>            –
+            <div class="doc-md-description">
+              <p>True on success, False on failure after retries.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/task.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __call__(self):
+    """
+    Automatically executed when the class is instantiated and called.
+
+    It executes the run method with appropriate logic and handles retries.
+
+    Returns:
+        bool: True on success, False on failure after retries.
+    """
+    result: bool = False
+    payload: dict = {}
+
+    try:
+        for attempt in Retrying(
+            wait=wait_fixed(config.BOT_RETRY_DELAY),
+            stop=stop_after_attempt(config.BOT_MAX_RETRIES),
+            retry=retry_if_result(self.__is_false__),
+            after=after_log(logger, logging.DEBUG)
+        ):
+            with attempt:
+                bot: Bot = None
+
+                if config.BOT_DRIVER_TYPE == config.DriverType.FIREFOX:
+                    bot = FirefoxBot()
+                elif config.BOT_DRIVER_TYPE == config.DriverType.CHROME:
+                    bot = ChromeBot()
+                else:
+                    raise ValueError(f'Unknown Driver Type: {config.BOT_DRIVER_TYPE}')
+
+                with bot:
+                    try:
+                        result = self.run(bot)
+                        payload = bot.payload
+                    except Exception as e:
+                        result = False
+                        logging.error(f'{e}')
+
+                        try:
+                            payload = bot.payload
+                        except Exception as e:
+                            payload = {}
+
+                        bot.save_html()
+                        bot.save_screenshot()
+
+            if not attempt.retry_state.outcome.failed:
+                attempt.retry_state.set_result(result)
+
+        if result:
+            return self.on_success(payload)
+
+    except RetryError:
+        return self.on_failure(payload)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.task.Task.__is_false__" class="doc doc-heading">
+          <code class="highlight language-python">__is_false__(value)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Returns True if the value is False.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>value</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The value to check.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>bool</code></b>            –
+            <div class="doc-md-description">
+              <p>True if the value is False, False otherwise.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/task.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __is_false__(self, value):
+    """
+    Returns True if the value is False.
+
+    Args:
+        value: The value to check.
+
+    Returns:
+        bool: True if the value is False, False otherwise.
+    """
+    return value is False</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.task.Task.on_failure" class="doc doc-heading">
+          <code class="highlight language-python">on_failure(payload)</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Actions to be taken if the run method fails after a specified number of retries.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>payload</code></b>
+              –
+              <div class="doc-md-description">
+                <p>Data collected during the run method.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>NotImplementedError</code>
+              –
+              <div class="doc-md-description">
+                <p>Subclasses must define this method.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/task.py</code></summary>
+            <pre class="highlight"><code class="language-python">@abstractmethod
+def on_failure(self, payload):
+    """
+    Actions to be taken if the run method fails after a specified number of retries.
+
+    Args:
+        payload: Data collected during the run method.
+
+    Raises:
+        NotImplementedError: Subclasses must define this method.
+    """
+    raise NotImplementedError('Tasks must define this method.')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.task.Task.on_success" class="doc doc-heading">
+          <code class="highlight language-python">on_success(payload)</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Actions to be taken on successful completion of the run method.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>payload</code></b>
+              –
+              <div class="doc-md-description">
+                <p>Data collected during the run method.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>NotImplementedError</code>
+              –
+              <div class="doc-md-description">
+                <p>Subclasses must define this method.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/task.py</code></summary>
+            <pre class="highlight"><code class="language-python">@abstractmethod
+def on_success(self, payload):
+    """
+    Actions to be taken on successful completion of the run method.
+
+    Args:
+        payload: Data collected during the run method.
+
+    Raises:
+        NotImplementedError: Subclasses must define this method.
+    """
+    raise NotImplementedError('Tasks must define this method.')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="fastbots.task.Task.run" class="doc doc-heading">
+          <code class="highlight language-python">run(bot)</code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Executes the series of interactions.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>bot</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="fastbots.bot.Bot" href="../bot/#fastbots.bot.Bot">Bot</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>The bot instance to perform interactions.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>bool</code></b>(                <code>bool</code>
+)            –
+            <div class="doc-md-description">
+              <p>True if interactions are successful, False otherwise.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>NotImplementedError</code>
+              –
+              <div class="doc-md-description">
+                <p>Subclasses must define this method.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>fastbots/task.py</code></summary>
+            <pre class="highlight"><code class="language-python">@abstractmethod
+def run(self, bot: Bot) -&gt; bool:
+    """
+    Executes the series of interactions.
+
+    Args:
+        bot (Bot): The bot instance to perform interactions.
+
+    Returns:
+        bool: True if interactions are successful, False otherwise.
+
+    Raises:
+        NotImplementedError: Subclasses must define this method.
+    """
+    raise NotImplementedError('Tasks must define this method.')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="fastbots"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../page/" class="btn btn-neutral float-right" title="Page">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../page/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

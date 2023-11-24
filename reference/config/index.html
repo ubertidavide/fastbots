@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/reference/config/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Config - fastbots</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Config";
+        var mkdocs_page_input_path = "reference/config.md";
+        var mkdocs_page_url = "/ubertidavide/fastbots/reference/config/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> fastbots
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">fastbots</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">References</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../task/">Task</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../page/">Page</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Bot</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../bot/">Bot</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../firefox_bot/">Firefox</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../chrome_bot/">Chrome</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Config</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">fastbots</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">References</li>
+      <li class="breadcrumb-item active">Config</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <pre><code class="language-python">import logging
+from typing import List
+from enum import Enum
+
+from decouple import config
+
+# Define an enumeration for driver types
+class DriverType(Enum):
+    FIREFOX = 1
+    CHROME = 2
+
+# Define static configurations
+
+# Possible values: 'development' or 'release'
+ENV_DEVELOPMENT: str = 'development'
+ENV_RELEASE: str = 'release'
+
+# Dynamic configurations
+
+# Logging level for the application
+# Possible values: logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL
+LOG_LEVEL: int = config('LOGLEVEL', default=logging.DEBUG, cast=int)
+
+# Environment type
+# Possible values: 'development' or 'release'
+ENV: str = config('ENV', default=ENV_DEVELOPMENT, cast=str)
+
+# Project information
+PROJECT_NAME: str = config('PROJECT_NAME', default='fastbot', cast=str)
+APP_VERSION: str = config('APP_VERSION', default='0.1.0', cast=str)
+
+# WebDriver settings for bot
+
+# Driver type for the bot
+# Possible values: DriverType.FIREFOX or DriverType.CHROME
+BOT_DRIVER_TYPE: DriverType = config('BOT_DRIVER_TYPE', default=DriverType.FIREFOX, cast=DriverType)
+
+# Path to the download folder for the bot
+# Set to None for the default temporary directory
+BOT_DOWNLOAD_FOLDER_PATH: str = config('BOT_DOWNLOAD_FOLDER_PATH', default=None, cast=str)
+
+# Comma-separated list of additional arguments for the bot
+BOT_ARGUMENTS: List[str] = config('BOT_ARGUMENTS', default=[])
+
+# User agent string for the bot
+BOT_USER_AGENT: str = config('BOT_USER_AGENT', default=f'{PROJECT_NAME} {APP_VERSION}', cast=str)
+
+# Proxy settings for the bot
+BOT_PROXY_ENABLED: bool = config('BOT_PROXY_ENABLED', default=False, cast=bool)
+BOT_HTTP_PROXY: str = config('BOT_HTTP_PROXY', default=None, cast=str)
+BOT_HTTPS_PROXY: str = config('BOT_HTTPS_PROXY', default=BOT_HTTP_PROXY, cast=str)
+
+# Paths for storing screenshots, HTML pages, and cookies
+BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH: str = config('BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH', default='debug/', cast=str)
+BOT_HTML_DOWNLOAD_FOLDER_PATH: str = config('BOT_HTML_DOWNLOAD_FOLDER_PATH', default='debug/', cast=str)
+BOT_COOKIES_FILE_PATH: str = config('BOT_COOKIES_FILE_PATH', default='cookies.pkl', cast=str)
+
+# Path to the preferences file for Firefox bot
+BOT_PREFERENCES_FILE_PATH: str = config('BOT_PREFERENCES_FILE_PATH', default='preferences.json', cast=str)
+
+# Bot retry settings
+BOT_MAX_RETRIES: int = config('BOT_MAX_RETRIES', default=2, cast=int)
+BOT_RETRY_DELAY: int = config('BOT_RETRY_DELAY', default=10, cast=int)
+
+# Selenium configurations
+
+# Global implicit wait time for the Selenium driver
+SELENIUM_GLOBAL_IMPLICIT_WAIT: int = config('SELENIUM_GLOBAL_IMPLICIT_WAIT', default=5, cast=int)
+
+# Check if the expected URL should be verified
+SELENIUM_EXPECTED_URL_CHECK: bool = config('SELENIUM_EXPECTED_URL_CHECK', default=True, cast=bool)
+
+# Timeout for checking the expected URL
+SELENIUM_EXPECTED_URL_TIMEOUT: int = config('SELENIUM_EXPECTED_URL_TIMEOUT', default=5, cast=int)
+
+# Default wait time for Selenium actions
+SELENIUM_DEFAULT_WAIT: int = config('SELENIUM_DEFAULT_WAIT', default=5, cast=int)
+
+# Timeout for waiting for file downloads in Selenium
+SELENIUM_FILE_DOWNLOAD_TIMEOUT: int = config('SELENIUM_FILE_DOWNLOAD_TIMEOUT', default=20, cast=int)
+
+# Path to the locators file for Selenium
+SELENIUM_LOCATORS_FILE: str = config('SELENIUM_LOCATORS_FILE', default='locators.ini', cast=str)
+
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../chrome_bot/" class="btn btn-neutral float-left" title="Chrome"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../chrome_bot/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
