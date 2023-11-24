@@ -1,0 +1,2 @@
+# Bot
+::: fastbots.bot.Bot

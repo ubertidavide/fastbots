@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastbots"
-version = "0.1.5"
+version = "0.1.6"
 description = "A simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design."
 authors = ["Uberti Davide <24529587+ubertidavide@users.noreply.github.com>"]
 license = "LICENSE"
@@ -17,7 +17,8 @@ selenium-wire = "^5.1.0"
 setuptools = "^68.2.2"
 pytest = "^7.4.3"
 pytest-mock = "^3.12.0"
-mkdocs = {extras = ["pymdownx"], version = "^1.5.3"}
+mkdocstrings = {extras = ["python"], version = "^0.24.0"}
+mkdocs = "^1.5.3"
 
 [build-system]
 requires = ["poetry-core"]

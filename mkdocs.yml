@@ -7,5 +7,16 @@ theme:
 repo_name: ubertidavide/fastbots
 repo_url: https://github.com/ubertidavide/fastbots
 edit_uri: ''
+site_author: 'Uberti Davide'
 nav:
-- fastbots: index.md
+  - 'index.md'
+  - 'References': 
+    - 'Task': 'reference/task.md'
+    - 'Page': 'reference/page.md'
+    - 'Bot': 
+      - 'Bot': 'reference/bot.md' 
+      - 'Firefox': 'reference/firefox_bot.md'
+      - 'Chrome': 'reference/chrome_bot.md'
+    - 'Config': 'reference/config.md'
+plugins:
+  - mkdocstrings

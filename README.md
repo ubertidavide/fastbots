@@ -3,17 +3,19 @@ Fastbots is a simple library designed for rapid bot and scraper development usin
 It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.  
 Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  
 
-## Installation:
+fastbots is also fully compatible with all selenium functions, refer to [selenium official documentation](https://www.selenium.dev/documentation/webdriver/elements/interactions/) for more details.
+
+## Installation
 The installation process is straightforward using pip from the PyPI repository.
 
 ```bash
 pip install fastbots
 ```
 
-## Showcase:
+## Showcase
 Check out the full example at the: [cookiecutter-fastbots](https://github.com/ubertidavide/cookiecutter-fastbots).
 
-### Main Code:
+### Main Code
 Here's the main code example:
 ```python
 -- main.py
@@ -104,7 +106,7 @@ if __name__ == '__main__':
     TestTask()()
 ```
 
-### Locators File:
+### Locators File
 In the locators configuration file, all required locator configurations are defined. 
 This can be easily changed without rebuilding or making modifications to the code.
 ```ini
@@ -122,7 +124,10 @@ product_locator=(By.XPATH, '//*[@id="search"]/div[1]/div[1]/div/span[1]/div[1]/d
 name_locator=(By.ID, "title")
 ```
 
-### Browser and Drivers (Optional):
+## Settings
+
+
+### Browser and Drivers (Optional)
 For default configuration, the selected browser is Firefox, but it could be changed from the config file:
 ```ini
 -- settings.ini
@@ -196,7 +201,7 @@ BOT_USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH
 ### Arguments (Optional)
 Configure Firefox Arguments, store them in the config file. The format is the same for all the supported drivers; check carefully that the exact arg is implemented for the selected driver.
 
-#### Firefox args:
+#### Firefox args
 ```ini
 -- settings.ini
 [settings]
@@ -213,7 +218,7 @@ BOT_ARGUMENTS=["--no-sandbox"]
 ### Store Preferences (Optional)
 Store preferences in a JSON file, the format is the same for all the supported drivers; check carefully that the exact string and value are implemented for the selected driver.
 
-#### Firefox prefs:
+#### Firefox prefs
 ```jsonc
 -- preferences.json 
 {
@@ -222,7 +227,7 @@ Store preferences in a JSON file, the format is the same for all the supported d
 }
 ```
 
-#### Chrome prefs:
+#### Chrome prefs
 ```jsonc
 -- preferences.json 
 {
