@@ -1,5 +1,5 @@
 # fastbots
-Fastbots is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.  
+[Fastbots](https://ubertidavide.github.io/fastbots/) is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.  
 It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.  
 Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  
 
@@ -235,3 +235,6 @@ Store preferences in a JSON file, the format is the same for all the supported d
     "profile.default_content_settings.popups": 0  # Allow popups
 }
 ```
+
+### References
+[Fastbots docs](https://ubertidavide.github.io/fastbots/)
