@@ -1,0 +1,2 @@
+# Task
+::: fastbots.task.Task

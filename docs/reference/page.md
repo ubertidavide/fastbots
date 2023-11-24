@@ -1,0 +1,2 @@
+# Page
+::: fastbots.page.Page
