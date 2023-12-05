@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastbots"
-version = "0.1.6"
+version = "0.1.7"
 description = "A simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design."
 authors = ["Uberti Davide <24529587+ubertidavide@users.noreply.github.com>"]
 license = "LICENSE"
