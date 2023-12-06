@@ -1,4 +1,5 @@
 import logging
+import traceback
 from abc import ABC, abstractmethod
 
 from tenacity import RetryError, Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
@@ -112,6 +113,7 @@ class Task(ABC):
                         except Exception as e:
                             result = False
                             logging.error(f'{e}')
+                            logging.error(f'Full traceback: {traceback.format_exc()}')
 
                             try:
                                 payload = bot.payload
