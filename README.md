@@ -69,7 +69,7 @@ class SearchPage(Page):
         search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
         
         # Enter a search query and submit (using the loaded data in the task)
-        search_element.send_keys(self.bot.payload['data']['element_name'])
+        search_element.send_keys(self.bot.payload['input_data']['element_name'])
         search_element.send_keys(Keys.ENTER)
 
         # Locate the product element and click on it
@@ -87,8 +87,8 @@ class TestTask(Task):
         # Log information about the current action
         logging.info('DO THINGS')
 
-        # load all needed data in the interactions (es. login password)
-        self.bot.payload['data']['element_name'] = 'test'
+        # load all needed data in the pages interactions (es. login password loaded from a file using pandas)
+        bot.payload['input_data']['element_name'] = 'test'
 
         # Open the search page, perform actions, and go forward
         page: Page = SearchPage(bot=bot).forward()
