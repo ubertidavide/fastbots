@@ -45,6 +45,8 @@ class Page(ABC):
         Args:
             bot (Bot): The bot instance associated with the page.
             page_name (str): The name of the page.
+            strict_page_check (bool): True -> Check if the page url it's the same of the current url, 
+                                    else False -> if the url contain the page url.
 
         Raises:
             ValueError: If the locator is not enclosed in round brackets.

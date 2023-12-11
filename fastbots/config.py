@@ -40,7 +40,7 @@ BOT_DRIVER_TYPE: DriverType = config('BOT_DRIVER_TYPE', default=DriverType.FIREF
 BOT_DOWNLOAD_FOLDER_PATH: str = config('BOT_DOWNLOAD_FOLDER_PATH', default=None, cast=str)
 
 # Comma-separated list of additional arguments for the bot
-BOT_ARGUMENTS: List[str] = config('BOT_ARGUMENTS', default=[])
+BOT_ARGUMENTS: str = config('BOT_ARGUMENTS', default=None, cast=str)
 
 # User agent string for the bot
 BOT_USER_AGENT: str = config('BOT_USER_AGENT', default=f'{PROJECT_NAME} {APP_VERSION}', cast=str)

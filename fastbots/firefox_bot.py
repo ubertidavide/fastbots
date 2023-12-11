@@ -98,8 +98,10 @@ class FirefoxBot(Bot):
         firefox_options: FirefoxOptions = FirefoxOptions()
         
         # Add all the arguments specified in the config
-        for argument in config.BOT_ARGUMENTS:
-            firefox_options.add_argument(argument)
+        if config.BOT_ARGUMENTS is not None:
+            arguments = config.BOT_ARGUMENTS.replace(' ', '').strip().split(',')
+            for argument in arguments:
+                firefox_options.add_argument(argument)
 
         firefox_profile: FirefoxProfile = self.__load_preferences__()
 

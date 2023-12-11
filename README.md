@@ -122,7 +122,7 @@ This can be easily changed without rebuilding or making modifications to the cod
 [pages_url] # pages_url required url settings
 start_url=https://www.amazon.com/ #start_url it's the first page driver.get()
 search_page=https://www.amazon.com/ #*_page it's the first page url used for the page_name parameter with it's url that need to match
-product_page=https://www.amazon.com/s?k=Selenium+with+Python#*_page it's the second page url used for the page_name parameter with it's url that need to match
+product_page=None#Used to skip the page_url check of the current url on a single page
 
 [search_page] #*_page first page_name parameter, with it's related locators
 search_locator=(By.ID, "twotabsearchtextbox")
@@ -159,6 +159,7 @@ When the task fails, the library stores the screenshot and the HTML of the page 
 
 ### Page Url Check (Automatic)
 Every defined page must have a page URL, and when it's instantiated and reached by the bot, the library checks that the specified URL in the config matches the reached page during navigation to reduce navigation errors. If you want to disable this function, see the Global Wait Section below.
+There is also the possibility to change the page_url check from strict_page_url (exact match), with the current url that need to contains the page url, setting strict_page_url=False, in the page init method after the page name.
 
 ### File Download Wait (Functions)
 This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.
@@ -213,14 +214,14 @@ Configure Firefox Arguments, store them in the config file. The format is the sa
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS=["--headless", "--disable-gpu"]
+BOT_ARGUMENTS="--headless, --disable-gpu"
 ```
 
 #### Chrome args
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS=["--no-sandbox"]
+BOT_ARGUMENTS="--no-sandbox"
 ```
 
 ### Store Preferences (Optional)
