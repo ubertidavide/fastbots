@@ -70,6 +70,8 @@
                 </li>
     </ul>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../payload/">Payload</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
                   </li>
               </ul>
@@ -136,7 +138,7 @@
             <td><code>on_success</code></td>
             <td>
               <div class="doc-md-description">
-                <p>Actions to be taken on successful completion of the run method.</p>
+                <p>Payload): Actions to be taken on successful completion of the run method.</p>
               </div>
             </td>
           </tr>
@@ -144,7 +146,7 @@
             <td><code>on_failure</code></td>
             <td>
               <div class="doc-md-description">
-                <p>Actions to be taken if the run method fails after a specified number of retries.</p>
+                <p>Payload): Actions to be taken if the run method fails after a specified number of retries.</p>
               </div>
             </td>
           </tr>
@@ -161,8 +163,8 @@
 
     Methods:
         run(bot: Bot) -&gt; bool: Executes the series of interactions. Must be implemented by subclasses.
-        on_success(payload): Actions to be taken on successful completion of the run method.
-        on_failure(payload): Actions to be taken if the run method fails after a specified number of retries.
+        on_success(payload: Payload): Actions to be taken on successful completion of the run method.
+        on_failure(payload: Payload): Actions to be taken if the run method fails after a specified number of retries.
     """
 
     @abstractmethod
@@ -182,12 +184,12 @@
         raise NotImplementedError('Tasks must define this method.')
 
     @abstractmethod
-    def on_success(self, payload):
+    def on_success(self, payload: Payload):
         """
         Actions to be taken on successful completion of the run method.
 
         Args:
-            payload: Data collected during the run method.
+            payload (Payload): Data collected during the run method.
 
         Raises:
             NotImplementedError: Subclasses must define this method.
@@ -195,12 +197,12 @@
         raise NotImplementedError('Tasks must define this method.')
 
     @abstractmethod
-    def on_failure(self, payload):
+    def on_failure(self, payload: Payload):
         """
         Actions to be taken if the run method fails after a specified number of retries.
 
         Args:
-            payload: Data collected during the run method.
+            payload (Payload): Data collected during the run method.
 
         Raises:
             NotImplementedError: Subclasses must define this method.
@@ -229,7 +231,7 @@
             bool: True on success, False on failure after retries.
         """
         result: bool = False
-        payload: dict = {}
+        payload: Payload = None
 
         try:
             for attempt in Retrying(
@@ -255,14 +257,20 @@
                         except Exception as e:
                             result = False
                             logging.error(f'{e}')
+                            logging.error(f'Full traceback: {traceback.format_exc()}')
 
+                            # try to get the payload
                             try:
                                 payload = bot.payload
                             except Exception as e:
-                                payload = {}
+                                payload = None
 
-                            bot.save_html()
-                            bot.save_screenshot()
+                            # save useful debug informations
+                            try:
+                                bot.save_html()
+                                bot.save_screenshot()
+                            except Exception as e:
+                                pass
 
                 if not attempt.retry_state.outcome.failed:
                     attempt.retry_state.set_result(result)
@@ -338,7 +346,7 @@
         bool: True on success, False on failure after retries.
     """
     result: bool = False
-    payload: dict = {}
+    payload: Payload = None
 
     try:
         for attempt in Retrying(
@@ -364,14 +372,20 @@
                     except Exception as e:
                         result = False
                         logging.error(f'{e}')
+                        logging.error(f'Full traceback: {traceback.format_exc()}')
 
+                        # try to get the payload
                         try:
                             payload = bot.payload
                         except Exception as e:
-                            payload = {}
+                            payload = None
 
-                        bot.save_html()
-                        bot.save_screenshot()
+                        # save useful debug informations
+                        try:
+                            bot.save_html()
+                            bot.save_screenshot()
+                        except Exception as e:
+                            pass
 
             if not attempt.retry_state.outcome.failed:
                 attempt.retry_state.set_result(result)
@@ -501,6 +515,7 @@
         <ul class="first simple">
             <li>
               <b><code>payload</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="fastbots.payload.Payload" href="../payload/#fastbots.payload.Payload">Payload</a></code>)
               –
               <div class="doc-md-description">
                 <p>Data collected during the run method.</p>
@@ -538,12 +553,12 @@
           <details class="quote">
             <summary>Source code in <code>fastbots/task.py</code></summary>
             <pre class="highlight"><code class="language-python">@abstractmethod
-def on_failure(self, payload):
+def on_failure(self, payload: Payload):
     """
     Actions to be taken if the run method fails after a specified number of retries.
 
     Args:
-        payload: Data collected during the run method.
+        payload (Payload): Data collected during the run method.
 
     Raises:
         NotImplementedError: Subclasses must define this method.
@@ -588,6 +603,7 @@ def on_failure(self, payload):
         <ul class="first simple">
             <li>
               <b><code>payload</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="fastbots.payload.Payload" href="../payload/#fastbots.payload.Payload">Payload</a></code>)
               –
               <div class="doc-md-description">
                 <p>Data collected during the run method.</p>
@@ -625,12 +641,12 @@ def on_failure(self, payload):
           <details class="quote">
             <summary>Source code in <code>fastbots/task.py</code></summary>
             <pre class="highlight"><code class="language-python">@abstractmethod
-def on_success(self, payload):
+def on_success(self, payload: Payload):
     """
     Actions to be taken on successful completion of the run method.
 
     Args:
-        payload: Data collected during the run method.
+        payload (Payload): Data collected during the run method.
 
     Raises:
         NotImplementedError: Subclasses must define this method.

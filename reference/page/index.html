@@ -68,6 +68,8 @@
                 </li>
     </ul>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../payload/">Payload</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
                   </li>
               </ul>
@@ -232,7 +234,7 @@
         ```
     """
 
-    def __init__(self, bot: Bot, page_name: str = 'page_name'):
+    def __init__(self, bot: Bot, page_name: str = 'page_name', strict_page_check: bool = True):
         """
         Initializes the Page class.
 
@@ -243,6 +245,8 @@
         Args:
             bot (Bot): The bot instance associated with the page.
             page_name (str): The name of the page.
+            strict_page_check (bool): True -&gt; Check if the page url it's the same of the current url, 
+                                    else False -&gt; if the url contain the page url.
 
         Raises:
             ValueError: If the locator is not enclosed in round brackets.
@@ -257,7 +261,7 @@
 
         # check that the current page is the expected
         if config.SELENIUM_EXPECTED_URL_CHECK and self._page_url != 'None':
-            self._bot.check_page_url(expected_page_url=self._page_url)
+            self._bot.check_page_url(expected_page_url=self._page_url, strict_page_check=strict_page_check)
 
     @property
     def bot(self):
@@ -287,7 +291,7 @@
             ValueError: If the locator is not enclosed in round brackets or is of an unknown or incorrect format.
         """
         # load the locators from file and interpret that as code
-        full_locator: str = self._bot.locator(self._page_name, locator_name)
+        full_locator: str = self._bot.locator(self._page_name, locator_name).strip().replace('\\\'',  '\'')
 
         if not full_locator.startswith('(') or not full_locator.endswith(')'):
             raise ValueError('The locator must be enclosed in round brackets.')
@@ -394,7 +398,7 @@
 
 
 <h2 id="fastbots.page.Page.__init__" class="doc doc-heading">
-          <code class="highlight language-python">__init__(bot, page_name='page_name')</code>
+          <code class="highlight language-python">__init__(bot, page_name='page_name', strict_page_check=True)</code>
 
 </h2>
 
@@ -436,6 +440,17 @@ page_name=https://example.com/page</p>
                 <p>The name of the page.</p>
               </div>
             </li>
+            <li>
+              <b><code>strict_page_check</code></b>
+                  (<code>bool</code>, default:
+                      <code>True</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>True -&gt; Check if the page url it's the same of the current url, 
+                    else False -&gt; if the url contain the page url.</p>
+              </div>
+            </li>
         </ul>
       </td>
     </tr>
@@ -467,7 +482,7 @@ page_name=https://example.com/page</p>
 </table>
           <details class="quote">
             <summary>Source code in <code>fastbots/page.py</code></summary>
-            <pre class="highlight"><code class="language-python">def __init__(self, bot: Bot, page_name: str = 'page_name'):
+            <pre class="highlight"><code class="language-python">def __init__(self, bot: Bot, page_name: str = 'page_name', strict_page_check: bool = True):
     """
     Initializes the Page class.
 
@@ -478,6 +493,8 @@ page_name=https://example.com/page</p>
     Args:
         bot (Bot): The bot instance associated with the page.
         page_name (str): The name of the page.
+        strict_page_check (bool): True -&gt; Check if the page url it's the same of the current url, 
+                                else False -&gt; if the url contain the page url.
 
     Raises:
         ValueError: If the locator is not enclosed in round brackets.
@@ -492,7 +509,7 @@ page_name=https://example.com/page</p>
 
     # check that the current page is the expected
     if config.SELENIUM_EXPECTED_URL_CHECK and self._page_url != 'None':
-        self._bot.check_page_url(expected_page_url=self._page_url)</code></pre>
+        self._bot.check_page_url(expected_page_url=self._page_url, strict_page_check=strict_page_check)</code></pre>
           </details>
   </div>
 
@@ -610,7 +627,7 @@ locator_name=(By.XPATH, "//html//input")</p>
         ValueError: If the locator is not enclosed in round brackets or is of an unknown or incorrect format.
     """
     # load the locators from file and interpret that as code
-    full_locator: str = self._bot.locator(self._page_name, locator_name)
+    full_locator: str = self._bot.locator(self._page_name, locator_name).strip().replace('\\\'',  '\'')
 
     if not full_locator.startswith('(') or not full_locator.endswith(')'):
         raise ValueError('The locator must be enclosed in round brackets.')

@@ -83,6 +83,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#references">References</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -103,6 +105,8 @@
                 <li class="toctree-l2"><a class="reference internal" href="reference/chrome_bot/">Chrome</a>
                 </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/payload/">Payload</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="reference/config/">Config</a>
                   </li>
@@ -131,7 +135,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="fastbots">fastbots</h1>
-<p>Fastbots is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.<br />
+<p><a href="https://ubertidavide.github.io/fastbots/">Fastbots</a> is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.<br />
 It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.<br />
 Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  </p>
 <p>fastbots is also fully compatible with all selenium functions, refer to <a href="https://www.selenium.dev/documentation/webdriver/elements/interactions/">selenium official documentation</a> for more details.</p>
@@ -148,7 +152,7 @@ Even if site locators change, this library doesn't require modifications to the 
 import logging
 
 # Import necessary classes and modules from the fastbots library
-from fastbots import Task, Bot, Page, EC, WebElement, Keys
+from fastbots import Task, Bot, Page, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException
 
 # Define a ProductPage class, which is a subclass of the Page class
 class ProductPage(Page):
@@ -164,10 +168,15 @@ class ProductPage(Page):
         logging.info('DO THINGS')
 
         # Use locators specified in the file for flexibility and less code changes
+        # name_element: WebElement = self.bot.driver.find_element(*self.__locator__('name_locator'))
         name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
 
         # Store data in the payload section for future retrieval on success
         self.bot.payload['result'] = name_element.text
+
+        # example of downloading the product png images and rename it (check download folder settings)
+        # name_element.click() for example on element download button
+        # self.bot.wait_downloaded_file_path(&quot;png&quot;, new_name_file=self.bot.payload['data']['element_name'])
 
         # End the chain of page interactions
         return None
@@ -188,8 +197,8 @@ class SearchPage(Page):
         # Use locators specified in the file for flexibility and less code changes
         search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
 
-        # Enter a search query and submit
-        search_element.send_keys('Selenium with Python Simplified For Beginners')
+        # Enter a search query and submit (using the loaded data in the task)
+        search_element.send_keys(self.bot.payload['input_data']['element_name'])
         search_element.send_keys(Keys.ENTER)
 
         # Locate the product element and click on it
@@ -206,6 +215,9 @@ class TestTask(Task):
     def run(self, bot: Bot) -&gt; bool:
         # Log information about the current action
         logging.info('DO THINGS')
+
+        # load all needed data in the pages interactions (es. login password loaded from a file using pandas)
+        bot.payload['input_data']['element_name'] = 'test'
 
         # Open the search page, perform actions, and go forward
         page: Page = SearchPage(bot=bot).forward()
@@ -237,7 +249,7 @@ This can be easily changed without rebuilding or making modifications to the cod
 [pages_url] # pages_url required url settings
 start_url=https://www.amazon.com/ #start_url it's the first page driver.get()
 search_page=https://www.amazon.com/ #*_page it's the first page url used for the page_name parameter with it's url that need to match
-product_page=https://www.amazon.com/s?k=Selenium+with+Python#*_page it's the second page url used for the page_name parameter with it's url that need to match
+product_page=None#Used to skip the page_url check of the current url on a single page
 
 [search_page] #*_page first page_name parameter, with it's related locators
 search_locator=(By.ID, &quot;twotabsearchtextbox&quot;)
@@ -266,15 +278,19 @@ BOT_RETRY_DELAY=10 #sec default
 </code></pre>
 <p>When the task fails, the library stores the screenshot and the HTML of the page in the debug folder, useful for debugging. It will also store all the logs in the log.log file.</p>
 <h3 id="page-url-check-automatic">Page Url Check (Automatic)</h3>
-<p>Every defined page must have a page URL, and when it's instantiated and reached by the bot, the library checks that the specified URL in the config matches the reached page during navigation to reduce navigation errors. If you want to disable this function, see the Global Wait Section below.</p>
+<p>Every defined page must have a page URL, and when it's instantiated and reached by the bot, the library checks that the specified URL in the config matches the reached page during navigation to reduce navigation errors. If you want to disable this function, see the Global Wait Section below.
+There is also the possibility to change the page_url check from strict_page_url (exact match), with the current url that need to contains the page url, setting strict_page_url=False, in the page init method after the page name.</p>
 <h3 id="file-download-wait-functions">File Download Wait (Functions)</h3>
-<p>This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.</p>
+<p>This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.
+It's the default behaviour, all downloaded file need to be waited to be moved to download folder, to change this, disable strict download wait in the config, see the next section.</p>
 <h3 id="download-folder-and-other-folders-optional">Download Folder and other Folders (Optional)</h3>
 <pre><code class="language-ini">-- settings.ini
 [settings]
 BOT_DOWNLOAD_FOLDER_PATH='/usr/...' #override the default download path used for the browser
 BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
 BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug'
+
+BOT_STRICT_DOWNLOAD_WAIT=True #default, False -&gt; all the downloaded file are move to download folder always without wait check
 </code></pre>
 <h3 id="global-wait-optional">Global Wait (Optional)</h3>
 <p>The default configured waits are shown below:
@@ -309,12 +325,12 @@ BOT_USER_AGENT=&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.3
 <h4 id="firefox-args">Firefox args</h4>
 <pre><code class="language-ini">-- settings.ini
 [settings]
-BOT_ARGUMENTS=[&quot;--headless&quot;, &quot;--disable-gpu&quot;]
+BOT_ARGUMENTS=&quot;--headless, --disable-gpu&quot;
 </code></pre>
 <h4 id="chrome-args">Chrome args</h4>
 <pre><code class="language-ini">-- settings.ini
 [settings]
-BOT_ARGUMENTS=[&quot;--no-sandbox&quot;]
+BOT_ARGUMENTS=&quot;--no-sandbox&quot;
 </code></pre>
 <h3 id="store-preferences-optional">Store Preferences (Optional)</h3>
 <p>Store preferences in a JSON file, the format is the same for all the supported drivers; check carefully that the exact string and value are implemented for the selected driver.</p>
@@ -332,6 +348,8 @@ BOT_ARGUMENTS=[&quot;--no-sandbox&quot;]
     &quot;profile.default_content_settings.popups&quot;: 0  # Allow popups
 }
 </code></pre>
+<h3 id="references">References</h3>
+<p><a href="https://ubertidavide.github.io/fastbots/">Fastbots docs</a></p>
               
             </div>
           </div><footer>
@@ -379,5 +397,5 @@ BOT_ARGUMENTS=[&quot;--no-sandbox&quot;]
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-11-24 15:39:12.120063+00:00
+Build Date UTC : 2023-12-11 19:46:42.185985+00:00
 -->
