@@ -131,20 +131,27 @@ class Bot(ABC):
         shutil.rmtree(self._temp_dir)
         self._driver.close()
 
-    def check_page_url(self, expected_page_url: str):
+    def check_page_url(self, expected_page_url: str, strict_page_check: bool = True):
         """
         Check if the browser is on the expected page URL.
 
         Args:
             expected_page_url (str): The expected page URL.
+            strict_page_check (bool): True -> Uses url_to_be to verify that the url is the same, else use url_contains for the same check.
 
         Raises:
             ExpectedUrlError: If the browser is not on the expected page URL.
         """
+
+        # switch to contains in case of strict page check disabled
+        check_function = EC.url_to_be
+        if not strict_page_check:
+            check_function = EC.url_contains
+
         try:
             # polling that the page URL is the expected
             WebDriverWait(driver=self._driver, timeout=config.SELENIUM_EXPECTED_URL_TIMEOUT, poll_frequency=1).until(
-                EC.url_to_be(expected_page_url)
+                check_function(expected_page_url)
             )
 
         except TimeoutException as te:
