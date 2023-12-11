@@ -212,13 +212,13 @@ class Bot(ABC):
                 downloaded_file_path = Path(self._download_dir) / f'{new_file_name}.{file_extension}'
                 
             # move to the download folder the file name
-            shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
+            destination: str = shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
 
-            # remove the temporary downloaded file
-            latest_file.unlink()
+            # remove the file, don't raise exception if not exsit
+            latest_file.unlink(missing_ok=True)
 
             # return the path and filename as string
-            return str(downloaded_file_path.absolute())
+            return destination
 
         except TimeoutException as te:
             # if not the expected URL raises an exception
