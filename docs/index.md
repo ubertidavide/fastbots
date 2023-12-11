@@ -43,11 +43,12 @@ class ProductPage(Page):
         name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
         
         # Store data in the payload section for future retrieval on success
-        self.bot.payload['result'] = name_element.text
+        self.bot.payload.input_data['element_name'] = name_element.text
 
         # example of downloading the product png images and rename it (check download folder settings)
         # name_element.click() for example on element download button
-        # self.bot.wait_downloaded_file_path("png", new_name_file=self.bot.payload['data']['element_name'])
+        # self.bot.wait_downloaded_file_path("png", new_name_file=self.bot.payload.input_data['element_name'])
+        # it will put the download path in the payload.downloads datastore class when downloaded and renamed
 
         # End the chain of page interactions
         return None
@@ -69,7 +70,7 @@ class SearchPage(Page):
         search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
         
         # Enter a search query and submit (using the loaded data in the task)
-        search_element.send_keys(self.bot.payload['input_data']['element_name'])
+        search_element.send_keys(self.bot.payload.input_data['element_name'])
         search_element.send_keys(Keys.ENTER)
 
         # Locate the product element and click on it
@@ -88,7 +89,7 @@ class TestTask(Task):
         logging.info('DO THINGS')
 
         # load all needed data in the pages interactions (es. login password loaded from a file using pandas)
-        bot.payload['input_data']['element_name'] = 'test'
+        bot.payload.input_data = {'username': 'test', password: 'test', 'element_name': None}
 
         # Open the search page, perform actions, and go forward
         page: Page = SearchPage(bot=bot).forward()
@@ -101,12 +102,12 @@ class TestTask(Task):
         return True
 
     # Method executed on bot success, with its payload
-    def on_success(self, payload):
-        logging.info(f'SUCCESS {payload}')
+    def on_success(self, payload: Payload):
+        logging.info(f'SUCCESS {payload.downloads}')
     
     # Method executed on bot failure
-    def on_failure(self, payload):
-        logging.info(f'FAILED {payload}')
+    def on_failure(self, payload: Payload):
+        logging.info(f'FAILED {payload.output_data}')
 
 # Check if the script is executed as the main program
 if __name__ == '__main__':
