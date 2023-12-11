@@ -18,6 +18,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from fastbots import config, logger
+from fastbots.payload import Payload
 from fastbots.exceptions import ExpectedUrlError, DownloadFileError
 
 
@@ -32,7 +33,7 @@ class Bot(ABC):
         _temp_dir (str): A temporary directory for storing files during the bot's operation.
         _download_dir (str): The directory where downloaded files are stored.
         _locators (ConfigParser): Configuration parser for managing locators.
-        _payload (dict): Datastore for the bot.
+        _payload (Payload): Datastore for the bot.
 
     Methods:
         __init__(): Initializes the Bot instance.
@@ -66,14 +67,14 @@ class Bot(ABC):
 
         # official downloaded file folder
         if config.BOT_DOWNLOAD_FOLDER_PATH != 'None':
-            self._download_dir: str = tempfile.mkdtemp(dir=config.BOT_DOWNLOAD_FOLDER_PATH)
+            self._download_dir: str = config.BOT_DOWNLOAD_FOLDER_PATH
         else:
             self._download_dir: str = tempfile.mkdtemp()
 
         # load all the locators
         self._locators: ConfigParser = self.__load_locators__()
         # data store
-        self._payload: dict = {}
+        self._payload: Payload = Payload()
 
     @property
     def driver(self) -> WebDriver:
@@ -96,12 +97,12 @@ class Bot(ABC):
         return self._wait
     
     @property
-    def payload(self) -> dict:
+    def payload(self) -> Payload:
         """
-        Gets the payload dictionary used to store data in the bot.
+        Gets the payload class instance used to store data in the bot.
 
         Returns:
-            dict: The payload dictionary.
+            Payload: The payload class instance.
         """
         return self._payload
 
@@ -128,23 +129,45 @@ class Bot(ABC):
 
         Removes temporary directories and closes the driver.
         """
+        if not config.BOT_STRICT_DOWNLOAD_WAIT:
+            downloads_destinations = []
+            for temp_file in list(Path(self._temp_dir).glob(f'*.*')):
+                # if the file is not a firefox of chrome temporary file
+                if temp_file.suffix not in '.crdownload' and temp_file.suffix not in '.part':
+                    # destination file name
+                    downloaded_file_path = Path(self._download_dir) / temp_file.name
+                    # move to the download folder the file name
+                    destination: str = shutil.move(src=str(temp_file.absolute()), dst=str(downloaded_file_path.absolute()))
+                    downloads_destinations.append(destination)
+                    # remove the file, don't raise exception if not exsit
+                    temp_file.unlink(missing_ok=True)
+                
+            self._payload.downloads = downloads_destinations
+
         shutil.rmtree(self._temp_dir)
         self._driver.close()
 
-    def check_page_url(self, expected_page_url: str):
+    def check_page_url(self, expected_page_url: str, strict_page_check: bool = True):
         """
         Check if the browser is on the expected page URL.
 
         Args:
             expected_page_url (str): The expected page URL.
+            strict_page_check (bool): True -> Uses url_to_be to verify that the url is the same, else use url_contains for the same check.
 
         Raises:
             ExpectedUrlError: If the browser is not on the expected page URL.
         """
+
+        # switch to contains in case of strict page check disabled
+        check_function = EC.url_to_be
+        if not strict_page_check:
+            check_function = EC.url_contains
+
         try:
             # polling that the page URL is the expected
             WebDriverWait(driver=self._driver, timeout=config.SELENIUM_EXPECTED_URL_TIMEOUT, poll_frequency=1).until(
-                EC.url_to_be(expected_page_url)
+                check_function(expected_page_url)
             )
 
         except TimeoutException as te:
@@ -200,18 +223,20 @@ class Bot(ABC):
             # build the download path based on renamed file or 
             downloaded_file_path: Path = None
             if new_file_name is None:
-                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / latest_file.name
+                downloaded_file_path = Path(self._download_dir) / latest_file.name
             else:
-                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / f'{new_file_name}.{file_extension}'
+                downloaded_file_path = Path(self._download_dir) / f'{new_file_name}.{file_extension}'
                 
             # move to the download folder the file name
-            shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
+            destination: str = shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
 
-            # remove the temporary downloaded file
-            latest_file.unlink()
+            # remove the file, don't raise exception if not exsit
+            latest_file.unlink(missing_ok=True)
+
+            self._payload.downloads = self._payload.downloads.append(destination)
 
             # return the path and filename as string
-            return str(downloaded_file_path.absolute())
+            return destination
 
         except TimeoutException as te:
             # if not the expected URL raises an exception

@@ -34,7 +34,7 @@ class Page(ABC):
         ```
     """
 
-    def __init__(self, bot: Bot, page_name: str = 'page_name'):
+    def __init__(self, bot: Bot, page_name: str = 'page_name', strict_page_check: bool = True):
         """
         Initializes the Page class.
 
@@ -45,6 +45,8 @@ class Page(ABC):
         Args:
             bot (Bot): The bot instance associated with the page.
             page_name (str): The name of the page.
+            strict_page_check (bool): True -> Check if the page url it's the same of the current url, 
+                                    else False -> if the url contain the page url.
 
         Raises:
             ValueError: If the locator is not enclosed in round brackets.
@@ -59,7 +61,7 @@ class Page(ABC):
 
         # check that the current page is the expected
         if config.SELENIUM_EXPECTED_URL_CHECK and self._page_url != 'None':
-            self._bot.check_page_url(expected_page_url=self._page_url)
+            self._bot.check_page_url(expected_page_url=self._page_url, strict_page_check=strict_page_check)
 
     @property
     def bot(self):
@@ -89,7 +91,7 @@ class Page(ABC):
             ValueError: If the locator is not enclosed in round brackets or is of an unknown or incorrect format.
         """
         # load the locators from file and interpret that as code
-        full_locator: str = self._bot.locator(self._page_name, locator_name)
+        full_locator: str = self._bot.locator(self._page_name, locator_name).strip().replace('\\\'',  '\'')
 
         if not full_locator.startswith('(') or not full_locator.endswith(')'):
             raise ValueError('The locator must be enclosed in round brackets.')

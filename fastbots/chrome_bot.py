@@ -88,8 +88,10 @@ class ChromeBot(Bot):
         chrome_options: ChromeOptions = ChromeOptions()
         
         # Add all the arguments specified in the config
-        for argument in config.BOT_ARGUMENTS:
-            chrome_options.add_argument(argument)
+        if config.BOT_ARGUMENTS is not None:
+            arguments = config.BOT_ARGUMENTS.replace(' ', '').strip().split(',')
+            for argument in arguments:
+                chrome_options.add_argument(argument)
 
         # Basic static settings
         chrome_options.add_argument(f'user-agent={config.BOT_USER_AGENT}')
