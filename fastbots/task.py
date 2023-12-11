@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 from tenacity import RetryError, Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
 
 from fastbots.bot import Bot
+from fastbots.payload import Payload
 from fastbots.chrome_bot import ChromeBot
 from fastbots.firefox_bot import FirefoxBot
 from fastbots import config
@@ -19,8 +20,8 @@ class Task(ABC):
 
     Methods:
         run(bot: Bot) -> bool: Executes the series of interactions. Must be implemented by subclasses.
-        on_success(payload): Actions to be taken on successful completion of the run method.
-        on_failure(payload): Actions to be taken if the run method fails after a specified number of retries.
+        on_success(payload: Payload): Actions to be taken on successful completion of the run method.
+        on_failure(payload: Payload): Actions to be taken if the run method fails after a specified number of retries.
     """
 
     @abstractmethod
@@ -40,12 +41,12 @@ class Task(ABC):
         raise NotImplementedError('Tasks must define this method.')
     
     @abstractmethod
-    def on_success(self, payload):
+    def on_success(self, payload: Payload):
         """
         Actions to be taken on successful completion of the run method.
 
         Args:
-            payload: Data collected during the run method.
+            payload (Payload): Data collected during the run method.
 
         Raises:
             NotImplementedError: Subclasses must define this method.
@@ -53,12 +54,12 @@ class Task(ABC):
         raise NotImplementedError('Tasks must define this method.')
 
     @abstractmethod
-    def on_failure(self, payload):
+    def on_failure(self, payload: Payload):
         """
         Actions to be taken if the run method fails after a specified number of retries.
 
         Args:
-            payload: Data collected during the run method.
+            payload (Payload): Data collected during the run method.
 
         Raises:
             NotImplementedError: Subclasses must define this method.
@@ -87,7 +88,7 @@ class Task(ABC):
             bool: True on success, False on failure after retries.
         """
         result: bool = False
-        payload: dict = {}
+        payload: Payload = None
 
         try:
             for attempt in Retrying(
@@ -115,13 +116,18 @@ class Task(ABC):
                             logging.error(f'{e}')
                             logging.error(f'Full traceback: {traceback.format_exc()}')
 
+                            # try to get the payload
                             try:
                                 payload = bot.payload
                             except Exception as e:
-                                payload = {}
+                                payload = None
 
-                            bot.save_html()
-                            bot.save_screenshot()
+                            # save useful debug informations
+                            try:
+                                bot.save_html()
+                                bot.save_screenshot()
+                            except Exception as e:
+                                pass
 
                 if not attempt.retry_state.outcome.failed:
                     attempt.retry_state.set_result(result)

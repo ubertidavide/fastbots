@@ -18,6 +18,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from fastbots import config, logger
+from fastbots.payload import Payload
 from fastbots.exceptions import ExpectedUrlError, DownloadFileError
 
 
@@ -32,7 +33,7 @@ class Bot(ABC):
         _temp_dir (str): A temporary directory for storing files during the bot's operation.
         _download_dir (str): The directory where downloaded files are stored.
         _locators (ConfigParser): Configuration parser for managing locators.
-        _payload (dict): Datastore for the bot.
+        _payload (Payload): Datastore for the bot.
 
     Methods:
         __init__(): Initializes the Bot instance.
@@ -73,7 +74,7 @@ class Bot(ABC):
         # load all the locators
         self._locators: ConfigParser = self.__load_locators__()
         # data store
-        self._payload: dict = {}
+        self._payload: Payload = Payload()
 
     @property
     def driver(self) -> WebDriver:
@@ -96,12 +97,12 @@ class Bot(ABC):
         return self._wait
     
     @property
-    def payload(self) -> dict:
+    def payload(self) -> Payload:
         """
-        Gets the payload dictionary used to store data in the bot.
+        Gets the payload class instance used to store data in the bot.
 
         Returns:
-            dict: The payload dictionary.
+            Payload: The payload class instance.
         """
         return self._payload
 
@@ -128,6 +129,21 @@ class Bot(ABC):
 
         Removes temporary directories and closes the driver.
         """
+        if not config.BOT_STRICT_DOWNLOAD_WAIT:
+            downloads_destinations = []
+            for temp_file in list(Path(self._temp_dir).glob(f'*.*')):
+                # if the file is not a firefox of chrome temporary file
+                if temp_file.suffix not in '.crdownload' and temp_file.suffix not in '.part':
+                    # destination file name
+                    downloaded_file_path = Path(self._download_dir) / temp_file.name
+                    # move to the download folder the file name
+                    destination: str = shutil.move(src=str(temp_file.absolute()), dst=str(downloaded_file_path.absolute()))
+                    downloads_destinations.append(destination)
+                    # remove the file, don't raise exception if not exsit
+                    temp_file.unlink(missing_ok=True)
+                
+            self._payload.downloads = downloads_destinations
+
         shutil.rmtree(self._temp_dir)
         self._driver.close()
 
@@ -216,6 +232,8 @@ class Bot(ABC):
 
             # remove the file, don't raise exception if not exsit
             latest_file.unlink(missing_ok=True)
+
+            self._payload.downloads = self._payload.downloads.append(destination)
 
             # return the path and filename as string
             return destination

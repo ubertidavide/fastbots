@@ -163,6 +163,7 @@ There is also the possibility to change the page_url check from strict_page_url 
 
 ### File Download Wait (Functions)
 This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.
+It's the default behaviour, all downloaded file need to be waited to be moved to download folder, to change this, disable strict download wait in the config, see the next section.
 
 ### Download Folder and other Folders (Optional)
 ```ini
@@ -171,6 +172,8 @@ This library has the bot.wait_downloaded_file_path(file_extension, new_name_file
 BOT_DOWNLOAD_FOLDER_PATH='/usr/...' #override the default download path used for the browser
 BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
 BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug'
+
+BOT_STRICT_DOWNLOAD_WAIT=True #default, False -> all the downloaded file are move to download folder always without wait check
 ```
 
 ### Global Wait (Optional)
