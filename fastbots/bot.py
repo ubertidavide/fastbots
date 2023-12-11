@@ -66,7 +66,7 @@ class Bot(ABC):
 
         # official downloaded file folder
         if config.BOT_DOWNLOAD_FOLDER_PATH != 'None':
-            self._download_dir: str = tempfile.mkdtemp(dir=config.BOT_DOWNLOAD_FOLDER_PATH)
+            self._download_dir: str = config.BOT_DOWNLOAD_FOLDER_PATH
         else:
             self._download_dir: str = tempfile.mkdtemp()
 
@@ -207,9 +207,9 @@ class Bot(ABC):
             # build the download path based on renamed file or 
             downloaded_file_path: Path = None
             if new_file_name is None:
-                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / latest_file.name
+                downloaded_file_path = Path(self._download_dir) / latest_file.name
             else:
-                downloaded_file_path = Path(config.BOT_DOWNLOAD_FOLDER_PATH) / f'{new_file_name}.{file_extension}'
+                downloaded_file_path = Path(self._download_dir) / f'{new_file_name}.{file_extension}'
                 
             # move to the download folder the file name
             shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
