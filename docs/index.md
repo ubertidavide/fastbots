@@ -1,5 +1,5 @@
 # fastbots
-Fastbots is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.  
+[Fastbots](https://ubertidavide.github.io/fastbots/) is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.  
 It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.  
 Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  
 
@@ -23,7 +23,7 @@ Here's the main code example:
 import logging
 
 # Import necessary classes and modules from the fastbots library
-from fastbots import Task, Bot, Page, EC, WebElement, Keys
+from fastbots import Task, Bot, Page, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException
 
 # Define a ProductPage class, which is a subclass of the Page class
 class ProductPage(Page):
@@ -39,10 +39,15 @@ class ProductPage(Page):
         logging.info('DO THINGS')
 
         # Use locators specified in the file for flexibility and less code changes
+        # name_element: WebElement = self.bot.driver.find_element(*self.__locator__('name_locator'))
         name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
         
         # Store data in the payload section for future retrieval on success
         self.bot.payload['result'] = name_element.text
+
+        # example of downloading the product png images and rename it (check download folder settings)
+        # name_element.click() for example on element download button
+        # self.bot.wait_downloaded_file_path("png", new_name_file=self.bot.payload['data']['element_name'])
 
         # End the chain of page interactions
         return None
@@ -63,8 +68,8 @@ class SearchPage(Page):
         # Use locators specified in the file for flexibility and less code changes
         search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
         
-        # Enter a search query and submit
-        search_element.send_keys('Selenium with Python Simplified For Beginners')
+        # Enter a search query and submit (using the loaded data in the task)
+        search_element.send_keys(self.bot.payload['input_data']['element_name'])
         search_element.send_keys(Keys.ENTER)
 
         # Locate the product element and click on it
@@ -81,6 +86,9 @@ class TestTask(Task):
     def run(self, bot: Bot) -> bool:
         # Log information about the current action
         logging.info('DO THINGS')
+
+        # load all needed data in the pages interactions (es. login password loaded from a file using pandas)
+        bot.payload['input_data']['element_name'] = 'test'
 
         # Open the search page, perform actions, and go forward
         page: Page = SearchPage(bot=bot).forward()
@@ -114,7 +122,7 @@ This can be easily changed without rebuilding or making modifications to the cod
 [pages_url] # pages_url required url settings
 start_url=https://www.amazon.com/ #start_url it's the first page driver.get()
 search_page=https://www.amazon.com/ #*_page it's the first page url used for the page_name parameter with it's url that need to match
-product_page=https://www.amazon.com/s?k=Selenium+with+Python#*_page it's the second page url used for the page_name parameter with it's url that need to match
+product_page=None#Used to skip the page_url check of the current url on a single page
 
 [search_page] #*_page first page_name parameter, with it's related locators
 search_locator=(By.ID, "twotabsearchtextbox")
@@ -151,9 +159,11 @@ When the task fails, the library stores the screenshot and the HTML of the page 
 
 ### Page Url Check (Automatic)
 Every defined page must have a page URL, and when it's instantiated and reached by the bot, the library checks that the specified URL in the config matches the reached page during navigation to reduce navigation errors. If you want to disable this function, see the Global Wait Section below.
+There is also the possibility to change the page_url check from strict_page_url (exact match), with the current url that need to contains the page url, setting strict_page_url=False, in the page init method after the page name.
 
 ### File Download Wait (Functions)
 This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.
+It's the default behaviour, all downloaded file need to be waited to be moved to download folder, to change this, disable strict download wait in the config, see the next section.
 
 ### Download Folder and other Folders (Optional)
 ```ini
@@ -162,6 +172,8 @@ This library has the bot.wait_downloaded_file_path(file_extension, new_name_file
 BOT_DOWNLOAD_FOLDER_PATH='/usr/...' #override the default download path used for the browser
 BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
 BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug'
+
+BOT_STRICT_DOWNLOAD_WAIT=True #default, False -> all the downloaded file are move to download folder always without wait check
 ```
 
 ### Global Wait (Optional)
@@ -205,14 +217,14 @@ Configure Firefox Arguments, store them in the config file. The format is the sa
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS=["--headless", "--disable-gpu"]
+BOT_ARGUMENTS="--headless, --disable-gpu"
 ```
 
 #### Chrome args
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS=["--no-sandbox"]
+BOT_ARGUMENTS="--no-sandbox"
 ```
 
 ### Store Preferences (Optional)
@@ -235,3 +247,6 @@ Store preferences in a JSON file, the format is the same for all the supported d
     "profile.default_content_settings.popups": 0  # Allow popups
 }
 ```
+
+### References
+[Fastbots docs](https://ubertidavide.github.io/fastbots/)

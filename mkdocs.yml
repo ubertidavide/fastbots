@@ -17,6 +17,7 @@ nav:
       - 'Bot': 'reference/bot.md' 
       - 'Firefox': 'reference/firefox_bot.md'
       - 'Chrome': 'reference/chrome_bot.md'
+    - 'Payload': 'reference/payload.md'
     - 'Config': 'reference/config.md'
 plugins:
   - mkdocstrings
