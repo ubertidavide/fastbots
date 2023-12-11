@@ -1,0 +1,2 @@
+# Payload
+::: fastbots.payload.Payload
