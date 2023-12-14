@@ -11,3 +11,4 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException,
 from fastbots.bot import Bot
 from fastbots.page import Page
 from fastbots.task import Task
+from fastbots.payload import Payload

@@ -91,7 +91,7 @@ class Page(ABC):
             ValueError: If the locator is not enclosed in round brackets or is of an unknown or incorrect format.
         """
         # load the locators from file and interpret that as code
-        full_locator: str = self._bot.locator(self._page_name, locator_name).strip().replace('\\\'',  '\'')
+        full_locator: str = self._bot.locator(self._page_name, locator_name).strip().replace('\\\'',  '\'').replace('\\"', '"')
 
         if not full_locator.startswith('(') or not full_locator.endswith(')'):
             raise ValueError('The locator must be enclosed in round brackets.')
