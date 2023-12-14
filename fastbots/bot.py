@@ -233,7 +233,7 @@ class Bot(ABC):
             # remove the file, don't raise exception if not exsit
             latest_file.unlink(missing_ok=True)
 
-            self._payload.downloads = self._payload.downloads.append(destination)
+            self._payload.downloads = [].extend(self._payload.downloads).append(latest_file)
 
             # return the path and filename as string
             return destination

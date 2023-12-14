@@ -9,7 +9,7 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from fastbots.firefox_bot import FirefoxBot
-from fastbots import config
+from fastbots import config, Payload
 
 
 @pytest.fixture
@@ -25,10 +25,13 @@ def test_wait(bot):
     assert isinstance(bot.wait, WebDriverWait)
 
 def test_payload(bot):
-    assert bot.payload == {}
+    assert isinstance(bot.payload, Payload)
 
 def test_locator(bot):
     assert bot.locator('search_page', 'search_locator') == '(By.ID, "twotabsearchtextbox")'
+    assert bot.locator('search_page', 'search_locator') == '(By.ID, \'twotabsearchtextbox\')'
+    assert bot.locator('search_page', 'search_locator') == "(By.ID, 'twotabsearchtextbox')"
+    assert bot.locator('search_page', 'search_locator') == "(By.ID, \"twotabsearchtextbox\")"
 
     with pytest.raises(ValueError):
         bot.locator('product_page', 'not_exist_locator')

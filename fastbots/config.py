@@ -1,5 +1,4 @@
 import logging
-from typing import List
 from enum import Enum
 
 from decouple import config

@@ -4,13 +4,15 @@ from abc import ABC, abstractmethod
 
 from tenacity import RetryError, Retrying, wait_fixed, stop_after_attempt, retry_if_result, after_log
 
+from fastbots import config
 from fastbots.bot import Bot
 from fastbots.payload import Payload
 from fastbots.chrome_bot import ChromeBot
 from fastbots.firefox_bot import FirefoxBot
-from fastbots import config
+
 
 logger = logging.getLogger(__name__)
+
 
 class Task(ABC):
     """
@@ -114,26 +116,32 @@ class Task(ABC):
                         except Exception as e:
                             result = False
                             logging.error(f'{e}')
-                            logging.error(f'Full traceback: {traceback.format_exc()}')
+                            logging.error(f'{traceback.format_exc()}')
 
                             # try to get the payload
                             try:
+                                bot.save_html()
+                                bot.save_screenshot()
                                 payload = bot.payload
                             except Exception as e:
                                 payload = None
-
-                            # save useful debug informations
-                            try:
-                                bot.save_html()
-                                bot.save_screenshot()
-                            except Exception as e:
-                                pass
+                                logging.error(f'{e}')
 
                 if not attempt.retry_state.outcome.failed:
                     attempt.retry_state.set_result(result)
 
             if result:
-                return self.on_success(payload)
-            
+                try:
+                    return self.on_success(payload)
+                except Exception as e:
+                    logging.error(f'{e}')
+                    logging.error(f'{traceback.format_exc()}')
+                    return
+
         except RetryError:
-            return self.on_failure(payload)
+            try:
+                return self.on_failure(payload)
+            except Exception as e:
+                logging.error(f'{e}')
+                logging.error(f'{traceback.format_exc()}')
+                return

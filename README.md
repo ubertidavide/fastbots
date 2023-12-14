@@ -23,7 +23,7 @@ Here's the main code example:
 import logging
 
 # Import necessary classes and modules from the fastbots library
-from fastbots import Task, Bot, Page, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException
+from fastbots import Task, Bot, Page, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException, Payload
 
 # Define a ProductPage class, which is a subclass of the Page class
 class ProductPage(Page):
@@ -89,7 +89,7 @@ class TestTask(Task):
         logging.info('DO THINGS')
 
         # load all needed data in the pages interactions (es. login password loaded from a file using pandas)
-        bot.payload.input_data = {'username': 'test', password: 'test', 'element_name': None}
+        bot.payload.input_data = {'username': 'test', 'password': 'test', 'element_name': None}
 
         # Open the search page, perform actions, and go forward
         page: Page = SearchPage(bot=bot).forward()
