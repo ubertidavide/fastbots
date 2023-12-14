@@ -23,7 +23,7 @@ Here's the main code example:
 import logging
 
 # Import necessary classes and modules from the fastbots library
-from fastbots import Task, Bot, Page, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException, Payload
+from fastbots import Task, Bot, Page, Payload, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException
 
 # Define a ProductPage class, which is a subclass of the Page class
 class ProductPage(Page):
@@ -40,10 +40,10 @@ class ProductPage(Page):
 
         # Use locators specified in the file for flexibility and less code changes
         # name_element: WebElement = self.bot.driver.find_element(*self.__locator__('name_locator'))
-        name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
+        #name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
         
         # Store data in the payload section for future retrieval on success
-        self.bot.payload.input_data['element_name'] = name_element.text
+        #self.bot.payload.input_data['element_name'] = name_element.text
 
         # example of downloading the product png images and rename it (check download folder settings)
         # name_element.click() for example on element download button
@@ -74,8 +74,8 @@ class SearchPage(Page):
         search_element.send_keys(Keys.ENTER)
 
         # Locate the product element and click on it
-        product_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('product_locator')))
-        product_element.click()
+        #product_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('product_locator')))
+        #product_element.click()
 
         # Continue the chain of interaction on the next page (ProductPage)
         return ProductPage(bot=self.bot)
@@ -89,10 +89,10 @@ class TestTask(Task):
         logging.info('DO THINGS')
 
         # load all needed data in the pages interactions (es. login password loaded from a file using pandas)
-        bot.payload.input_data = {'username': 'test', 'password': 'test', 'element_name': None}
+        bot.payload.input_data = {'username': 'test', 'password': 'test', 'element_name': 'My book'}
 
         # Open the search page, perform actions, and go forward
-        page: Page = SearchPage(bot=bot).forward()
+        page: Page = SearchPage(bot=bot)
 
         # For every page found, perform actions and go forward
         while page:

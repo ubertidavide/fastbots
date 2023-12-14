@@ -71,7 +71,7 @@ class TestTask(Task):
         bot.payload.input_data = {'username': 'test', 'password': 'test', 'element_name': 'My book'}
 
         # Open the search page, perform actions, and go forward
-        page: Page = SearchPage(bot=bot).forward()
+        page: Page = SearchPage(bot=bot)
 
         # For every page found, perform actions and go forward
         while page:
