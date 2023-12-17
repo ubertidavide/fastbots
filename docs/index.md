@@ -218,14 +218,14 @@ Configure Firefox Arguments, store them in the config file. The format is the sa
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS="--headless, --disable-gpu"
+BOT_ARGUMENTS="--headless, --disable-gpu, -profile ./selenium"
 ```
 
 #### Chrome args
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS="--no-sandbox"
+BOT_ARGUMENTS="--no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium"
 ```
 
 ### Store Preferences (Optional)
@@ -236,7 +236,8 @@ Store preferences in a JSON file, the format is the same for all the supported d
 -- preferences.json 
 {
     "browser.download.manager.showWhenStarting": false, # Don't show download
-    "browser.helperApps.neverAsk.saveToDisk": "application/pdf" # Automatic save PDF files
+    "browser.helperApps.neverAsk.saveToDisk": "application/pdf", # Automatic save PDF files
+    "pdfjs.disabled": true  # Don't show the pdf
 }
 ```
 

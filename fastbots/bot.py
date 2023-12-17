@@ -6,6 +6,7 @@ from pathlib import Path
 from datetime import datetime
 from configparser import ConfigParser
 import logging
+import time
 from typing import Type
 from abc import ABC, abstractmethod
 
@@ -61,6 +62,9 @@ class Bot(ABC):
         Sets up temporary directories, locators, and a data store for the bot.
         """
         super().__init__()
+
+        # used to track time
+        self._start_time: float = time.time()
 
         # use a temporary directory as the default download folder
         self._temp_dir: str = tempfile.mkdtemp()
@@ -118,8 +122,10 @@ class Bot(ABC):
         # default global driver settings
         self._driver.implicitly_wait(config.SELENIUM_GLOBAL_IMPLICIT_WAIT)
 
-        # load the start page
-        self._driver.get(self.locator('pages_url', 'start_url'))
+        # load the start page, if it's setted
+        start_url: str = self.locator('pages_url', 'start_url')
+        if start_url != 'None':
+            self._driver.get(start_url)
 
         return self
 
@@ -130,7 +136,6 @@ class Bot(ABC):
         Removes temporary directories and closes the driver.
         """
         if not config.BOT_STRICT_DOWNLOAD_WAIT:
-            downloads_destinations = []
             for temp_file in list(Path(self._temp_dir).glob(f'*.*')):
                 # if the file is not a firefox of chrome temporary file
                 if temp_file.suffix not in '.crdownload' and temp_file.suffix not in '.part':
@@ -138,14 +143,14 @@ class Bot(ABC):
                     downloaded_file_path = Path(self._download_dir) / temp_file.name
                     # move to the download folder the file name
                     destination: str = shutil.move(src=str(temp_file.absolute()), dst=str(downloaded_file_path.absolute()))
-                    downloads_destinations.append(destination)
+                    self._payload.downloads.append(destination)
+                    self._payload.output_data['downloads_count'] = len(self._payload.downloads)
                     # remove the file, don't raise exception if not exsit
                     temp_file.unlink(missing_ok=True)
-                
-            self._payload.downloads = downloads_destinations
 
         shutil.rmtree(self._temp_dir)
-        self._driver.close()
+        self._driver.quit()
+        self._payload.output_data['eta'] = time.time()-self._start_time
 
     def check_page_url(self, expected_page_url: str, strict_page_check: bool = True):
         """
@@ -229,11 +234,10 @@ class Bot(ABC):
                 
             # move to the download folder the file name
             destination: str = shutil.move(src=str(latest_file.absolute()), dst=str(downloaded_file_path.absolute()))
-
+            self._payload.downloads.append(destination)
+            self._payload.output_data['downloads_count'] = len(self._payload.downloads)
             # remove the file, don't raise exception if not exsit
             latest_file.unlink(missing_ok=True)
-
-            self._payload.downloads = [].extend(self._payload.downloads).append(latest_file)
 
             # return the path and filename as string
             return destination
@@ -250,7 +254,7 @@ class Bot(ABC):
 
             raise DownloadFileError()
 
-    def save_screenshot(self):
+    def save_screenshot(self) -> str:
         """
         Saves a screenshot of the browser.
 
@@ -265,8 +269,10 @@ class Bot(ABC):
 
         file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
         self._driver.save_screenshot(str(file_path.absolute()))
+        self._payload.output_data['screenshot_path'] = str(file_path.absolute())
+        return str(file_path.absolute())
 
-    def save_html(self):
+    def save_html(self) -> str:
         """
         Saves the HTML page of the browser.
 
@@ -282,8 +288,10 @@ class Bot(ABC):
         file_path: Path = Path(config.BOT_HTML_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.html'
         with open(str(file_path.absolute()), "w", encoding="utf-8") as file:
             file.write(self._driver.page_source)
+        self._payload.output_data['html_path'] = str(file_path.absolute())
+        return str(file_path.absolute())
 
-    def save_cookies(self):
+    def save_cookies(self) -> str:
         """
         Saves all the cookies found in the browser.
 
@@ -297,6 +305,8 @@ class Bot(ABC):
 
         with open(config.BOT_COOKIES_FILE_PATH, 'wb') as file:
             pickle.dump(cookies, file)
+        self._payload.output_data['cookies_path'] = config.BOT_COOKIES_FILE_PATH
+        return config.BOT_COOKIES_FILE_PATH
     
     def load_cookies(self):
         """

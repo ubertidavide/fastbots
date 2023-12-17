@@ -9,3 +9,4 @@ debug
 .pytest_cache
 *.pkl
 site
+scripts
