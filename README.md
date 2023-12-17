@@ -121,7 +121,7 @@ This can be easily changed without rebuilding or making modifications to the cod
 ```ini
 -- locators.ini
 [pages_url] # pages_url required url settings
-start_url=https://www.amazon.com/ #start_url it's the first page driver.get()
+start_url=https://www.amazon.com/ #start_url it's the first page driver.get() could be also None
 search_page=https://www.amazon.com/ #*_page it's the first page url used for the page_name parameter with it's url that need to match
 product_page=None#Used to skip the page_url check of the current url on a single page
 
@@ -218,14 +218,14 @@ Configure Firefox Arguments, store them in the config file. The format is the sa
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS="--headless, --disable-gpu"
+BOT_ARGUMENTS="--headless, --disable-gpu, -profile ./selenium"
 ```
 
 #### Chrome args
 ```ini
 -- settings.ini
 [settings]
-BOT_ARGUMENTS="--no-sandbox"
+BOT_ARGUMENTS="--no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium"
 ```
 
 ### Store Preferences (Optional)
@@ -236,7 +236,8 @@ Store preferences in a JSON file, the format is the same for all the supported d
 -- preferences.json 
 {
     "browser.download.manager.showWhenStarting": false, # Don't show download
-    "browser.helperApps.neverAsk.saveToDisk": "application/pdf" # Automatic save PDF files
+    "browser.helperApps.neverAsk.saveToDisk": "application/pdf", # Automatic save PDF files
+    "pdfjs.disabled": true  # Don't show the pdf
 }
 ```
 

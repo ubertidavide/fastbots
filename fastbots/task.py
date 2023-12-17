@@ -46,6 +46,7 @@ class Task(ABC):
     def on_success(self, payload: Payload):
         """
         Actions to be taken on successful completion of the run method.
+        Executed ony if the run method return true at the end of it's workflow.
 
         Args:
             payload (Payload): Data collected during the run method.
@@ -113,6 +114,7 @@ class Task(ABC):
                         try:
                             result = self.run(bot)
                             payload = bot.payload
+                            payload.output_data['result'] = result
                         except Exception as e:
                             result = False
                             logging.error(f'{e}')
@@ -123,6 +125,7 @@ class Task(ABC):
                                 bot.save_html()
                                 bot.save_screenshot()
                                 payload = bot.payload
+                                payload.output_data['result'] = result
                             except Exception as e:
                                 payload = None
                                 logging.error(f'{e}')

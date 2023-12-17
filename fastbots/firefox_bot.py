@@ -38,11 +38,11 @@ class FirefoxBot(Bot):
         ```
     """
 
-    def __init__(self) -> None:
+    def __init__(self, interceptor: callable = None) -> None:
         """
         Initializes all attributes of the Firefox Bot instance.
         """
-        super().__init__()
+        super().__init__(interceptor)
 
         # Load the configured driver
         self._driver: WebDriver = self.__load_driver__()
@@ -50,7 +50,7 @@ class FirefoxBot(Bot):
         # Default wait
         self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
 
-    def save_screenshot(self):
+    def save_screenshot(self) -> str:
         """
         Saves the browser's screenshot to a PNG file.
 
@@ -61,6 +61,7 @@ class FirefoxBot(Bot):
 
         file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
         self._driver.get_full_page_screenshot_as_file(str(file_path.absolute()))
+        return str(file_path.absolute())
 
     def __load_preferences__(self) -> FirefoxProfile:
         """

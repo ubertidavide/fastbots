@@ -113,7 +113,7 @@ class Page(ABC):
                     full_locator[1:-1].strip()[len(locator):].strip()[1:].strip()[1:-1]
                 )
 
-                logging.info(f'{parsed_locator}')
+                logging.debug(f'{locator_name} {parsed_locator}')
 
                 return parsed_locator
             

@@ -1,4 +1,5 @@
 {
     "browser.download.manager.showWhenStarting": false,
-    "browser.helperApps.neverAsk.saveToDisk": "application/pdf"
+    "browser.helperApps.neverAsk.saveToDisk": "application/pdf",
+    "pdfjs.disabled": true
 }

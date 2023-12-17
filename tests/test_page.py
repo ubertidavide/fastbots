@@ -12,5 +12,5 @@ def page():
 ('test2_locator', "//*[@id=\"search\"]/div[1]/div[1]/div/span[1]/div[1]/div[2]"),
 ('test3_locator', "//*[@id='search']/div[1]/div[1]/div/span[1]/div[1]/div[2]")
 ])
-def test__locator__(locator_name, expected):
-    assert Page.__locator__(locator_name) == expected
+def test__locator__(page, locator_name, expected):
+    assert page.__locator__(locator_name) == expected
