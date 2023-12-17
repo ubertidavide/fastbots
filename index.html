@@ -326,12 +326,12 @@ BOT_USER_AGENT=&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.3
 <h4 id="firefox-args">Firefox args</h4>
 <pre><code class="language-ini">-- settings.ini
 [settings]
-BOT_ARGUMENTS=&quot;--headless, --disable-gpu&quot;
+BOT_ARGUMENTS=&quot;--headless, --disable-gpu, -profile ./selenium&quot;
 </code></pre>
 <h4 id="chrome-args">Chrome args</h4>
 <pre><code class="language-ini">-- settings.ini
 [settings]
-BOT_ARGUMENTS=&quot;--no-sandbox&quot;
+BOT_ARGUMENTS=&quot;--no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium&quot;
 </code></pre>
 <h3 id="store-preferences-optional">Store Preferences (Optional)</h3>
 <p>Store preferences in a JSON file, the format is the same for all the supported drivers; check carefully that the exact string and value are implemented for the selected driver.</p>
@@ -339,7 +339,8 @@ BOT_ARGUMENTS=&quot;--no-sandbox&quot;
 <pre><code class="language-jsonc">-- preferences.json 
 {
     &quot;browser.download.manager.showWhenStarting&quot;: false, # Don't show download
-    &quot;browser.helperApps.neverAsk.saveToDisk&quot;: &quot;application/pdf&quot; # Automatic save PDF files
+    &quot;browser.helperApps.neverAsk.saveToDisk&quot;: &quot;application/pdf&quot;, # Automatic save PDF files
+    &quot;pdfjs.disabled&quot;: true  # Don't show the pdf
 }
 </code></pre>
 <h4 id="chrome-prefs">Chrome prefs</h4>
@@ -398,5 +399,5 @@ BOT_ARGUMENTS=&quot;--no-sandbox&quot;
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-14 09:43:04.751687+00:00
+Build Date UTC : 2023-12-17 21:06:41.461433+00:00
 -->

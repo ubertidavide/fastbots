@@ -187,6 +187,7 @@
     def on_success(self, payload: Payload):
         """
         Actions to be taken on successful completion of the run method.
+        Executed ony if the run method return true at the end of it's workflow.
 
         Args:
             payload (Payload): Data collected during the run method.
@@ -254,6 +255,7 @@
                         try:
                             result = self.run(bot)
                             payload = bot.payload
+                            payload.output_data['result'] = result
                         except Exception as e:
                             result = False
                             logging.error(f'{e}')
@@ -264,6 +266,7 @@
                                 bot.save_html()
                                 bot.save_screenshot()
                                 payload = bot.payload
+                                payload.output_data['result'] = result
                             except Exception as e:
                                 payload = None
                                 logging.error(f'{e}')
@@ -375,6 +378,7 @@
                     try:
                         result = self.run(bot)
                         payload = bot.payload
+                        payload.output_data['result'] = result
                     except Exception as e:
                         result = False
                         logging.error(f'{e}')
@@ -385,6 +389,7 @@
                             bot.save_html()
                             bot.save_screenshot()
                             payload = bot.payload
+                            payload.output_data['result'] = result
                         except Exception as e:
                             payload = None
                             logging.error(f'{e}')
@@ -599,7 +604,8 @@ def on_failure(self, payload: Payload):
 
   <div class="doc doc-contents ">
   
-      <p>Actions to be taken on successful completion of the run method.</p>
+      <p>Actions to be taken on successful completion of the run method.
+Executed ony if the run method return true at the end of it's workflow.</p>
 
 
 
@@ -656,6 +662,7 @@ def on_failure(self, payload: Payload):
 def on_success(self, payload: Payload):
     """
     Actions to be taken on successful completion of the run method.
+    Executed ony if the run method return true at the end of it's workflow.
 
     Args:
         payload (Payload): Data collected during the run method.

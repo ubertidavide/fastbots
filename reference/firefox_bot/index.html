@@ -223,11 +223,11 @@
         ```
     """
 
-    def __init__(self) -&gt; None:
+    def __init__(self, interceptor: callable = None) -&gt; None:
         """
         Initializes all attributes of the Firefox Bot instance.
         """
-        super().__init__()
+        super().__init__(interceptor)
 
         # Load the configured driver
         self._driver: WebDriver = self.__load_driver__()
@@ -235,7 +235,7 @@
         # Default wait
         self._wait: WebDriverWait = WebDriverWait(driver=self._driver, timeout=config.SELENIUM_DEFAULT_WAIT, poll_frequency=1)
 
-    def save_screenshot(self):
+    def save_screenshot(self) -&gt; str:
         """
         Saves the browser's screenshot to a PNG file.
 
@@ -246,6 +246,7 @@
 
         file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
         self._driver.get_full_page_screenshot_as_file(str(file_path.absolute()))
+        return str(file_path.absolute())
 
     def __load_preferences__(self) -&gt; FirefoxProfile:
         """
@@ -349,7 +350,7 @@
 
 
 <h2 id="fastbots.firefox_bot.FirefoxBot.__init__" class="doc doc-heading">
-          <code class="highlight language-python">__init__()</code>
+          <code class="highlight language-python">__init__(interceptor=None)</code>
 
 </h2>
 
@@ -360,11 +361,11 @@
 
           <details class="quote">
             <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
-            <pre class="highlight"><code class="language-python">def __init__(self) -&gt; None:
+            <pre class="highlight"><code class="language-python">def __init__(self, interceptor: callable = None) -&gt; None:
     """
     Initializes all attributes of the Firefox Bot instance.
     """
-    super().__init__()
+    super().__init__(interceptor)
 
     # Load the configured driver
     self._driver: WebDriver = self.__load_driver__()
@@ -618,7 +619,7 @@
 
           <details class="quote">
             <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
-            <pre class="highlight"><code class="language-python">def save_screenshot(self):
+            <pre class="highlight"><code class="language-python">def save_screenshot(self) -&gt; str:
     """
     Saves the browser's screenshot to a PNG file.
 
@@ -628,7 +629,8 @@
         Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH).mkdir(exist_ok=True, parents=True)
 
     file_path: Path = Path(config.BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH) / f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
-    self._driver.get_full_page_screenshot_as_file(str(file_path.absolute()))</code></pre>
+    self._driver.get_full_page_screenshot_as_file(str(file_path.absolute()))
+    return str(file_path.absolute())</code></pre>
           </details>
   </div>
 
