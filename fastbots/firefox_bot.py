@@ -38,11 +38,11 @@ class FirefoxBot(Bot):
         ```
     """
 
-    def __init__(self, interceptor: callable = None) -> None:
+    def __init__(self) -> None:
         """
         Initializes all attributes of the Firefox Bot instance.
         """
-        super().__init__(interceptor)
+        super().__init__()
 
         # Load the configured driver
         self._driver: WebDriver = self.__load_driver__()
