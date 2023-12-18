@@ -42,13 +42,13 @@ class ChromeBot(Bot):
         ```
     """
 
-    def __init__(self, interceptor: callable = None) -> None:
+    def __init__(self) -> None:
         """
         Chrome Bot
 
         Initialize all the attributes of the Chrome Bot instance.
         """
-        super().__init__(interceptor)
+        super().__init__()
 
         # Load the configured driver
         self._driver: WebDriver = self.__load_driver__()
