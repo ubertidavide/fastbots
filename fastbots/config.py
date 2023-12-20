@@ -88,7 +88,7 @@ SELENIUM_LOCATORS_FILE: str = config('SELENIUM_LOCATORS_FILE', default='locators
 # Disable traffic capture (disabled by default)
 SELENIUM_DISABLE_CAPTURE: bool = config('SELENIUM_DISABLE_CAPTURE', default=True, cast=bool)
 
-# Specify all the url in scope for the capture (nothing by default)
+# Specify all the url in scope for the capture, using a comma separated list (nothing by default)
 SELENIUM_IN_SCOPE_CAPTURE: str = config('SELENIUM_IN_SCOPE_CAPTURE', default=None, cast=str)
 
 # Enable Har capture (disabbled by default)
