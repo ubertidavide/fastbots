@@ -223,11 +223,11 @@
         ```
     """
 
-    def __init__(self, interceptor: callable = None) -&gt; None:
+    def __init__(self) -&gt; None:
         """
         Initializes all attributes of the Firefox Bot instance.
         """
-        super().__init__(interceptor)
+        super().__init__()
 
         # Load the configured driver
         self._driver: WebDriver = self.__load_driver__()
@@ -350,7 +350,7 @@
 
 
 <h2 id="fastbots.firefox_bot.FirefoxBot.__init__" class="doc doc-heading">
-          <code class="highlight language-python">__init__(interceptor=None)</code>
+          <code class="highlight language-python">__init__()</code>
 
 </h2>
 
@@ -361,11 +361,11 @@
 
           <details class="quote">
             <summary>Source code in <code>fastbots/firefox_bot.py</code></summary>
-            <pre class="highlight"><code class="language-python">def __init__(self, interceptor: callable = None) -&gt; None:
+            <pre class="highlight"><code class="language-python">def __init__(self) -&gt; None:
     """
     Initializes all attributes of the Firefox Bot instance.
     """
-    super().__init__(interceptor)
+    super().__init__()
 
     # Load the configured driver
     self._driver: WebDriver = self.__load_driver__()

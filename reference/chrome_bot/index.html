@@ -226,13 +226,13 @@ finally:
         ```
     """
 
-    def __init__(self, interceptor: callable = None) -&gt; None:
+    def __init__(self) -&gt; None:
         """
         Chrome Bot
 
         Initialize all the attributes of the Chrome Bot instance.
         """
-        super().__init__(interceptor)
+        super().__init__()
 
         # Load the configured driver
         self._driver: WebDriver = self.__load_driver__()
@@ -340,7 +340,7 @@ finally:
 
 
 <h2 id="fastbots.chrome_bot.ChromeBot.__init__" class="doc doc-heading">
-          <code class="highlight language-python">__init__(interceptor=None)</code>
+          <code class="highlight language-python">__init__()</code>
 
 </h2>
 
@@ -352,13 +352,13 @@ finally:
 
           <details class="quote">
             <summary>Source code in <code>fastbots/chrome_bot.py</code></summary>
-            <pre class="highlight"><code class="language-python">def __init__(self, interceptor: callable = None) -&gt; None:
+            <pre class="highlight"><code class="language-python">def __init__(self) -&gt; None:
     """
     Chrome Bot
 
     Initialize all the attributes of the Chrome Bot instance.
     """
-    super().__init__(interceptor)
+    super().__init__()
 
     # Load the configured driver
     self._driver: WebDriver = self.__load_driver__()

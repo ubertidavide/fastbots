@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://github.com/ubertidavide/fastbots/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/ubertidavide/fastbots/reference/bot/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/ubertidavide/fastbots/reference/chrome_bot/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/ubertidavide/fastbots/reference/config/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/ubertidavide/fastbots/reference/firefox_bot/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/ubertidavide/fastbots/reference/page/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/ubertidavide/fastbots/reference/payload/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/ubertidavide/fastbots/reference/task/</loc>
-         <lastmod>2023-12-17</lastmod>
+         <lastmod>2023-12-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
