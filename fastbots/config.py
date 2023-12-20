@@ -82,3 +82,14 @@ SELENIUM_FILE_DOWNLOAD_TIMEOUT: int = config('SELENIUM_FILE_DOWNLOAD_TIMEOUT', d
 
 # Path to the locators file for Selenium
 SELENIUM_LOCATORS_FILE: str = config('SELENIUM_LOCATORS_FILE', default='locators.ini', cast=str)
+
+# Advanced settings
+
+# Disable traffic capture (disabled by default)
+SELENIUM_DISABLE_CAPTURE: bool = config('SELENIUM_DISABLE_CAPTURE', default=True, cast=bool)
+
+# Specify all the url in scope for the capture (nothing by default)
+SELENIUM_IN_SCOPE_CAPTURE: str = config('SELENIUM_IN_SCOPE_CAPTURE', default=None, cast=str)
+
+# Enable Har capture (disabbled by default)
+SELENIUM_ENABLE_HAR_CAPTURE: bool = config('SELENIUM_ENABLE_HAR_CAPTURE', default=False, cast=bool)

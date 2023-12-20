@@ -1,11 +1,13 @@
 # fastbots
+
 [Fastbots](https://ubertidavide.github.io/fastbots/) is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.  
 It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.  
-Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  
+Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.
 
 fastbots is also fully compatible with all selenium functions, refer to [selenium official documentation](https://www.selenium.dev/documentation/webdriver/elements/interactions/) for more details.
 
 ## Installation
+
 The installation process is straightforward using pip from the PyPI repository.
 
 ```bash
@@ -13,12 +15,15 @@ pip install fastbots
 ```
 
 ## Showcase
-Check out the full example at the: [cookiecutter-fastbots](https://github.com/ubertidavide/cookiecutter-fastbots).
+
+Check out the full example at [cookiecutter-fastbots](https://github.com/ubertidavide/cookiecutter-fastbots).
 
 ### Main Code
+
 Here's the main code example:
+
 ```python
--- main.py
+# main.py
 # Import the logging module to handle logging in the script
 import logging
 
@@ -30,7 +35,7 @@ class ProductPage(Page):
 
     # Constructor to initialize the ProductPage instance
     # The page_name is used in the locators file; default is 'product_page'
-    def __init__(self, bot: Bot, page_name: str = 'product_page'): 
+    def __init__(self, bot: Bot, page_name: str = 'product_page'):
         super().__init__(bot, page_name)
 
     # Define the forward method for navigating to the next page
@@ -41,7 +46,7 @@ class ProductPage(Page):
         # Use locators specified in the file for flexibility and less code changes
         # name_element: WebElement = self.bot.driver.find_element(*self.__locator__('name_locator'))
         #name_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('name_locator')))
-        
+
         # Store data in the payload section for future retrieval on success
         #self.bot.payload.input_data['element_name'] = name_element.text
 
@@ -68,7 +73,7 @@ class SearchPage(Page):
 
         # Use locators specified in the file for flexibility and less code changes
         search_element: WebElement = self.bot.wait.until(EC.element_to_be_clickable(self.__locator__('search_locator')))
-        
+
         # Enter a search query and submit (using the loaded data in the task)
         search_element.send_keys(self.bot.payload.input_data['element_name'])
         search_element.send_keys(Keys.ENTER)
@@ -104,7 +109,7 @@ class TestTask(Task):
     # Method executed on bot success, with its payload
     def on_success(self, payload: Payload):
         logging.info(f'SUCCESS {payload.downloads}')
-    
+
     # Method executed on bot failure
     def on_failure(self, payload: Payload):
         logging.info(f'FAILED {payload.output_data}')
@@ -116,12 +121,14 @@ if __name__ == '__main__':
 ```
 
 ### Locators File
-In the locators configuration file, all required locator configurations are defined. 
+
+In the locators configuration file, all required locator configurations are defined.
 This can be easily changed without rebuilding or making modifications to the code.
+
 ```ini
--- locators.ini
+# locators.ini
 [pages_url] # pages_url required url settings
-start_url=https://www.amazon.com/ #start_url it's the first page driver.get()
+start_url=https://www.amazon.com/ #start_url it's the first page driver.get() could be also None
 search_page=https://www.amazon.com/ #*_page it's the first page url used for the page_name parameter with it's url that need to match
 product_page=None#Used to skip the page_url check of the current url on a single page
 
@@ -135,40 +142,48 @@ name_locator=(By.ID, "title")
 
 ## Settings
 
-
 ### Browser and Drivers (Optional)
+
 For default configuration, the selected browser is Firefox, but it could be changed from the config file:
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 #BOT_DRIVER_TYPE=FIREFOX
 BOT_DRIVER_TYPE=CHROME
 ```
+
 **The correct browser installed for the driver selected is required**.
 The browser installation path is autodetected by system environment variables, and the driver download process and its related installation path settings are managed automatically.
 
 ### Retry and Debug (Optional)
+
 By default, every task will be retried 2 times, waiting for 10 seconds. If all two attempts fail, the task executes the on_error method; otherwise, it will execute the on_success method. This behavior could be modified in the settings file:
 This behaviour could be modified in the settings file:
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 BOT_MAX_RETRIES=2 #sec default
 BOT_RETRY_DELAY=10 #sec default
 ```
+
 When the task fails, the library stores the screenshot and the HTML of the page in the debug folder, useful for debugging. It will also store all the logs in the log.log file.
 
 ### Page Url Check (Automatic)
+
 Every defined page must have a page URL, and when it's instantiated and reached by the bot, the library checks that the specified URL in the config matches the reached page during navigation to reduce navigation errors. If you want to disable this function, see the Global Wait Section below.
 There is also the possibility to change the page_url check from strict_page_url (exact match), with the current url that need to contains the page url, setting strict_page_url=False, in the page init method after the page name.
 
 ### File Download Wait (Functions)
+
 This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.
 It's the default behaviour, all downloaded file need to be waited to be moved to download folder, to change this, disable strict download wait in the config, see the next section.
 
 ### Download Folder and other Folders (Optional)
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 BOT_DOWNLOAD_FOLDER_PATH='/usr/...' #override the default download path used for the browser
 BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
@@ -178,12 +193,15 @@ BOT_STRICT_DOWNLOAD_WAIT=True #default, False -> all the downloaded file are mov
 ```
 
 ### Global Wait (Optional)
+
 The default configured waits are shown below:
+
 - The implicit wait used for initial page loading.
 - The wait for the URL check that matches the specified in the locators file.
 - The default wait used by the self.bot.wait function.
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 SELENIUM_GLOBAL_IMPLICIT_WAIT=5 #sec default
 SELENIUM_EXPECTED_URL_TIMEOUT=5 #sec default
@@ -194,9 +212,11 @@ SELENIUM_EXPECTED_URL_CHECK=False #disable the automatic page url check, the def
 ```
 
 ### Proxy (Optional)
+
 Configure the proxy settings.
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=127.0.0.1:8080
@@ -204,51 +224,60 @@ BOT_HTTPS_PROXY=127.0.0.1:8080
 ```
 
 ### User Agent (Optional)
+
 Configure the user agent used for the requests.
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 BOT_USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
 ```
 
 ### Arguments (Optional)
+
 Configure Firefox Arguments, store them in the config file. The format is the same for all the supported drivers; check carefully that the exact arg is implemented for the selected driver.
 
 #### Firefox args
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 BOT_ARGUMENTS="--headless, --disable-gpu, -profile ./selenium"
 ```
 
 #### Chrome args
+
 ```ini
--- settings.ini
+# settings.ini
 [settings]
 BOT_ARGUMENTS="--no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium"
 ```
 
 ### Store Preferences (Optional)
+
 Store preferences in a JSON file, the format is the same for all the supported drivers; check carefully that the exact string and value are implemented for the selected driver.
 
 #### Firefox prefs
+
 ```jsonc
--- preferences.json 
+// preferences.json
 {
-    "browser.download.manager.showWhenStarting": false, # Don't show download
-    "browser.helperApps.neverAsk.saveToDisk": "application/pdf", # Automatic save PDF files
-    "pdfjs.disabled": true  # Don't show the pdf
+  "browser.download.manager.showWhenStarting": false, // Don't show download
+  "browser.helperApps.neverAsk.saveToDisk": "application/pdf", // Automatic save PDF files
+  "pdfjs.disabled": true // Don't show the pdf
 }
 ```
 
 #### Chrome prefs
+
 ```jsonc
--- preferences.json 
+// preferences.json
 {
-    "profile.default_content_setting_values.notifications": 2,  # Disable notifications
-    "profile.default_content_settings.popups": 0  # Allow popups
+  "profile.default_content_setting_values.notifications": 2, // Disable notifications
+  "profile.default_content_settings.popups": 0 // Allow popups
 }
 ```
 
 ### References
+
 [Fastbots docs](https://ubertidavide.github.io/fastbots/)
