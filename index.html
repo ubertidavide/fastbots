@@ -137,17 +137,17 @@
                 <h1 id="fastbots">fastbots</h1>
 <p><a href="https://ubertidavide.github.io/fastbots/">Fastbots</a> is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.<br />
 It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.<br />
-Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.  </p>
+Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.</p>
 <p>fastbots is also fully compatible with all selenium functions, refer to <a href="https://www.selenium.dev/documentation/webdriver/elements/interactions/">selenium official documentation</a> for more details.</p>
 <h2 id="installation">Installation</h2>
 <p>The installation process is straightforward using pip from the PyPI repository.</p>
 <pre><code class="language-bash">pip install fastbots
 </code></pre>
 <h2 id="showcase">Showcase</h2>
-<p>Check out the full example at the: <a href="https://github.com/ubertidavide/cookiecutter-fastbots">cookiecutter-fastbots</a>.</p>
+<p>Check out the full example at <a href="https://github.com/ubertidavide/cookiecutter-fastbots">cookiecutter-fastbots</a>.</p>
 <h3 id="main-code">Main Code</h3>
 <p>Here's the main code example:</p>
-<pre><code class="language-python">-- main.py
+<pre><code class="language-python"># main.py
 # Import the logging module to handle logging in the script
 import logging
 
@@ -159,7 +159,7 @@ class ProductPage(Page):
 
     # Constructor to initialize the ProductPage instance
     # The page_name is used in the locators file; default is 'product_page'
-    def __init__(self, bot: Bot, page_name: str = 'product_page'): 
+    def __init__(self, bot: Bot, page_name: str = 'product_page'):
         super().__init__(bot, page_name)
 
     # Define the forward method for navigating to the next page
@@ -244,11 +244,11 @@ if __name__ == '__main__':
     TestTask()()
 </code></pre>
 <h3 id="locators-file">Locators File</h3>
-<p>In the locators configuration file, all required locator configurations are defined. 
+<p>In the locators configuration file, all required locator configurations are defined.
 This can be easily changed without rebuilding or making modifications to the code.</p>
-<pre><code class="language-ini">-- locators.ini
+<pre><code class="language-ini"># locators.ini
 [pages_url] # pages_url required url settings
-start_url=https://www.amazon.com/ #start_url it's the first page driver.get()
+start_url=https://www.amazon.com/ #start_url it's the first page driver.get() could be also None
 search_page=https://www.amazon.com/ #*_page it's the first page url used for the page_name parameter with it's url that need to match
 product_page=None#Used to skip the page_url check of the current url on a single page
 
@@ -262,7 +262,7 @@ name_locator=(By.ID, &quot;title&quot;)
 <h2 id="settings">Settings</h2>
 <h3 id="browser-and-drivers-optional">Browser and Drivers (Optional)</h3>
 <p>For default configuration, the selected browser is Firefox, but it could be changed from the config file:</p>
-<pre><code class="language-ini">-- settings.ini
+<pre><code class="language-ini"># settings.ini
 [settings]
 #BOT_DRIVER_TYPE=FIREFOX
 BOT_DRIVER_TYPE=CHROME
@@ -272,7 +272,7 @@ The browser installation path is autodetected by system environment variables, a
 <h3 id="retry-and-debug-optional">Retry and Debug (Optional)</h3>
 <p>By default, every task will be retried 2 times, waiting for 10 seconds. If all two attempts fail, the task executes the on_error method; otherwise, it will execute the on_success method. This behavior could be modified in the settings file:
 This behaviour could be modified in the settings file:</p>
-<pre><code class="language-ini">-- settings.ini
+<pre><code class="language-ini"># settings.ini
 [settings]
 BOT_MAX_RETRIES=2 #sec default
 BOT_RETRY_DELAY=10 #sec default
@@ -285,7 +285,7 @@ There is also the possibility to change the page_url check from strict_page_url 
 <p>This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.
 It's the default behaviour, all downloaded file need to be waited to be moved to download folder, to change this, disable strict download wait in the config, see the next section.</p>
 <h3 id="download-folder-and-other-folders-optional">Download Folder and other Folders (Optional)</h3>
-<pre><code class="language-ini">-- settings.ini
+<pre><code class="language-ini"># settings.ini
 [settings]
 BOT_DOWNLOAD_FOLDER_PATH='/usr/...' #override the default download path used for the browser
 BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
@@ -294,11 +294,13 @@ BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug'
 BOT_STRICT_DOWNLOAD_WAIT=True #default, False -&gt; all the downloaded file are move to download folder always without wait check
 </code></pre>
 <h3 id="global-wait-optional">Global Wait (Optional)</h3>
-<p>The default configured waits are shown below:
-- The implicit wait used for initial page loading.
-- The wait for the URL check that matches the specified in the locators file.
-- The default wait used by the self.bot.wait function.</p>
-<pre><code class="language-ini">-- settings.ini
+<p>The default configured waits are shown below:</p>
+<ul>
+<li>The implicit wait used for initial page loading.</li>
+<li>The wait for the URL check that matches the specified in the locators file.</li>
+<li>The default wait used by the self.bot.wait function.</li>
+</ul>
+<pre><code class="language-ini"># settings.ini
 [settings]
 SELENIUM_GLOBAL_IMPLICIT_WAIT=5 #sec default
 SELENIUM_EXPECTED_URL_TIMEOUT=5 #sec default
@@ -309,7 +311,7 @@ SELENIUM_EXPECTED_URL_CHECK=False #disable the automatic page url check, the def
 </code></pre>
 <h3 id="proxy-optional">Proxy (Optional)</h3>
 <p>Configure the proxy settings.</p>
-<pre><code class="language-ini">-- settings.ini
+<pre><code class="language-ini"># settings.ini
 [settings]
 BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=127.0.0.1:8080
@@ -317,37 +319,37 @@ BOT_HTTPS_PROXY=127.0.0.1:8080
 </code></pre>
 <h3 id="user-agent-optional">User Agent (Optional)</h3>
 <p>Configure the user agent used for the requests.</p>
-<pre><code class="language-ini">-- settings.ini
+<pre><code class="language-ini"># settings.ini
 [settings]
 BOT_USER_AGENT=&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36&quot;
 </code></pre>
 <h3 id="arguments-optional">Arguments (Optional)</h3>
 <p>Configure Firefox Arguments, store them in the config file. The format is the same for all the supported drivers; check carefully that the exact arg is implemented for the selected driver.</p>
 <h4 id="firefox-args">Firefox args</h4>
-<pre><code class="language-ini">-- settings.ini
+<pre><code class="language-ini"># settings.ini
 [settings]
 BOT_ARGUMENTS=&quot;--headless, --disable-gpu, -profile ./selenium&quot;
 </code></pre>
 <h4 id="chrome-args">Chrome args</h4>
-<pre><code class="language-ini">-- settings.ini
+<pre><code class="language-ini"># settings.ini
 [settings]
 BOT_ARGUMENTS=&quot;--no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium&quot;
 </code></pre>
 <h3 id="store-preferences-optional">Store Preferences (Optional)</h3>
 <p>Store preferences in a JSON file, the format is the same for all the supported drivers; check carefully that the exact string and value are implemented for the selected driver.</p>
 <h4 id="firefox-prefs">Firefox prefs</h4>
-<pre><code class="language-jsonc">-- preferences.json 
+<pre><code class="language-jsonc">// preferences.json
 {
-    &quot;browser.download.manager.showWhenStarting&quot;: false, # Don't show download
-    &quot;browser.helperApps.neverAsk.saveToDisk&quot;: &quot;application/pdf&quot;, # Automatic save PDF files
-    &quot;pdfjs.disabled&quot;: true  # Don't show the pdf
+  &quot;browser.download.manager.showWhenStarting&quot;: false, // Don't show download
+  &quot;browser.helperApps.neverAsk.saveToDisk&quot;: &quot;application/pdf&quot;, // Automatic save PDF files
+  &quot;pdfjs.disabled&quot;: true // Don't show the pdf
 }
 </code></pre>
 <h4 id="chrome-prefs">Chrome prefs</h4>
-<pre><code class="language-jsonc">-- preferences.json 
+<pre><code class="language-jsonc">// preferences.json
 {
-    &quot;profile.default_content_setting_values.notifications&quot;: 2,  # Disable notifications
-    &quot;profile.default_content_settings.popups&quot;: 0  # Allow popups
+  &quot;profile.default_content_setting_values.notifications&quot;: 2, // Disable notifications
+  &quot;profile.default_content_settings.popups&quot;: 0 // Allow popups
 }
 </code></pre>
 <h3 id="references">References</h3>
@@ -399,5 +401,5 @@ BOT_ARGUMENTS=&quot;--no-sandbox, --user-data-dir=./selenium, --profile-director
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-20 16:11:40.755556+00:00
+Build Date UTC : 2023-12-20 16:12:29.766494+00:00
 -->
