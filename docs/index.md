@@ -16,7 +16,7 @@ pip install fastbots
 
 ## Showcase
 
-Check out the full example at [cookiecutter-fastbots](https://github.com/ubertidavide/cookiecutter-fastbots).
+Check out the full template example at [cookiecutter-fastbots](https://github.com/ubertidavide/cookiecutter-fastbots), improve the development speed with this ready to use template, reducing the boilerplate code.
 
 ### Main Code
 
@@ -119,11 +119,13 @@ if __name__ == '__main__':
     # Start the above TestTask
     TestTask()()
 ```
+**Attention**: This framework is flexible, you could also use only the Task class and the selenium's related functions inside the run method without using the POM (Page Object Model) or develop specific pages flow depending on your needs.
 
 ### Locators File
 
-In the locators configuration file, all required locator configurations are defined.
-This can be easily changed without rebuilding or making modifications to the code.
+In the locators configuration file `locators.ini`, all required locator configurations are defined.  
+This can be easily changed without rebuilding or making modifications to the code.  
+It provides a structured and well-known way of managing page locators and urls, useful for scalability in big projects.
 
 ```ini
 # locators.ini
@@ -142,9 +144,9 @@ name_locator=(By.ID, "title")
 
 ## Settings
 
-### Browser and Drivers (Optional)
+### Browser and Drivers 
 
-For default configuration, the selected browser is Firefox, but it could be changed from the config file:
+For default configuration, the selected browser is Firefox, but it could be changed from the `settings.ini` file:
 
 ```ini
 # settings.ini
@@ -156,9 +158,9 @@ BOT_DRIVER_TYPE=CHROME
 **The correct browser installed for the driver selected is required**.
 The browser installation path is autodetected by system environment variables, and the driver download process and its related installation path settings are managed automatically.
 
-### Retry and Debug (Optional)
+### Retry and Debug 
 
-By default, every task will be retried 2 times, waiting for 10 seconds. If all two attempts fail, the task executes the on_error method; otherwise, it will execute the on_success method. This behavior could be modified in the settings file:
+By default, every task will be retried 2 times, waiting for 10 seconds. If all two attempts fail, the task executes the `on_error` method; otherwise, if the `run` fuction will `return True`, then it will be executed the `on_success` method.  
 This behaviour could be modified in the settings file:
 
 ```ini
@@ -168,37 +170,67 @@ BOT_MAX_RETRIES=2 #sec default
 BOT_RETRY_DELAY=10 #sec default
 ```
 
-When the task fails, the library stores the screenshot and the HTML of the page in the debug folder, useful for debugging. It will also store all the logs in the log.log file.
+When the task fails, the library stores the screenshot and the HTML of the page in the debug folder, useful for debugging.  
+```ini
+# settings.ini
+[settings]
+BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
+BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug' # default
+```
+It will also store all the logs in the `log.log` file.
 
-### Page Url Check (Automatic)
+### Page Url Check
 
-Every defined page must have a page URL, and when it's instantiated and reached by the bot, the library checks that the specified URL in the config matches the reached page during navigation to reduce navigation errors. If you want to disable this function, see the Global Wait Section below.
-There is also the possibility to change the page_url check from strict_page_url (exact match), with the current url that need to contains the page url, setting strict_page_url=False, in the page init method after the page name.
+#### Strict Page Check (Default)
+During the navigation the driver goes througth different pages, in every pages initialization, in the default behaviour, the url of the browsers and the specified url of the page setted in the `locators.ini` are cheched.  
+There is also the possibility to change the page_url check type from `strict_page_url` (exact match), with the current url that need to contains the page url, setting `strict_page_url=False`, in the page `__init__` method after the page name.
 
-### File Download Wait (Functions)
+#### Disabled Strict Page Check
+This check could be disabled globally setting `SELENIUM_EXPECTED_URL_CHECK` to `False` or on a specific page in the `locators.ini` file, at the `[page_url]` section, setting `page_name=None`.
+```ini
+# settings.ini
+[settings]
+SELENIUM_EXPECTED_URL_CHECK=False #disable the automatic page url check, the default value it's True
+```
 
-This library has the bot.wait_downloaded_file_path(file_extension, new_name_file=None) method that could be used after a button download click to wait and get the path of the downloaded file. It will also give the ability to rename the file. The extension is used to check that the downloaded file is correct and not corrupted.
-It's the default behaviour, all downloaded file need to be waited to be moved to download folder, to change this, disable strict download wait in the config, see the next section.
+### File Download
 
-### Download Folder and other Folders (Optional)
+Specify the path used to store the downloaded files.
 
 ```ini
 # settings.ini
 [settings]
 BOT_DOWNLOAD_FOLDER_PATH='/usr/...' #override the default download path used for the browser
-BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
-BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug'
+```
 
+#### Strict Download Wait (Default)
+
+This library has the `bot.wait_downloaded_file_path(file_extension, new_name_file=None)` method that could be used after a click on a file download button, to wait and get the path of the downloaded file.  
+It will give also the ability to rename the file.  
+The file extension is used to check that the downloaded file is correct and not corrupted.  
+It's the default behaviour, all the downloaded file need to be waited to be moved to download folder, to change this, disable strict download wait in the config, see the next section.
+
+#### Disabled Strict Download Wait
+
+At the end of the run Task method all the downloaded files are moved to the download folder.
+
+```ini
+# settings.ini
+[settings]
 BOT_STRICT_DOWNLOAD_WAIT=True #default, False -> all the downloaded file are move to download folder always without wait check
 ```
 
-### Global Wait (Optional)
+### Wait Managment
 
 The default configured waits are shown below:
 
-- The implicit wait used for initial page loading.
-- The wait for the URL check that matches the specified in the locators file.
-- The default wait used by the self.bot.wait function.
+- `SELENIUM_GLOBAL_IMPLICIT_WAIT`: The global [implicit](https://selenium-python.readthedocs.io/waits.html#implicit-waits) wait.
+
+- `SELENIUM_EXPECTED_URL_TIMEOUT`: The automatic waited time for the URL check to match a specific condition, done when the page is initialized.  
+
+- `SELENIUM_DEFAULT_WAIT`: The default waited time used by the `bot.wait` function (A WebDriverWait ready to use).
+
+- `SELENIUM_FILE_DOWNLOAD_TIMEOUT`: The default waited file download time used by the `bot.wait_downloaded_file_path()`
 
 ```ini
 # settings.ini
@@ -207,13 +239,11 @@ SELENIUM_GLOBAL_IMPLICIT_WAIT=5 #sec default
 SELENIUM_EXPECTED_URL_TIMEOUT=5 #sec default
 SELENIUM_DEFAULT_WAIT=5 #sec default
 SELENIUM_FILE_DOWNLOAD_TIMEOUT=20 #sec default
-
-SELENIUM_EXPECTED_URL_CHECK=False #disable the automatic page url check, the default value it's True
 ```
 
-### Proxy (Optional)
+### Proxy, Rotating Proxies, Web Unlocker Support 
 
-Configure the proxy settings.
+Configure the proxy settings, you could proxy to a specific IP:
 
 ```ini
 # settings.ini
@@ -222,38 +252,52 @@ BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=127.0.0.1:8080
 BOT_HTTPS_PROXY=127.0.0.1:8080
 ```
+ or even to a paid proxy service like [Brightdata](https://brightdata.com/proxy-types/residential-proxies), [Oxylabs](https://oxylabs.io/products/residential-proxy-pool), [Netnut](https://netnut.io/rotating-residential-proxies/) that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution:
+ ```ini
+# settings.ini Oxyslab
+# 'http://{username}:{password}@{proxy}'
+[settings]
+BOT_PROXY_ENABLED=True
+BOT_HTTP_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
+BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
+```
+**Attention** : All your data will pass through the proxy, check that the proxy is a trusted source before you use them.
 
-### User Agent (Optional)
+### User Agent 
 
-Configure the user agent used for the requests.
+Configure the user agent used for the requests, for default it will be fastbots.
 
 ```ini
 # settings.ini
 [settings]
 BOT_USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
 ```
+For more or specific user agents see [this list](https://www.useragents.me/).
 
-### Arguments (Optional)
+### Arguments and Profiles
 
-Configure Firefox Arguments, store them in the config file. The format is the same for all the supported drivers; check carefully that the exact arg is implemented for the selected driver.
+Configure Firefox Arguments, store them in the config file. The format is the same for all the supported drivers; check carefully that the exact arg is implemented for the selected driver.  
+Arguments are also used to load specific profiles already created, see driver related docs [Firefox Profile Manager](https://support.mozilla.org/en-US/kb/profile-manager-create-remove-switch-firefox-profiles), [Firefox Profile](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data), [Chrome Profile](https://support.google.com/chrome/answer/2364824)
 
 #### Firefox args
 
 ```ini
 # settings.ini
 [settings]
-BOT_ARGUMENTS="--headless, --disable-gpu, -profile ./selenium"
+BOT_ARGUMENTS="-headless, -profile ./selenium"
 ```
+For a detailed list of all supported args check [Firefox Args](https://wiki.mozilla.org/Firefox/CommandLineOptions)
 
 #### Chrome args
 
 ```ini
 # settings.ini
 [settings]
-BOT_ARGUMENTS="--no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium"
+BOT_ARGUMENTS="--headless, --disable-gpu, --no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium"
 ```
+For a detailed list of all supported args check [Chromium Args](https://peter.sh/experiments/chromium-command-line-switches/).
 
-### Store Preferences (Optional)
+### Store Preferences
 
 Store preferences in a JSON file, the format is the same for all the supported drivers; check carefully that the exact string and value are implemented for the selected driver.
 
@@ -267,6 +311,7 @@ Store preferences in a JSON file, the format is the same for all the supported d
   "pdfjs.disabled": true // Don't show the pdf
 }
 ```
+For a detailed list of all supported prefs check [Firefox Profile Prefs](https://searchfox.org/mozilla-release/source/browser/app/profile/firefox.js) and [Firefox All Prefs](https://searchfox.org/mozilla-release/source/modules/libpref/init/all.js)
 
 #### Chrome prefs
 
@@ -277,6 +322,49 @@ Store preferences in a JSON file, the format is the same for all the supported d
   "profile.default_content_settings.popups": 0 // Allow popups
 }
 ```
+For a detailed list of all supported prefs check [Chrome Prefs](https://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/pref_names.cc?view=markup)
+
+### Interceptor
+
+This library integrate also the selenium-wire capabilities, traffic capture is disabled by default.
+
+```ini
+# settings.ini
+[settings]
+# enable capture
+SELENIUM_DISABLE_CAPTURE=False
+# capture only in scope requests and response (comma separated list of domains)
+SELENIUM_IN_SCOPE_CAPTURE='.*stackoverflow.*, .*github.*'
+# enalbe HAR capture
+SELENIUM_ENABLE_HAR_CAPTURE=True
+```
+
+#### Response Interceptor
+```python
+def interceptor(request, response):  # A response interceptor takes two args
+    # add a header to some domain
+    if request.url == 'https://server.com/some/path':
+        response.headers['New-Header'] = 'Some Value'
+
+bot.driver.response_interceptor = interceptor
+```
+
+#### Request Interceptor
+```python
+def interceptor(request): # A response interceptor take one args
+
+    # Block PNG, JPEG and GIF images
+    if request.path.endswith(('.png', '.jpg', '.gif')):
+        request.abort()
+    
+    # add parameter
+    params = request.params
+    params['foo'] = 'bar'
+    request.params = params
+
+bot.driver.request_interceptor = interceptor
+```
+See [selenium-wire](https://github.com/wkeeling/selenium-wire) docs for more detailed use cases.
 
 ### References
 
