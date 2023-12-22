@@ -119,6 +119,10 @@ class Bot(ABC):
         Returns:
             Type['Bot']: The bot instance within the context.
         """
+        # add the url in scope, only used when the capture is enabled
+        if config.SELENIUM_IN_SCOPE_CAPTURE != 'None':
+            self._driver.scopes = config.SELENIUM_IN_SCOPE_CAPTURE.replace(' ', '').strip().split(',')
+
         # default global driver settings
         self._driver.implicitly_wait(config.SELENIUM_GLOBAL_IMPLICIT_WAIT)
 

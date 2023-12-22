@@ -8,6 +8,15 @@ class DriverType(Enum):
     FIREFOX = 1
     CHROME = 2
 
+    @staticmethod
+    def from_str(label):
+        if label.lower().strip() == 'firefox':
+            return DriverType.FIREFOX
+        elif label.lower().strip() == 'chrome':
+            return DriverType.CHROME
+        else:
+            raise NotImplemented('Unknown driver type.')
+
 # Define static configurations
 
 # Possible values: 'development' or 'release'
@@ -32,7 +41,7 @@ APP_VERSION: str = config('APP_VERSION', default='0.1.0', cast=str)
 
 # Driver type for the bot
 # Possible values: DriverType.FIREFOX or DriverType.CHROME
-BOT_DRIVER_TYPE: DriverType = config('BOT_DRIVER_TYPE', default=DriverType.FIREFOX, cast=DriverType)
+BOT_DRIVER_TYPE: DriverType = config('BOT_DRIVER_TYPE', default=DriverType.FIREFOX, cast=DriverType.from_str)
 
 # Path to the download folder for the bot
 # Set to None for the default temporary directory
@@ -82,3 +91,14 @@ SELENIUM_FILE_DOWNLOAD_TIMEOUT: int = config('SELENIUM_FILE_DOWNLOAD_TIMEOUT', d
 
 # Path to the locators file for Selenium
 SELENIUM_LOCATORS_FILE: str = config('SELENIUM_LOCATORS_FILE', default='locators.ini', cast=str)
+
+# Advanced settings
+
+# Disable traffic capture (disabled by default)
+SELENIUM_DISABLE_CAPTURE: bool = config('SELENIUM_DISABLE_CAPTURE', default=True, cast=bool)
+
+# Specify all the url in scope for the capture, using a comma separated list (nothing by default)
+SELENIUM_IN_SCOPE_CAPTURE: str = config('SELENIUM_IN_SCOPE_CAPTURE', default=None, cast=str)
+
+# Enable Har capture (disabbled by default)
+SELENIUM_ENABLE_HAR_CAPTURE: bool = config('SELENIUM_ENABLE_HAR_CAPTURE', default=False, cast=bool)
