@@ -216,7 +216,7 @@ It's the default behaviour, all the downloaded file need to be waited to be move
 
 #### Disabled Strict Download Wait
 
-At the end of the run Task method all the downloaded files are moved to the download folder.
+At the end of the `run` Task method all the downloaded files are moved to the download folder.
 
 ```ini
 # settings.ini
