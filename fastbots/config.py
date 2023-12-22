@@ -10,6 +10,9 @@ class DriverType(Enum):
 
     @staticmethod
     def from_str(label):
+        if not isinstance(label, str):
+            raise TypeError('Label must be a string.')
+    
         if label.lower().strip() == 'firefox':
             return DriverType.FIREFOX
         elif label.lower().strip() == 'chrome':
@@ -41,7 +44,7 @@ APP_VERSION: str = config('APP_VERSION', default='0.1.0', cast=str)
 
 # Driver type for the bot
 # Possible values: DriverType.FIREFOX or DriverType.CHROME
-BOT_DRIVER_TYPE: DriverType = config('BOT_DRIVER_TYPE', default=DriverType.FIREFOX, cast=DriverType.from_str)
+BOT_DRIVER_TYPE: DriverType = config('BOT_DRIVER_TYPE', default='firefox', cast=DriverType.from_str)
 
 # Path to the download folder for the bot
 # Set to None for the default temporary directory
