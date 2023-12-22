@@ -10,9 +10,9 @@ class DriverType(Enum):
 
     @staticmethod
     def from_str(label):
-        if label.lower() == 'firefox':
+        if label.lower().strip() == 'firefox':
             return DriverType.FIREFOX
-        elif label.lower() == 'chrome':
+        elif label.lower().strip() == 'chrome':
             return DriverType.CHROME
         else:
             raise NotImplemented('Unknown driver type.')

@@ -119,6 +119,7 @@ if __name__ == '__main__':
     # Start the above TestTask
     TestTask()()
 ```
+
 **Attention**: This framework is flexible, you could also use only the Task class and the selenium's related functions inside the run method without using the POM (Page Object Model) or develop specific pages flow depending on your needs.
 
 ### Locators File
@@ -171,22 +172,25 @@ BOT_RETRY_DELAY=10 #sec default
 ```
 
 When the task fails, the library stores the screenshot and the HTML of the page in the debug folder, useful for debugging.  
+
 ```ini
 # settings.ini
 [settings]
 BOT_SCREENSHOT_DOWNLOAD_FOLDER_PATH='/debug' # default
 BOT_HTML_DOWNLOAD_FOLDER_PATH='/debug' # default
 ```
+
 It will also store all the logs in the `log.log` file.
 
 ### Page Url Check
 
 #### Strict Page Check (Default)
 During the navigation the driver goes througth different pages, in every pages initialization, in the default behaviour, the url of the browsers and the specified url of the page setted in the `locators.ini` are cheched.  
-There is also the possibility to change the page_url check type from `strict_page_url` (exact match), with the current url that need to contains the page url, setting `strict_page_url=False`, in the page `__init__` method after the page name.
+There is also the possibility to change the `page_url` check type from `strict_page_url` (exact match), with the current url that need to contains the page url, setting `strict_page_url=False`, in the page `__init__` method after the page name.
 
 #### Disabled Strict Page Check
 This check could be disabled globally setting `SELENIUM_EXPECTED_URL_CHECK` to `False` or on a specific page in the `locators.ini` file, at the `[page_url]` section, setting `page_name=None`.
+
 ```ini
 # settings.ini
 [settings]
@@ -252,7 +256,9 @@ BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=127.0.0.1:8080
 BOT_HTTPS_PROXY=127.0.0.1:8080
 ```
+
  or even to a paid proxy service like [Brightdata](https://brightdata.com/proxy-types/residential-proxies), [Oxylabs](https://oxylabs.io/products/residential-proxy-pool), [Netnut](https://netnut.io/rotating-residential-proxies/) that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution:
+
  ```ini
 # settings.ini Oxyslab
 # 'http://{username}:{password}@{proxy}'
@@ -261,6 +267,7 @@ BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
 BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
 ```
+
 **Attention** : All your data will pass through the proxy, check that the proxy is a trusted source before you use them.
 
 ### User Agent 
@@ -272,6 +279,7 @@ Configure the user agent used for the requests, for default it will be fastbots.
 [settings]
 BOT_USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
 ```
+
 For more or specific user agents see [this list](https://www.useragents.me/).
 
 ### Arguments and Profiles
@@ -286,6 +294,7 @@ Arguments are also used to load specific profiles already created, see driver re
 [settings]
 BOT_ARGUMENTS="-headless, -profile ./selenium"
 ```
+
 For a detailed list of all supported args check [Firefox Args](https://wiki.mozilla.org/Firefox/CommandLineOptions)
 
 #### Chrome args
@@ -295,6 +304,7 @@ For a detailed list of all supported args check [Firefox Args](https://wiki.mozi
 [settings]
 BOT_ARGUMENTS="--headless, --disable-gpu, --no-sandbox, --user-data-dir=./selenium, --profile-directory=selenium"
 ```
+
 For a detailed list of all supported args check [Chromium Args](https://peter.sh/experiments/chromium-command-line-switches/).
 
 ### Store Preferences
@@ -311,6 +321,7 @@ Store preferences in a JSON file, the format is the same for all the supported d
   "pdfjs.disabled": true // Don't show the pdf
 }
 ```
+
 For a detailed list of all supported prefs check [Firefox Profile Prefs](https://searchfox.org/mozilla-release/source/browser/app/profile/firefox.js) and [Firefox All Prefs](https://searchfox.org/mozilla-release/source/modules/libpref/init/all.js)
 
 #### Chrome prefs
@@ -322,7 +333,18 @@ For a detailed list of all supported prefs check [Firefox Profile Prefs](https:/
   "profile.default_content_settings.popups": 0 // Allow popups
 }
 ```
+
 For a detailed list of all supported prefs check [Chrome Prefs](https://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/pref_names.cc?view=markup)
+
+### Cookies Managment
+
+There is also the possibility to load `bot.load_cookies()` and store `bot.save_cookies()` cookies from file.
+
+```ini
+# settings.ini
+[settings]
+BOT_COOKIES_FILE_PATH=cookies.pkl #default
+```
 
 ### Interceptor
 
@@ -340,6 +362,7 @@ SELENIUM_ENABLE_HAR_CAPTURE=True
 ```
 
 #### Response Interceptor
+
 ```python
 def interceptor(request, response):  # A response interceptor takes two args
     # add a header to some domain
@@ -350,6 +373,7 @@ bot.driver.response_interceptor = interceptor
 ```
 
 #### Request Interceptor
+
 ```python
 def interceptor(request): # A response interceptor take one args
 
@@ -364,6 +388,7 @@ def interceptor(request): # A response interceptor take one args
 
 bot.driver.request_interceptor = interceptor
 ```
+
 See [selenium-wire](https://github.com/wkeeling/selenium-wire) docs for more detailed use cases.
 
 ### References
