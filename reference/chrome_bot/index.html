@@ -272,7 +272,7 @@ finally:
         chrome_options: ChromeOptions = ChromeOptions()
 
         # Add all the arguments specified in the config
-        if config.BOT_ARGUMENTS is not None:
+        if config.BOT_ARGUMENTS != 'None':
             arguments = config.BOT_ARGUMENTS.replace(' ', '').strip().split(',')
             for argument in arguments:
                 chrome_options.add_argument(argument)
@@ -300,24 +300,22 @@ finally:
         Returns:
             WebDriver: Chrome WebDriver instance.
         """
+        seleniumwire_options = {
+            'disable_capture': config.SELENIUM_DISABLE_CAPTURE,
+            'enable_har': config.SELENIUM_ENABLE_HAR_CAPTURE
+        }
+
         if config.BOT_PROXY_ENABLED:
             # Proxy settings
-            seleniumwire_options = {
-                "proxy": {
-                    "http": config.BOT_HTTP_PROXY,
-                    "https": config.BOT_HTTPS_PROXY,
-                }
+            seleniumwire_options['proxy'] = {
+                'http': config.BOT_HTTP_PROXY,
+                'https': config.BOT_HTTPS_PROXY,
             }
 
-            # Initialize Chrome with proxy
-            return Chrome(
-                options=self.__load_options__(),
-                seleniumwire_options=seleniumwire_options
-            )
-
-        # Initialize Chrome without proxy
+        # Initialize Chrome with options
         return Chrome(
-            options=self.__load_options__()
+            options=self.__load_options__(),
+            seleniumwire_options=seleniumwire_options
         )</code></pre>
             </details>
 
@@ -423,24 +421,22 @@ finally:
     Returns:
         WebDriver: Chrome WebDriver instance.
     """
+    seleniumwire_options = {
+        'disable_capture': config.SELENIUM_DISABLE_CAPTURE,
+        'enable_har': config.SELENIUM_ENABLE_HAR_CAPTURE
+    }
+
     if config.BOT_PROXY_ENABLED:
         # Proxy settings
-        seleniumwire_options = {
-            "proxy": {
-                "http": config.BOT_HTTP_PROXY,
-                "https": config.BOT_HTTPS_PROXY,
-            }
+        seleniumwire_options['proxy'] = {
+            'http': config.BOT_HTTP_PROXY,
+            'https': config.BOT_HTTPS_PROXY,
         }
 
-        # Initialize Chrome with proxy
-        return Chrome(
-            options=self.__load_options__(),
-            seleniumwire_options=seleniumwire_options
-        )
-
-    # Initialize Chrome without proxy
+    # Initialize Chrome with options
     return Chrome(
-        options=self.__load_options__()
+        options=self.__load_options__(),
+        seleniumwire_options=seleniumwire_options
     )</code></pre>
           </details>
   </div>
@@ -503,7 +499,7 @@ finally:
     chrome_options: ChromeOptions = ChromeOptions()
 
     # Add all the arguments specified in the config
-    if config.BOT_ARGUMENTS is not None:
+    if config.BOT_ARGUMENTS != 'None':
         arguments = config.BOT_ARGUMENTS.replace(' ', '').strip().split(',')
         for argument in arguments:
             chrome_options.add_argument(argument)

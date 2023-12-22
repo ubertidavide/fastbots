@@ -284,7 +284,7 @@
         firefox_options: FirefoxOptions = FirefoxOptions()
 
         # Add all the arguments specified in the config
-        if config.BOT_ARGUMENTS is not None:
+        if config.BOT_ARGUMENTS != 'None':
             arguments = config.BOT_ARGUMENTS.replace(' ', '').strip().split(',')
             for argument in arguments:
                 firefox_options.add_argument(argument)
@@ -310,24 +310,22 @@
         Returns:
             WebDriver: The configured WebDriver instance for Firefox.
         """
+        seleniumwire_options = {
+            'disable_capture': config.SELENIUM_DISABLE_CAPTURE,
+            'enable_har': config.SELENIUM_ENABLE_HAR_CAPTURE
+        }
+
         if config.BOT_PROXY_ENABLED:
             # Proxy settings
-            seleniumwire_options = {
-                "proxy": {
-                    "http": config.BOT_HTTP_PROXY,
-                    "https": config.BOT_HTTPS_PROXY,
-                }
+            seleniumwire_options['proxy'] = {
+                'http': config.BOT_HTTP_PROXY,
+                'https': config.BOT_HTTPS_PROXY,
             }
 
-            # Initialize Firefox with proxy
-            return Firefox(
-                options=self.__load_options__(),
-                seleniumwire_options=seleniumwire_options
-            )
-
-        # Initialize Firefox without proxy
+        # Initialize Firefox with options
         return Firefox(
-            options=self.__load_options__()
+            options=self.__load_options__(),
+            seleniumwire_options=seleniumwire_options
         )</code></pre>
             </details>
 
@@ -429,24 +427,22 @@
     Returns:
         WebDriver: The configured WebDriver instance for Firefox.
     """
+    seleniumwire_options = {
+        'disable_capture': config.SELENIUM_DISABLE_CAPTURE,
+        'enable_har': config.SELENIUM_ENABLE_HAR_CAPTURE
+    }
+
     if config.BOT_PROXY_ENABLED:
         # Proxy settings
-        seleniumwire_options = {
-            "proxy": {
-                "http": config.BOT_HTTP_PROXY,
-                "https": config.BOT_HTTPS_PROXY,
-            }
+        seleniumwire_options['proxy'] = {
+            'http': config.BOT_HTTP_PROXY,
+            'https': config.BOT_HTTPS_PROXY,
         }
 
-        # Initialize Firefox with proxy
-        return Firefox(
-            options=self.__load_options__(),
-            seleniumwire_options=seleniumwire_options
-        )
-
-    # Initialize Firefox without proxy
+    # Initialize Firefox with options
     return Firefox(
-        options=self.__load_options__()
+        options=self.__load_options__(),
+        seleniumwire_options=seleniumwire_options
     )</code></pre>
           </details>
   </div>
@@ -509,7 +505,7 @@
     firefox_options: FirefoxOptions = FirefoxOptions()
 
     # Add all the arguments specified in the config
-    if config.BOT_ARGUMENTS is not None:
+    if config.BOT_ARGUMENTS != 'None':
         arguments = config.BOT_ARGUMENTS.replace(' ', '').strip().split(',')
         for argument in arguments:
             firefox_options.add_argument(argument)
