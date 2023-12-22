@@ -258,9 +258,9 @@ BOT_HTTP_PROXY=127.0.0.1:8080
 BOT_HTTPS_PROXY=127.0.0.1:8080
 ```
 
- or even to a paid proxy service like [Brightdata](https://brightdata.com/proxy-types/residential-proxies), [Oxylabs](https://oxylabs.io/products/residential-proxy-pool), [Netnut](https://netnut.io/rotating-residential-proxies/) that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution:
+or even to a paid proxy service like [Brightdata](https://brightdata.com/proxy-types/residential-proxies), [Oxylabs](https://oxylabs.io/products/residential-proxy-pool), [Netnut](https://netnut.io/rotating-residential-proxies/) that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution:
 
- ```ini
+```ini
 # settings.ini Oxyslab
 # 'http://{username}:{password}@{proxy}'
 [settings]
