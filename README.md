@@ -16,7 +16,7 @@ pip install fastbots
 
 ## Showcase
 
-Check out the full example at [cookiecutter-fastbots](https://github.com/ubertidavide/cookiecutter-fastbots).
+Check out the full template example at [cookiecutter-fastbots](https://github.com/ubertidavide/cookiecutter-fastbots), improve the development speed with this ready to use template, reducing the boilerplate code.
 
 ### Main Code
 
@@ -326,11 +326,23 @@ For a detailed list of all supported prefs check [Chrome Prefs](https://src.chro
 
 ### Interceptor
 
-This library integrates also the selenium-wire capabilities: 
+This library integrate also the selenium-wire capabilities, traffic capture is disabled by default.
+
+```ini
+# settings.ini
+[settings]
+# enable capture
+SELENIUM_DISABLE_CAPTURE=False
+# capture only in scope requests and response (comma separated list of domains)
+SELENIUM_IN_SCOPE_CAPTURE='.*stackoverflow.*, .*github.*'
+# enalbe HAR capture
+SELENIUM_ENABLE_HAR_CAPTURE=True
+```
 
 #### Response Interceptor
 ```python
 def interceptor(request, response):  # A response interceptor takes two args
+    # add a header to some domain
     if request.url == 'https://server.com/some/path':
         response.headers['New-Header'] = 'Some Value'
 
@@ -340,6 +352,12 @@ bot.driver.response_interceptor = interceptor
 #### Request Interceptor
 ```python
 def interceptor(request): # A response interceptor take one args
+
+    # Block PNG, JPEG and GIF images
+    if request.path.endswith(('.png', '.jpg', '.gif')):
+        request.abort()
+    
+    # add parameter
     params = request.params
     params['foo'] = 'bar'
     request.params = params
