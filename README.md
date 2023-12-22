@@ -251,6 +251,7 @@ Configure the proxy settings, you could proxy to a specific IP:
 
 ```ini
 # settings.ini
+# '<proxy_protocol>://<username>:<password>@<proxy_ip_address>:<proxy_port>'
 [settings]
 BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=127.0.0.1:8080
