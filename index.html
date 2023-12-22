@@ -75,6 +75,36 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#proxy-rotating-proxies-web-unlocker-support">Proxy, Rotating Proxies, Web Unlocker Support</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-agent">User Agent</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#arguments-and-profiles">Arguments and Profiles</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#firefox-args">Firefox args</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#chrome-args">Chrome args</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#store-preferences">Store Preferences</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#firefox-prefs">Firefox prefs</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#chrome-prefs">Chrome prefs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cookies-managment">Cookies Managment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#interceptor">Interceptor</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#response-interceptor">Response Interceptor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#request-interceptor">Request Interceptor</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#references">References</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -336,22 +366,17 @@ BOT_HTTP_PROXY=127.0.0.1:8080
 BOT_HTTPS_PROXY=127.0.0.1:8080
 </code></pre>
 <p>or even to a paid proxy service like <a href="https://brightdata.com/proxy-types/residential-proxies">Brightdata</a>, <a href="https://oxylabs.io/products/residential-proxy-pool">Oxylabs</a>, <a href="https://netnut.io/rotating-residential-proxies/">Netnut</a> that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution:</p>
-<p>```ini</p>
-<h1 id="settingsini-oxyslab">settings.ini Oxyslab</h1>
-<h1 id="httpusernamepasswordproxy">'http://{username}:{password}@{proxy}'</h1>
-<p>[settings]
+<pre><code class="language-ini"># settings.ini Oxyslab
+# 'http://{username}:{password}@{proxy}'
+[settings]
 BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
-BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777</p>
-<pre><code>
-**Attention** : All your data will pass through the proxy, check that the proxy is a trusted source before you use them.
-
-### User Agent 
-
-Configure the user agent used for the requests, for default it will be fastbots.
-
-```ini
-# settings.ini
+BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
+</code></pre>
+<p><strong>Attention</strong> : All your data will pass through the proxy, check that the proxy is a trusted source before you use them.</p>
+<h3 id="user-agent">User Agent</h3>
+<p>Configure the user agent used for the requests, for default it will be fastbots.</p>
+<pre><code class="language-ini"># settings.ini
 [settings]
 BOT_USER_AGENT=&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36&quot;
 </code></pre>
@@ -479,5 +504,5 @@ bot.driver.request_interceptor = interceptor
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-22 20:17:09.343490+00:00
+Build Date UTC : 2023-12-22 20:21:15.612130+00:00
 -->
