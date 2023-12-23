@@ -12,6 +12,7 @@ selenium = "^4.15.2"
 python-decouple = "^3.8"
 tenacity = "^8.2.3"
 selenium-wire = "^5.1.0"
+capsolver = "^1.0.7"
 
 [tool.poetry.group.dev.dependencies]
 setuptools = "^68.2.2"

@@ -105,3 +105,6 @@ SELENIUM_IN_SCOPE_CAPTURE: str = config('SELENIUM_IN_SCOPE_CAPTURE', default=Non
 
 # Enable Har capture (disabbled by default)
 SELENIUM_ENABLE_HAR_CAPTURE: bool = config('SELENIUM_ENABLE_HAR_CAPTURE', default=False, cast=bool)
+
+# Capsolver CHAPTCHA resolver service
+CAPSOLVER_API_KEY: str = config('CAPSOLVER_API_KEY', default=None, cast=str)

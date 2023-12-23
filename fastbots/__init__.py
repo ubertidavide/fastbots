@@ -8,6 +8,8 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.alert import Alert
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementNotInteractableException, StaleElementReferenceException, ElementClickInterceptedException
 
+import capsolver
+
 from fastbots.bot import Bot
 from fastbots.page import Page
 from fastbots.task import Task

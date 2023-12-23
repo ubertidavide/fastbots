@@ -271,6 +271,34 @@ BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
 
 **Attention** : All your data will pass through the proxy, check that the proxy is a trusted source before you use them.
 
+### CAPTCHA Solvers
+
+By default, this library integrate [capsolver](https://docs.capsolver.com/guide/getting-started) service, this provide the possibility to bypass an high number of different CAPTCHAs.
+
+An example code:
+
+```python
+from fastbots import capsolver
+
+solution = capsolver.solve({
+        "type":"ReCaptchaV2TaskProxyLess",
+        "websiteKey":"6Le-wvkSAAAAAPBMRTvw0Q4Muexq9bi0DJwx_mJ-",
+        "websiteURL":"https://www.google.com/recaptcha/api2/demo",
+    })
+
+print(solution)
+```
+
+Specify your API Key in the settings.
+
+```ini
+# settings.ini
+[settings]
+CAPSOLVER_API_KEY="my-api-key"
+```
+
+For more and detailed capabilities see [capsolver](https://docs.capsolver.com/guide/getting-started) official docs.
+
 ### User Agent 
 
 Configure the user agent used for the requests, for default it will be fastbots.
