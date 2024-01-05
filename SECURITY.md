@@ -6,8 +6,8 @@ Please upgrade to a supported version for better security.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.2.5   | :white_check_mark: |
-| < 0.2.5   | :x:                |
+| 0.2.6   | :white_check_mark: |
+| < 0.2.6   | :x:                |
 
 ## Reporting a Vulnerability
 

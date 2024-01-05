@@ -38,7 +38,7 @@ ENV: str = config('ENV', default=ENV_DEVELOPMENT, cast=str)
 
 # Project information
 PROJECT_NAME: str = config('PROJECT_NAME', default='fastbot', cast=str)
-APP_VERSION: str = config('APP_VERSION', default='0.1.0', cast=str)
+APP_VERSION: str = config('APP_VERSION', default='0.2.6', cast=str)
 
 # WebDriver settings for bot
 
@@ -105,3 +105,6 @@ SELENIUM_IN_SCOPE_CAPTURE: str = config('SELENIUM_IN_SCOPE_CAPTURE', default=Non
 
 # Enable Har capture (disabbled by default)
 SELENIUM_ENABLE_HAR_CAPTURE: bool = config('SELENIUM_ENABLE_HAR_CAPTURE', default=False, cast=bool)
+
+# Capsolver CHAPTCHA resolver service
+CAPSOLVER_API_KEY: str = config('CAPSOLVER_API_KEY', default=None, cast=str)

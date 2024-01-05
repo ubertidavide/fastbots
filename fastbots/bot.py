@@ -17,6 +17,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
+import capsolver
 
 from fastbots import config, logger
 from fastbots.payload import Payload
@@ -79,6 +80,10 @@ class Bot(ABC):
         self._locators: ConfigParser = self.__load_locators__()
         # data store
         self._payload: Payload = Payload()
+
+        # add the api key if setted
+        if config.CAPSOLVER_API_KEY != 'None':
+            capsolver.api_key = config.CAPSOLVER_API_KEY
 
     @property
     def driver(self) -> WebDriver:

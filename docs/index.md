@@ -245,7 +245,7 @@ SELENIUM_DEFAULT_WAIT=5 #sec default
 SELENIUM_FILE_DOWNLOAD_TIMEOUT=20 #sec default
 ```
 
-### Proxy, Rotating Proxies, Web Unlocker Support 
+### Proxy, Rotating Proxies, Tor, Web Unlocker Support 
 
 Configure the proxy settings, you could proxy to a specific IP:
 
@@ -258,7 +258,9 @@ BOT_HTTP_PROXY=127.0.0.1:8080
 BOT_HTTPS_PROXY=127.0.0.1:8080
 ```
 
-or even to a paid proxy service like [Brightdata](https://brightdata.com/proxy-types/residential-proxies), [Oxylabs](https://oxylabs.io/products/residential-proxy-pool), [Netnut](https://netnut.io/rotating-residential-proxies/) that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution:
+or even to a paid proxy service like [Brightdata](https://brightdata.com/proxy-types/residential-proxies), [Oxylabs](https://oxylabs.io/products/residential-proxy-pool), [Netnut](https://netnut.io/rotating-residential-proxies/) that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution, [Tor](https://www.torproject.org/) to acess hidden services.
+
+Example using Oxylabs rotating proxies:
 
 ```ini
 # settings.ini Oxyslab
@@ -270,6 +272,34 @@ BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
 ```
 
 **Attention** : All your data will pass through the proxy, check that the proxy is a trusted source before you use them.
+
+### CAPTCHA Solvers
+
+By default, this library integrate [capsolver](https://docs.capsolver.com/guide/getting-started) service, this provide the possibility to bypass an high number of different CAPTCHAs (es: [reCAPTCHA](https://www.google.com/recaptcha/about/) and [HCaptcha](https://www.hcaptcha.com/)).
+
+An example code:
+
+```python
+from fastbots import capsolver
+
+solution = capsolver.solve({
+        "type":"ReCaptchaV2TaskProxyLess",
+        "websiteKey":"6Le-wvkSAAAAAPBMRTvw0Q4Muexq9bi0DJwx_mJ-",
+        "websiteURL":"https://www.google.com/recaptcha/api2/demo",
+    })
+
+print(solution)
+```
+
+Specify your API Key in the settings.
+
+```ini
+# settings.ini
+[settings]
+CAPSOLVER_API_KEY="my-api-key"
+```
+
+For more and detailed capabilities see [capsolver](https://docs.capsolver.com/guide/getting-started) official docs.
 
 ### User Agent 
 
