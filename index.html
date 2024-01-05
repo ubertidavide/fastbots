@@ -73,7 +73,9 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#wait-managment">Wait Managment</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#proxy-rotating-proxies-web-unlocker-support">Proxy, Rotating Proxies, Web Unlocker Support</a>
+    <li class="toctree-l3"><a class="reference internal" href="#proxy-rotating-proxies-tor-web-unlocker-support">Proxy, Rotating Proxies, Tor, Web Unlocker Support</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#captcha-solvers">CAPTCHA Solvers</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#user-agent">User Agent</a>
     </li>
@@ -356,7 +358,7 @@ SELENIUM_EXPECTED_URL_TIMEOUT=5 #sec default
 SELENIUM_DEFAULT_WAIT=5 #sec default
 SELENIUM_FILE_DOWNLOAD_TIMEOUT=20 #sec default
 </code></pre>
-<h3 id="proxy-rotating-proxies-web-unlocker-support">Proxy, Rotating Proxies, Web Unlocker Support</h3>
+<h3 id="proxy-rotating-proxies-tor-web-unlocker-support">Proxy, Rotating Proxies, Tor, Web Unlocker Support</h3>
 <p>Configure the proxy settings, you could proxy to a specific IP:</p>
 <pre><code class="language-ini"># settings.ini
 # '&lt;proxy_protocol&gt;://&lt;username&gt;:&lt;password&gt;@&lt;proxy_ip_address&gt;:&lt;proxy_port&gt;'
@@ -365,7 +367,8 @@ BOT_PROXY_ENABLED=True
 BOT_HTTP_PROXY=127.0.0.1:8080
 BOT_HTTPS_PROXY=127.0.0.1:8080
 </code></pre>
-<p>or even to a paid proxy service like <a href="https://brightdata.com/proxy-types/residential-proxies">Brightdata</a>, <a href="https://oxylabs.io/products/residential-proxy-pool">Oxylabs</a>, <a href="https://netnut.io/rotating-residential-proxies/">Netnut</a> that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution:</p>
+<p>or even to a paid proxy service like <a href="https://brightdata.com/proxy-types/residential-proxies">Brightdata</a>, <a href="https://oxylabs.io/products/residential-proxy-pool">Oxylabs</a>, <a href="https://netnut.io/rotating-residential-proxies/">Netnut</a> that let you connect throught different IPs and help bypass CAPTCHA with the web unlocker solution, <a href="https://www.torproject.org/">Tor</a> to acess hidden services.</p>
+<p>Example using Oxylabs rotating proxies:</p>
 <pre><code class="language-ini"># settings.ini Oxyslab
 # 'http://{username}:{password}@{proxy}'
 [settings]
@@ -374,6 +377,25 @@ BOT_HTTP_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
 BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
 </code></pre>
 <p><strong>Attention</strong> : All your data will pass through the proxy, check that the proxy is a trusted source before you use them.</p>
+<h3 id="captcha-solvers">CAPTCHA Solvers</h3>
+<p>By default, this library integrate <a href="https://docs.capsolver.com/guide/getting-started">capsolver</a> service, this provide the possibility to bypass an high number of different CAPTCHAs (es: <a href="https://www.google.com/recaptcha/about/">reCAPTCHA</a> and <a href="https://www.hcaptcha.com/">HCaptcha</a>).</p>
+<p>An example code:</p>
+<pre><code class="language-python">from fastbots import capsolver
+
+solution = capsolver.solve({
+        &quot;type&quot;:&quot;ReCaptchaV2TaskProxyLess&quot;,
+        &quot;websiteKey&quot;:&quot;6Le-wvkSAAAAAPBMRTvw0Q4Muexq9bi0DJwx_mJ-&quot;,
+        &quot;websiteURL&quot;:&quot;https://www.google.com/recaptcha/api2/demo&quot;,
+    })
+
+print(solution)
+</code></pre>
+<p>Specify your API Key in the settings.</p>
+<pre><code class="language-ini"># settings.ini
+[settings]
+CAPSOLVER_API_KEY=&quot;my-api-key&quot;
+</code></pre>
+<p>For more and detailed capabilities see <a href="https://docs.capsolver.com/guide/getting-started">capsolver</a> official docs.</p>
 <h3 id="user-agent">User Agent</h3>
 <p>Configure the user agent used for the requests, for default it will be fastbots.</p>
 <pre><code class="language-ini"># settings.ini
@@ -504,5 +526,5 @@ bot.driver.request_interceptor = interceptor
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-22 20:21:15.612130+00:00
+Build Date UTC : 2024-01-05 14:37:51.808451+00:00
 -->

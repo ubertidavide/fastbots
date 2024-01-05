@@ -371,6 +371,10 @@ Waits for a specific downloaded file and returns its path.</p>
         # data store
         self._payload: Payload = Payload()
 
+        # add the api key if setted
+        if config.CAPSOLVER_API_KEY != 'None':
+            capsolver.api_key = config.CAPSOLVER_API_KEY
+
     @property
     def driver(self) -&gt; WebDriver:
         """
@@ -1000,7 +1004,11 @@ Waits for a specific downloaded file and returns its path.</p>
     # load all the locators
     self._locators: ConfigParser = self.__load_locators__()
     # data store
-    self._payload: Payload = Payload()</code></pre>
+    self._payload: Payload = Payload()
+
+    # add the api key if setted
+    if config.CAPSOLVER_API_KEY != 'None':
+        capsolver.api_key = config.CAPSOLVER_API_KEY</code></pre>
           </details>
   </div>
 
