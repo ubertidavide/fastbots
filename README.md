@@ -273,7 +273,7 @@ BOT_HTTPS_PROXY=http://customer-USER:PASS@pr.oxylabs.io:7777
 
 ### CAPTCHA Solvers
 
-By default, this library integrate [capsolver](https://docs.capsolver.com/guide/getting-started) service, this provide the possibility to bypass an high number of different CAPTCHAs.
+By default, this library integrate [capsolver](https://docs.capsolver.com/guide/getting-started) service, this provide the possibility to bypass an high number of different CAPTCHAs (es: [reCAPTCHA](https://www.google.com/recaptcha/about/) and [HCaptcha](https://www.hcaptcha.com/)).
 
 An example code:
 
