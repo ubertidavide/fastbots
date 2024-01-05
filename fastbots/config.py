@@ -38,7 +38,7 @@ ENV: str = config('ENV', default=ENV_DEVELOPMENT, cast=str)
 
 # Project information
 PROJECT_NAME: str = config('PROJECT_NAME', default='fastbot', cast=str)
-APP_VERSION: str = config('APP_VERSION', default='0.1.0', cast=str)
+APP_VERSION: str = config('APP_VERSION', default='0.2.6', cast=str)
 
 # WebDriver settings for bot
 
