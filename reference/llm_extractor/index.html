@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/reference/page/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Uberti Davide" /><link rel="canonical" href="https://github.com/ubertidavide/fastbots/reference/llm_extractor/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Page - fastbots</title>
+    <title>LLMExtractor - fastbots</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,9 +13,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Page";
-        var mkdocs_page_input_path = "reference/page.md";
-        var mkdocs_page_url = "/ubertidavide/fastbots/reference/page/";
+        var mkdocs_page_name = "LLMExtractor";
+        var mkdocs_page_input_path = "reference/llm_extractor.md";
+        var mkdocs_page_url = "/ubertidavide/fastbots/reference/llm_extractor/";
       </script>
     
     <!--[if lt IE 9]>
@@ -44,19 +44,7 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../task/">Task</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Page</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#fastbots.page.Page">Page</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#fastbots.page.Page.bot">bot</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#fastbots.page.Page.__init__">__init__()</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#fastbots.page.Page.__locator__">__locator__()</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#fastbots.page.Page.forward">forward()</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../page/">Page</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="#">Bot</a>
     <ul>
@@ -70,7 +58,9 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../payload/">Payload</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../llm_extractor/">LLMExtractor</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">LLMExtractor</a>
+    <ul class="current">
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
                   </li>
@@ -90,7 +80,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">References</li>
-      <li class="breadcrumb-item active">Page</li>
+      <li class="breadcrumb-item active">LLMExtractor</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -99,21 +89,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="page">Page</h1>
+                <h2 id="llmextractor">LLMExtractor</h2>
 
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="fastbots.page.Page"></a>
+<a id="fastbots.llm_extractor.LLMExtractor"></a>
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
-            Bases: <code><span title="abc.ABC">ABC</span></code></p>
+            Bases: <code>object</code></p>
 
   
-      <p>Page</p>
-<p>A blueprint for web pages used to navigate and perform actions on them.</p>
+      <p>LLM Extractor</p>
+<p>This is an extractor utility useful for leveraging the llm ability to extract automatically data from html.
+The data must be explained throught a pydantic model, this extractor use the rule to parse and validate correctly
+the needed entities.
+It uses an OpenAI llm model.</p>
 
 
 
@@ -132,23 +125,15 @@
                   (<code><a class="autorefs autorefs-internal" title="fastbots.bot.Bot" href="../bot/#fastbots.bot.Bot">Bot</a></code>)
               –
               <div class="doc-md-description">
-                <p>The bot instance associated with the page.</p>
+                <p>The bot instance associated with the extractor.</p>
               </div>
             </li>
             <li>
-              <b><code>_page_name</code></b>
-                  (<code>str</code>)
+              <b><code>_pydantic_model</code></b>
+                  (<code><span title="langchain_core.pydantic_v1.BaseModel">BaseModel</span></code>)
               –
               <div class="doc-md-description">
-                <p>The name of the page.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>_page_url</code></b>
-                  (<code>str</code>)
-              –
-              <div class="doc-md-description">
-                <p>The URL of the page.</p>
+                <p>The representation of the data needed to extract and validate the parsed data.</p>
               </div>
             </li>
         </ul>
@@ -171,116 +156,87 @@
             <td><code>__init__</code></td>
             <td>
               <div class="doc-md-description">
-                <p>Bot, page_name: str = 'page_name'): Initializes the Page class.</p>
+                <p>Bot, pydantic_model: BaseModel): Initialized the LLMExtractor class.</p>
               </div>
             </td>
           </tr>
           <tr>
-            <td><code>bot</code></td>
+            <td><code>extract_data</code></td>
             <td>
               <div class="doc-md-description">
-                <p>Gets the associated bot instance.</p>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td><code>__locator__</code></td>
-            <td>
-              <div class="doc-md-description">
-                <p>str) -&gt; tuple: Utility method to load a locator.</p>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td><code>forward</code></td>
-            <td>
-              <div class="doc-md-description">
-                <p>Represents a series of actions on the page.</p>
+                <p>str) -&gt; str: Extract the needed data.</p>
               </div>
             </td>
           </tr>
     </tbody>
   </table>
 
-<details class="example" open>
-  <summary>Example</summary>
-  <pre><code class="language-python">class MyPage(Page):
-    def forward(self):
-        # your implementation here
-</code></pre>
-</details>
             <details class="quote">
-              <summary>Source code in <code>fastbots/page.py</code></summary>
-              <pre class="highlight"><code class="language-python">class Page(ABC):
+              <summary>Source code in <code>fastbots/llm_extractor.py</code></summary>
+              <pre class="highlight"><code class="language-python">class LLMExtractor(object):
     """
-    Page
+    LLM Extractor
 
-    A blueprint for web pages used to navigate and perform actions on them.
+    This is an extractor utility useful for leveraging the llm ability to extract automatically data from html.
+    The data must be explained throught a pydantic model, this extractor use the rule to parse and validate correctly
+    the needed entities.
+    It uses an OpenAI llm model.
 
     Attributes:
-        _bot (Bot): The bot instance associated with the page.
-        _page_name (str): The name of the page.
-        _page_url (str): The URL of the page.
+        _bot (Bot): The bot instance associated with the extractor.
+        _pydantic_model (BaseModel): The representation of the data needed to extract and validate the parsed data.
 
     Methods:
-        __init__(bot: Bot, page_name: str = 'page_name'): Initializes the Page class.
-        bot: Gets the associated bot instance.
-        __locator__(locator_name: str) -&gt; tuple: Utility method to load a locator.
-        forward() -&gt; Union[Type['Page'], None]: Represents a series of actions on the page.
-
-    Example:
-        ```python
-        class MyPage(Page):
-            def forward(self):
-                # your implementation here
-        ```
+        __init__(self, bot: Bot, pydantic_model: BaseModel): Initialized the LLMExtractor class.
+        extract_data(self, locator_name: str) -&gt; str: Extract the needed data.
     """
 
-    def __init__(self, bot: Bot, page_name: str = 'page_name', strict_page_check: bool = True):
+    def __init__(self, bot: Bot, pydantic_model: BaseModel) -&gt; None:
         """
-        Initializes the Page class.
-
-        In the locators file, the page must be declared in the format:
-        [pages_url]
-        page_name=https://example.com/page
+        Initializes the LLMExtractor class.
 
         Args:
-            bot (Bot): The bot instance associated with the page.
-            page_name (str): The name of the page.
-            strict_page_check (bool): True -&gt; Check if the page url it's the same of the current url, 
-                                    else False -&gt; if the url contain the page url.
-
-        Raises:
-            ValueError: If the locator is not enclosed in round brackets.
+            bot (Bot): The bot instance associated with the extractor.
+            pydantic_model (BaseModel): The representation of the data needed to extract and validate the parsed data.
         """
         super().__init__()
 
         self._bot: Bot = bot
-        self._page_name: str = page_name
 
-        # load the pages url from the locators file
-        self._page_url: str = self._bot.locator('pages_url', self._page_name)
+        llm_model = ChatOpenAI(
+            temperature=0, 
+            model="gpt-3.5-turbo", 
+            openai_api_key=config.OPENAI_API_KEY
+        )
 
-        # check that the current page is the expected
-        if config.SELENIUM_EXPECTED_URL_CHECK and self._page_url != 'None':
-            self._bot.check_page_url(expected_page_url=self._page_url, strict_page_check=strict_page_check)
-
-    @property
-    def bot(self):
+        prompt_template = """ given this information {information} of an entity on this piece of html,
+            I want you to extract all the information about this entity.
+            You are not allowed to make any assumptions while extracting the information.
+            Every link you provide should be from the information given.
+            There should be no assumptions for Links/URLS.
+            You should not return code to do it.:
+            You should extract the following text infromation from the html:
+            \n{format_instructions} # here we are passing format_instructions
         """
-        Gets the associated bot instance.
 
-        Returns:
-            Bot: The bot instance.
-        """
-        return self._bot
+        json_output_parser = JsonOutputParser(
+            pydantic_model=pydantic_model
+        )
+
+        prompt = PromptTemplate(
+            template=prompt_template,
+            input_variables=["information"],
+            partial_variables={"format_instructions": json_output_parser.get_format_instructions()},
+        )
+
+        self._llm_chain = LLMChain(llm=llm_model, prompt=prompt)
 
     def __locator__(self, locator_name: str) -&gt; tuple:
         """
         Utility method to load a locator.
 
         The locators in the file must be in the format:
-        [page_name]
+        [llm_extractor]
         locator_name=(By.XPATH, "//html//input")
 
         Args:
@@ -293,7 +249,7 @@
             ValueError: If the locator is not enclosed in round brackets or is of an unknown or incorrect format.
         """
         # load the locators from file and interpret that as code
-        full_locator: str = self._bot.locator(self._page_name, locator_name).strip().replace('\\\'',  '\'').replace('\\"', '"')
+        full_locator: str = self._bot.locator('llm_extractor', locator_name).strip().replace('\\\'',  '\'').replace('\\"', '"')
 
         if not full_locator.startswith('(') or not full_locator.endswith(')'):
             raise ValueError('The locator must be enclosed in round brackets.')
@@ -322,18 +278,26 @@
         else:
             raise ValueError('The specified locator is unknown or wrong; check by, brackets, and commas.')
 
-    @abstractmethod
-    def forward(self) -&gt; Union[Type['Page'], None]:
+    def extract_data(self, locator_name: str) -&gt; str:
         """
-        Represents a series of actions on the page.
+        Extract the data as a json string, validated throught the data format specified by the pydantic model.
 
-        Returns:
-            Union[Type['Page'], None]: Either the next page instance or None to finish.
+        The locators in the file must be in the format:
+        [llm_extractor]
+        locator_name=(By.XPATH, "//html//input")
 
-        Raises:
-            NotImplementedError: Subclasses must define this method.
+        Args:
+            locator_name (str): The name of the locator.
         """
-        raise NotImplementedError('Tasks must define this method.')</code></pre>
+        try:
+            extracted_data = self._llm_chain.invoke(
+                input={"information": self._bot.wait.until(EC.presence_of_element_located(self.__locator__(locator_name))).get_attribute('innerHTML')},
+                return_only_outputs=True,
+            )
+            return extracted_data["text"]
+        except Exception as e:
+            logging.error(e)
+            return None</code></pre>
             </details>
 
   
@@ -346,51 +310,6 @@
 
 
 
-<div class="doc doc-object doc-attribute">
-
-
-
-
-<h2 id="fastbots.page.Page.bot" class="doc doc-heading">
-          <code class="highlight language-python">bot</code>
-  
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Gets the associated bot instance.</p>
-
-
-
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>Bot</code></b>            –
-            <div class="doc-md-description">
-              <p>The bot instance.</p>
-            </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
-
-</div>
-
 
 
 
@@ -399,18 +318,15 @@
 
 
 
-<h2 id="fastbots.page.Page.__init__" class="doc doc-heading">
-          <code class="highlight language-python">__init__(bot, page_name='page_name', strict_page_check=True)</code>
+<h2 id="fastbots.llm_extractor.LLMExtractor.__init__" class="doc doc-heading">
+          <code class="highlight language-python">__init__(bot, pydantic_model)</code>
 
 </h2>
 
 
   <div class="doc doc-contents ">
   
-      <p>Initializes the Page class.</p>
-<p>In the locators file, the page must be declared in the format:
-[pages_url]
-page_name=https://example.com/page</p>
+      <p>Initializes the LLMExtractor class.</p>
 
 
 
@@ -429,52 +345,15 @@ page_name=https://example.com/page</p>
                   (<code><a class="autorefs autorefs-internal" title="fastbots.bot.Bot" href="../bot/#fastbots.bot.Bot">Bot</a></code>)
               –
               <div class="doc-md-description">
-                <p>The bot instance associated with the page.</p>
+                <p>The bot instance associated with the extractor.</p>
               </div>
             </li>
             <li>
-              <b><code>page_name</code></b>
-                  (<code>str</code>, default:
-                      <code>&#39;page_name&#39;</code>
-)
+              <b><code>pydantic_model</code></b>
+                  (<code><span title="langchain_core.pydantic_v1.BaseModel">BaseModel</span></code>)
               –
               <div class="doc-md-description">
-                <p>The name of the page.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>strict_page_check</code></b>
-                  (<code>bool</code>, default:
-                      <code>True</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>True -&gt; Check if the page url it's the same of the current url, 
-                    else False -&gt; if the url contain the page url.</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Raises:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-                  <code>ValueError</code>
-              –
-              <div class="doc-md-description">
-                <p>If the locator is not enclosed in round brackets.</p>
+                <p>The representation of the data needed to extract and validate the parsed data.</p>
               </div>
             </li>
         </ul>
@@ -483,35 +362,46 @@ page_name=https://example.com/page</p>
   </tbody>
 </table>
           <details class="quote">
-            <summary>Source code in <code>fastbots/page.py</code></summary>
-            <pre class="highlight"><code class="language-python">def __init__(self, bot: Bot, page_name: str = 'page_name', strict_page_check: bool = True):
+            <summary>Source code in <code>fastbots/llm_extractor.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __init__(self, bot: Bot, pydantic_model: BaseModel) -&gt; None:
     """
-    Initializes the Page class.
-
-    In the locators file, the page must be declared in the format:
-    [pages_url]
-    page_name=https://example.com/page
+    Initializes the LLMExtractor class.
 
     Args:
-        bot (Bot): The bot instance associated with the page.
-        page_name (str): The name of the page.
-        strict_page_check (bool): True -&gt; Check if the page url it's the same of the current url, 
-                                else False -&gt; if the url contain the page url.
-
-    Raises:
-        ValueError: If the locator is not enclosed in round brackets.
+        bot (Bot): The bot instance associated with the extractor.
+        pydantic_model (BaseModel): The representation of the data needed to extract and validate the parsed data.
     """
     super().__init__()
 
     self._bot: Bot = bot
-    self._page_name: str = page_name
 
-    # load the pages url from the locators file
-    self._page_url: str = self._bot.locator('pages_url', self._page_name)
+    llm_model = ChatOpenAI(
+        temperature=0, 
+        model="gpt-3.5-turbo", 
+        openai_api_key=config.OPENAI_API_KEY
+    )
 
-    # check that the current page is the expected
-    if config.SELENIUM_EXPECTED_URL_CHECK and self._page_url != 'None':
-        self._bot.check_page_url(expected_page_url=self._page_url, strict_page_check=strict_page_check)</code></pre>
+    prompt_template = """ given this information {information} of an entity on this piece of html,
+        I want you to extract all the information about this entity.
+        You are not allowed to make any assumptions while extracting the information.
+        Every link you provide should be from the information given.
+        There should be no assumptions for Links/URLS.
+        You should not return code to do it.:
+        You should extract the following text infromation from the html:
+        \n{format_instructions} # here we are passing format_instructions
+    """
+
+    json_output_parser = JsonOutputParser(
+        pydantic_model=pydantic_model
+    )
+
+    prompt = PromptTemplate(
+        template=prompt_template,
+        input_variables=["information"],
+        partial_variables={"format_instructions": json_output_parser.get_format_instructions()},
+    )
+
+    self._llm_chain = LLMChain(llm=llm_model, prompt=prompt)</code></pre>
           </details>
   </div>
 
@@ -523,7 +413,7 @@ page_name=https://example.com/page</p>
 
 
 
-<h2 id="fastbots.page.Page.__locator__" class="doc doc-heading">
+<h2 id="fastbots.llm_extractor.LLMExtractor.__locator__" class="doc doc-heading">
           <code class="highlight language-python">__locator__(locator_name)</code>
 
 </h2>
@@ -533,7 +423,7 @@ page_name=https://example.com/page</p>
   
       <p>Utility method to load a locator.</p>
 <p>The locators in the file must be in the format:
-[page_name]
+[llm_extractor]
 locator_name=(By.XPATH, "//html//input")</p>
 
 
@@ -610,13 +500,13 @@ locator_name=(By.XPATH, "//html//input")</p>
   </tbody>
 </table>
           <details class="quote">
-            <summary>Source code in <code>fastbots/page.py</code></summary>
+            <summary>Source code in <code>fastbots/llm_extractor.py</code></summary>
             <pre class="highlight"><code class="language-python">def __locator__(self, locator_name: str) -&gt; tuple:
     """
     Utility method to load a locator.
 
     The locators in the file must be in the format:
-    [page_name]
+    [llm_extractor]
     locator_name=(By.XPATH, "//html//input")
 
     Args:
@@ -629,7 +519,7 @@ locator_name=(By.XPATH, "//html//input")</p>
         ValueError: If the locator is not enclosed in round brackets or is of an unknown or incorrect format.
     """
     # load the locators from file and interpret that as code
-    full_locator: str = self._bot.locator(self._page_name, locator_name).strip().replace('\\\'',  '\'').replace('\\"', '"')
+    full_locator: str = self._bot.locator('llm_extractor', locator_name).strip().replace('\\\'',  '\'').replace('\\"', '"')
 
     if not full_locator.startswith('(') or not full_locator.endswith(')'):
         raise ValueError('The locator must be enclosed in round brackets.')
@@ -668,19 +558,18 @@ locator_name=(By.XPATH, "//html//input")</p>
 
 
 
-<h2 id="fastbots.page.Page.forward" class="doc doc-heading">
-          <code class="highlight language-python">forward()</code>
-  
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
-  </span>
+<h2 id="fastbots.llm_extractor.LLMExtractor.extract_data" class="doc doc-heading">
+          <code class="highlight language-python">extract_data(locator_name)</code>
 
 </h2>
 
 
   <div class="doc doc-contents ">
   
-      <p>Represents a series of actions on the page.</p>
+      <p>Extract the data as a json string, validated throught the data format specified by the pydantic model.</p>
+<p>The locators in the file must be in the format:
+[llm_extractor]
+locator_name=(By.XPATH, "//html//input")</p>
 
 
 
@@ -691,38 +580,15 @@ locator_name=(By.XPATH, "//html//input")</p>
   </colgroup>
   <tbody valign="top">
     <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-                <code><span title="typing.Union">Union</span>[<span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="fastbots.page.Page" href="#fastbots.page.Page">Page</a>], None]</code>
-            –
-            <div class="doc-md-description">
-              <p>Union[Type['Page'], None]: Either the next page instance or None to finish.</p>
-            </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Raises:</th>
+      <th class="field-name">Parameters:</th>
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>NotImplementedError</code>
+              <b><code>locator_name</code></b>
+                  (<code>str</code>)
               –
               <div class="doc-md-description">
-                <p>Subclasses must define this method.</p>
+                <p>The name of the locator.</p>
               </div>
             </li>
         </ul>
@@ -731,19 +597,27 @@ locator_name=(By.XPATH, "//html//input")</p>
   </tbody>
 </table>
           <details class="quote">
-            <summary>Source code in <code>fastbots/page.py</code></summary>
-            <pre class="highlight"><code class="language-python">@abstractmethod
-def forward(self) -&gt; Union[Type['Page'], None]:
+            <summary>Source code in <code>fastbots/llm_extractor.py</code></summary>
+            <pre class="highlight"><code class="language-python">def extract_data(self, locator_name: str) -&gt; str:
     """
-    Represents a series of actions on the page.
+    Extract the data as a json string, validated throught the data format specified by the pydantic model.
 
-    Returns:
-        Union[Type['Page'], None]: Either the next page instance or None to finish.
+    The locators in the file must be in the format:
+    [llm_extractor]
+    locator_name=(By.XPATH, "//html//input")
 
-    Raises:
-        NotImplementedError: Subclasses must define this method.
+    Args:
+        locator_name (str): The name of the locator.
     """
-    raise NotImplementedError('Tasks must define this method.')</code></pre>
+    try:
+        extracted_data = self._llm_chain.invoke(
+            input={"information": self._bot.wait.until(EC.presence_of_element_located(self.__locator__(locator_name))).get_attribute('innerHTML')},
+            return_only_outputs=True,
+        )
+        return extracted_data["text"]
+    except Exception as e:
+        logging.error(e)
+        return None</code></pre>
           </details>
   </div>
 
@@ -760,8 +634,8 @@ def forward(self) -&gt; Union[Type['Page'], None]:
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../task/" class="btn btn-neutral float-left" title="Task"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../bot/" class="btn btn-neutral float-right" title="Bot">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../payload/" class="btn btn-neutral float-left" title="Payload"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../config/" class="btn btn-neutral float-right" title="Config">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -784,10 +658,10 @@ def forward(self) -&gt; Union[Type['Page'], None]:
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../task/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../payload/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../bot/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../config/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
