@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastbots"
-version = "0.2.6"
+version = "0.2.7"
 description = "A simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design."
 authors = ["Uberti Davide <24529587+ubertidavide@users.noreply.github.com>"]
 license = "LICENSE"
@@ -13,6 +13,8 @@ python-decouple = "^3.8"
 tenacity = "^8.2.3"
 selenium-wire = "^5.1.0"
 capsolver = "^1.0.7"
+langchain = "^0.1.16"
+langchain-openai = "^0.1.3"
 
 [tool.poetry.group.dev.dependencies]
 setuptools = "^68.2.2"

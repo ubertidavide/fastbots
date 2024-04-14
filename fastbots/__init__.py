@@ -10,7 +10,10 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException,
 
 import capsolver
 
+from langchain_core.pydantic_v1 import BaseModel, Field
+
 from fastbots.bot import Bot
 from fastbots.page import Page
 from fastbots.task import Task
 from fastbots.payload import Payload
+from fastbots.llm_extractor import LLMExtractor

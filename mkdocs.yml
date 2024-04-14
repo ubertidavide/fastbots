@@ -18,6 +18,7 @@ nav:
       - 'Firefox': 'reference/firefox_bot.md'
       - 'Chrome': 'reference/chrome_bot.md'
     - 'Payload': 'reference/payload.md'
+    - 'LLMExtractor': 'reference/llm_extractor.md'
     - 'Config': 'reference/config.md'
 plugins:
   - mkdocstrings

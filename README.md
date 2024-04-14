@@ -1,7 +1,7 @@
 # fastbots
 
 [Fastbots](https://ubertidavide.github.io/fastbots/) is a simple library designed for rapid bot and scraper development using Selenium and the POM (Page Object Model) design.  
-It enhances productivity by allowing developers to focus solely on scraping, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.  
+It enhances productivity by allowing developers to focus solely on scraping automatically using AI, reducing boilerplate code, and eliminating the need for direct driver management-related code, thanks to browser-independent settings.  
 Even if site locators change, this library doesn't require modifications to the code; adjustments can be made solely in the configuration.
 
 fastbots is also fully compatible with all selenium functions, refer to [selenium official documentation](https://www.selenium.dev/documentation/webdriver/elements/interactions/) for more details.
@@ -114,10 +114,42 @@ class TestTask(Task):
     def on_failure(self, payload: Payload):
         logging.info(f'FAILED {payload.output_data}')
 
+# Rapresentation of the data needed to extract from the HTML page.
+class InformationModel(BaseModel):
+    images_url: List[str] = Field(description="Images URL present in the page")
+    product_url: List[str] = Field(description="Product URL present in the page")
+    categories_names: List[str] = Field(description="Categories name present in the page")
+
+# Define a TestLLMTask class, which is a subclass of the Task class
+class TestLLMTask(Task):
+
+    # Main task code to be executed when running the script
+    def run(self, bot: Bot) -> bool:
+        # Log information about the current action
+        logging.info('DO THINGS')
+
+        # leverage the ai capabilities to automatically extract data from html (no need locators an manual data extraction)
+        extracted_data: str = LLMExtractor(bot=bot, pydantic_model=InformationModel).extract_data(locator_name='page_content_locator')
+
+        # set the extracted data as my output
+        bot.payload.output_data['information_model'] = extracted_data
+        
+        # For default, the task will succeed
+        return True
+
+    # Method executed on bot success, with its payload
+    def on_success(self, payload: Payload):
+        logging.info(f'SUCCESS {payload.downloads}')
+    
+    # Method executed on bot failure
+    def on_failure(self, payload: Payload):
+        logging.info(f'FAILED {payload.output_data}')
+
 # Check if the script is executed as the main program
 if __name__ == '__main__':
     # Start the above TestTask
-    TestTask()()
+    TestLLMTask()()
+    #TestTask()()
 ```
 
 **Attention**: This framework is flexible, you could also use only the Task class and the selenium's related functions inside the run method without using the POM (Page Object Model) or develop specific pages flow depending on your needs.
@@ -141,6 +173,21 @@ product_locator=(By.XPATH, '//*[@id="search"]/div[1]/div[1]/div/span[1]/div[1]/d
 
 [product_page]#*_page second page_name parameter, with it's related locators
 name_locator=(By.ID, "title")
+
+[llm_extractor] # used by the llm extractor to get only a piecie of HTML because llm have a text limit
+page_content_locator=(By.ID, 'pageContent')
+```
+
+## AI Enanched
+It provides the LLMExtractor utility that leverage the language models LLM to automatically extract, parse and validate data from html pages and convert it into a json formatted string.  
+Remember to declare your data representation through a Pydantic class and the `llm_extractor` section in `locators.ini` with it's locator used as entry point to get the HTML as the the above example.
+Under the hood now uses [OpenAI ChatGPT3.5](https://openai.com/blog/chatgpt).  
+Specify your API Key in the settings, using the [OpenAI Page](https://platform.openai.com/api-keys).  
+
+```ini
+# settings.ini
+[settings]
+OPENAI_API_KEY="my-api-key"
 ```
 
 ## Settings

@@ -1,8 +1,9 @@
 # Import the logging module to handle logging in the script
 import logging
+from typing import List
 
 # Import necessary classes and modules from the fastbots library
-from fastbots import Task, Bot, Page, Payload, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException
+from fastbots import Task, Bot, Page, Payload, EC, WebElement, Keys, ActionChains, Select, Alert, TimeoutException, NoSuchElementException, BaseModel, Field, LLMExtractor
 
 # Define a ProductPage class, which is a subclass of the Page class
 class ProductPage(Page):
@@ -88,7 +89,39 @@ class TestTask(Task):
     def on_failure(self, payload: Payload):
         logging.info(f'FAILED {payload.output_data}')
 
+# Rapresentation of the data needed to extract from the HTML page.
+class InformationModel(BaseModel):
+    images_url: List[str] = Field(description="Images URL present in the page")
+    product_url: List[str] = Field(description="Product URL present in the page")
+    categories_names: List[str] = Field(description="Categories name present in the page")
+
+# Define a TestLLMTask class, which is a subclass of the Task class
+class TestLLMTask(Task):
+
+    # Main task code to be executed when running the script
+    def run(self, bot: Bot) -> bool:
+        # Log information about the current action
+        logging.info('DO THINGS')
+
+        # leverage the ai capabilities to automatically extract data from html (no need locators an manual data extraction)
+        extracted_data: str = LLMExtractor(bot=bot, pydantic_model=InformationModel).extract_data(locator_name='page_content_locator')
+
+        # set the extracted data as my output
+        bot.payload.output_data['information_model'] = extracted_data
+        
+        # For default, the task will succeed
+        return True
+
+    # Method executed on bot success, with its payload
+    def on_success(self, payload: Payload):
+        logging.info(f'SUCCESS {payload.downloads}')
+    
+    # Method executed on bot failure
+    def on_failure(self, payload: Payload):
+        logging.info(f'FAILED {payload.output_data}')
+
 # Check if the script is executed as the main program
 if __name__ == '__main__':
     # Start the above TestTask
-    TestTask()()
+    TestLLMTask()()
+    #TestTask()()
