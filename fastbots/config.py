@@ -108,3 +108,6 @@ SELENIUM_ENABLE_HAR_CAPTURE: bool = config('SELENIUM_ENABLE_HAR_CAPTURE', defaul
 
 # Capsolver CHAPTCHA resolver service
 CAPSOLVER_API_KEY: str = config('CAPSOLVER_API_KEY', default=None, cast=str)
+
+# OpenAI service for llm
+OPENAI_API_KEY: str = config('OPENAI_API_KEY', default=None, cast=str)
